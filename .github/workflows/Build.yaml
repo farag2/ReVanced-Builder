@@ -173,7 +173,7 @@ jobs:
 
       - name: Release.txt
         run: |
-          $Release = Get-Content -Path Release.txt -Encoding utf8
+          $Release = Get-Content -Path Release.txt -Encoding utf8 -Raw
           echo "Release_Body=$Release" >> $env:GITHUB_ENV
           ${{ env.Release_Body }}
 
