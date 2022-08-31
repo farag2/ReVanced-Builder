@@ -173,10 +173,12 @@ jobs:
           Compress-Archive @Parameters
 
       - name: Release.md
+        id: read_release
         run: |
           $Release = (Get-Content -Path Release.md -Encoding utf8 -Raw).replace("%", "[char]0x25").replace("\n", "[char]0x0A").replace("\r", "[char]0x0D")
           echo $Release
-          echo "Release_Body=$Release" >> $env:GITHUB_ENV
+          echo "::set-output name=Release_Body::$Release"
+          # echo "Release_Body=$Release" >> $env:GITHUB_ENV
 
       - name: Uploading ReVanced.zip to release
         uses: svenstaro/upload-release-action@master
@@ -184,7 +186,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ReVanced.zip
           tag: ${{ github.ref }}
-          body: ${{ env.Release_Body }}
+          body: ${{ steps.read_release.outputs.RELEASE_BODY }}
           overwrite: true
           file_glob: true
           prerelease: $false
