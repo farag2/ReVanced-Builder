@@ -175,11 +175,9 @@ jobs:
       - name: Release.md
         id: read_release
         run: |
-          $Release = Get-Content -Path Release.md -Encoding utf8 -Raw
-          $Release.replace("%", "[char]0x25").replace("\n", "[char]0x0A").replace("\r", "[char]0x0D")
-          # echo "::set-output name=Release_Body::$Release"
+          $Release = (Get-Content -Path Release.md -Encoding utf8 -Raw).replace("%", "[char]0x25").replace("\n", "[char]0x0A").replace("\r", "[char]0x0D") | Set-Content -Path Release.md
+          $Release
           echo "Release_Body=$Release" >> $env:GITHUB_ENV
-          #${{ steps.read_release.outputs.RELEASE_BODY }}
 
       - name: Uploading ReVanced.zip to release
         uses: svenstaro/upload-release-action@master
