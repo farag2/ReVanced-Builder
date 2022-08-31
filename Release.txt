@@ -1,6 +1,1 @@
-* YouTube 17.33.42 (latest supported);\n\r
-* ReVanced CLI CLITag;\n\r
-* ReVanced Patches PatchesTag;\n\r
-* ReVanced Integrations IntegrationsTag;\n\r
-* microG GmsCore GmsCoreTag;\n\r
-* Azul Zulu ZuluTag.
+* YouTube 17.33.42 (latest supported);\n\r* ReVanced CLI CLITag;\n\r* ReVanced Patches PatchesTag;\n\r* ReVanced Integrations IntegrationsTag;\n\r* microG GmsCore GmsCoreTag;\n\r* Azul Zulu ZuluTag.
