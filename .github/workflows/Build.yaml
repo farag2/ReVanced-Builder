@@ -48,7 +48,7 @@ jobs:
           }
           Invoke-RestMethod @Parameters
 
-          (Get-Content -Path Release.md -Encoding utf8).replace("CLITag", $Tag) | Set-Content -Path Release.md -Encoding utf8 -Force
+          (Get-Content -Path Release.txt -Encoding utf8).replace("CLITag", $Tag) | Set-Content -Path Release.txt -Encoding utf8 -Force
 
       - name: Downloading ReVanced Patches
         run: |
@@ -68,7 +68,7 @@ jobs:
           }
           Invoke-RestMethod @Parameters
 
-          (Get-Content -Path Release.md -Encoding utf8).replace("PatchesTag", $Tag) | Set-Content -Path Release.md -Encoding utf8 -Force
+          (Get-Content -Path Release.txt -Encoding utf8).replace("PatchesTag", $Tag) | Set-Content -Path Release.txt -Encoding utf8 -Force
 
       - name: Downloading ReVanced Integrations
         run: |
@@ -87,7 +87,7 @@ jobs:
           }
           Invoke-RestMethod @Parameters
 
-          (Get-Content -Path Release.md -Encoding utf8).replace("IntegrationsTag", $Tag) | Set-Content -Path Release.md -Encoding utf8 -Force
+          (Get-Content -Path Release.txt -Encoding utf8).replace("IntegrationsTag", $Tag) | Set-Content -Path Release.txt -Encoding utf8 -Force
 
       - name: Downloading GmsCore
         run: |
@@ -106,7 +106,7 @@ jobs:
           }
           Invoke-RestMethod @Parameters
 
-          (Get-Content -Path Release.md -Encoding utf8).replace("GmsCoreTag", $Tag) | Set-Content -Path Release.md -Encoding utf8 -Force
+          (Get-Content -Path Release.txt -Encoding utf8).replace("GmsCoreTag", $Tag) | Set-Content -Path Release.txt -Encoding utf8 -Force
 
       - name: Downloading latest Zulu JDK
         run: |
@@ -126,7 +126,7 @@ jobs:
           }
           Invoke-RestMethod @Parameters
 
-          (Get-Content -Path Release.md -Encoding utf8).replace("ZuluTag", $Tag) | Set-Content -Path Release.md -Encoding utf8 -Force
+          (Get-Content -Path Release.txt -Encoding utf8).replace("ZuluTag", $Tag) | Set-Content -Path Release.txt -Encoding utf8 -Force
 
       - name: Expanding Zulu JDK
         run: |
@@ -171,9 +171,9 @@ jobs:
           }
           Compress-Archive @Parameters
 
-      - name: Release.md
+      - name: Release.txt
         run: |
-          $Release = Get-Content -Path Release.md -Encoding utf8
+          $Release = Get-Content -Path Release.txt -Encoding utf8
           echo "Release_Body=$Release" >> $env:GITHUB_ENV
           ${{ env.Release_Body }}
 
