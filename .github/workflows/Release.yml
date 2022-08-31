@@ -17,10 +17,10 @@ jobs:
         id: read_release
         run: |
           $Release = (Get-Content -Path Release.txt -Encoding utf8 -Raw)
-          $Release = $Release.replace("%", "[char]0x25")
-          $Release = $Release.replace("*", "[char]0x002A")
-          $Release = $Release.replace("`n", "[char]0x0A")
-          $Release = $Release.replace("`r", "[char]0x0D")
+          $Release = $Release.replace("%", $([char]0x25))
+          $Release = $Release.replace("*", $([char]0x002A))
+          $Release = $Release.replace("`n", $([char]0x0A))
+          $Release = $Release.replace("`r", $([char]0x0D))
 
           echo "::set-output name=RELEASE_BODY::$Release"
           ${{ steps.read_release.outputs.RELEASE_BODY }}
