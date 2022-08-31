@@ -27,6 +27,3 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref }}
           body: ${{ steps.read_release.outputs.RELEASE_BODY }}
-          overwrite: true
-          file_glob: true
-          prerelease: $false
