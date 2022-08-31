@@ -142,3 +142,7 @@ Remove-Item -Path "$DownloadsFolder\ReVanced\jdk_windows-x64_bin.zip" -Force
 --clean `
 --temp-dir "$DownloadsFolder\ReVanced\Temp" `
 --out "$DownloadsFolder\ReVanced\revanced.apk"
+
+Invoke-Item -Path "$DownloadsFolder\ReVanced"
+
+Write-Warning -Message "Latest available revanced.apk & microg.apk are ready in `"$DownloadsFolder\ReVanced`""
