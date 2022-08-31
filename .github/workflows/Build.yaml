@@ -166,5 +166,5 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ReVanced.zip
           tag: ${{ github.ref }}
-          overwrite: false
+          overwrite: true
           file_glob: true
