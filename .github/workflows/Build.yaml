@@ -76,20 +76,21 @@ jobs:
           }
           Invoke-RestMethod @Parameters
 
-          # https://apkpure.com/vanced-microg/com.mgoogle.android.gms
+          # https://github.com/microg/GmsCore
           $Parameters = @{
-              Uri             = "https://apkpure.com/vanced-microg/com.mgoogle.android.gms/download?from=details"
+              Uri             = "https://api.github.com/repos/microg/GmsCore/releases/latest"
               UseBasicParsing = $true
               Verbose         = $true
           }
-          $URL = ((Invoke-Webrequest @Parameters).Links | Where-Object -FilterScript {$_.href -match "https://download.apkpure.com"}).href
+          $Tag = (Invoke-RestMethod @Parameters).tag_name
+          $Tag2 = $Tag.replace("v", "")
           $Parameters = @{
-              Uri             = $URL
-              Outfile         = "$PSScriptRoot\microg.apk"
-              UseBasicParsing = $true
-              Verbose         = $true
+               Uri             = "https://github.com/microg/GmsCore/releases/download/$Tag/com.google.android.gms-$Tag2.apk"
+               Outfile         = "$DownloadsFolder\ReVanced\microg.apk"
+               UseBasicParsing = $true
+               Verbose         = $true
           }
-          Invoke-Webrequest @Parameters
+          Invoke-RestMethod @Parameters
 
           # https://github.com/ScoopInstaller/Java/blob/master/bucket/zulu-jdk.json
           $Parameters = @{
@@ -137,6 +138,8 @@ jobs:
           --temp-dir "$PSScriptRoot\Temp" `
           --out "$PSScriptRoot\revanced.apk"
 
+      - name: Creating archive
+        run: |
           $Parameters = @{
               Path             = "$PSScriptRoot\revanced.apk", "$PSScriptRoot\microg.apk"
               DestinationPath  = "ReVanced.zip"
@@ -145,12 +148,11 @@ jobs:
           }
           Compress-Archive @Parameters
 
-      - name: Upload ReVanced.zip to release
+      - name: Uploading ReVanced.zip to release
         uses: svenstaro/upload-release-action@master
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ReVanced.zip
           tag: ${{ github.ref }}
-          overwrite: true
+          overwrite: false
           file_glob: true
-          prerelease: true
