@@ -172,7 +172,6 @@ jobs:
           Compress-Archive @Parameters
 
       - name: Release.md
-        id: read_release
         run: |
           $Release = Get-Content -Path Release.md -Encoding utf8
           echo "Release_Body=$Release" >> $env:GITHUB_ENV
