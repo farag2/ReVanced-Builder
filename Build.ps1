@@ -9,7 +9,7 @@
 	  * Azul Zulu.
 
 	.NOTES
-	After compiling microg.apk and compiled revanced.apk will be located in "Downloads folder\ReVanced"
+	After compiling, microg.apk and compiled revanced.apk will be located in "Downloads folder\ReVanced"
 
 	.LINKS
 	https://github.com/revanced
