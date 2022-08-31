@@ -175,7 +175,6 @@ jobs:
         run: |
           $Release = Get-Content -Path Release.txt -Encoding utf8 -Raw
           echo "Release_Body=$Release" >> $env:GITHUB_ENV
-          ${{ env.Release_Body }}
 
       - name: Uploading ReVanced.zip to release
         uses: svenstaro/upload-release-action@master
