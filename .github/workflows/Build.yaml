@@ -86,7 +86,7 @@ jobs:
           $Tag2 = $Tag.replace("v", "")
           $Parameters = @{
                Uri             = "https://github.com/microg/GmsCore/releases/download/$Tag/com.google.android.gms-$Tag2.apk"
-               Outfile         = "$DownloadsFolder\ReVanced\microg.apk"
+               Outfile         = "$PSScriptRoot\ReVanced\microg.apk"
                UseBasicParsing = $true
                Verbose         = $true
           }
