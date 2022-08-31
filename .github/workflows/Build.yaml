@@ -44,6 +44,7 @@ jobs:
           }
           Invoke-RestMethod @Parameters
 
+          (Get-Content -Path Release.md -Encoding utf8).replace("CLITag", "$Tag") | Set-Content -Path Release.md -Encoding utf8 -Force
 
       - name: Downloading ReVanced Patches
         run: |
@@ -63,6 +64,8 @@ jobs:
           }
           Invoke-RestMethod @Parameters
 
+          (Get-Content -Path Release.md -Encoding utf8).replace("PatchesTag", "$Tag") | Set-Content -Path Release.md -Encoding utf8 -Force
+
       - name: Downloading ReVanced Integrations
         run: |
           # https://github.com/revanced/revanced-integrations
@@ -79,6 +82,8 @@ jobs:
               Verbose         = $true
           }
           Invoke-RestMethod @Parameters
+
+          (Get-Content -Path Release.md -Encoding utf8).replace("IntegrationsTag", "$Tag") | Set-Content -Path Release.md -Encoding utf8 -Force
 
       - name: Downloading GmsCore
         run: |
@@ -97,6 +102,8 @@ jobs:
           }
           Invoke-RestMethod @Parameters
 
+          (Get-Content -Path Release.md -Encoding utf8).replace("GmsCoreTag", "$Tag") | Set-Content -Path Release.md -Encoding utf8 -Force
+
       - name: Downloading latest Zulu JDK
         run: |
           # https://github.com/ScoopInstaller/Java/blob/master/bucket/zulu-jdk.json
@@ -113,6 +120,8 @@ jobs:
               Verbose         = $true
           }
           Invoke-RestMethod @Parameters
+
+          (Get-Content -Path Release.md -Encoding utf8).replace("ZuluTag", "$Tag") | Set-Content -Path Release.md -Encoding utf8 -Force
 
       - name: Expanding Zulu JDK
         run: |
