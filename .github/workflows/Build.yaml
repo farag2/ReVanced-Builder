@@ -12,6 +12,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@main
+
       - name: Downloading YouTube
         run: |
           # https://apkpure.com/youtube/com.google.android.youtube/versions
@@ -174,7 +175,9 @@ jobs:
       - name: Release.md
         run: |
           $Release = (Get-Content -Path Release.md -Raw -Encoding utf8).replace("%", "[char]0x25").replace("\n", "[char]0x0A").replace("\r", "[char]0x0D") | Set-Content -Path Release.md -Force
+          echo "String is $Release"
           echo "Release_Body=$Release" >> $env:GITHUB_ENV
+          echo "The string is: ${{ env.Release_Body }}"
 
       - name: Uploading ReVanced.zip to release
         uses: svenstaro/upload-release-action@master
