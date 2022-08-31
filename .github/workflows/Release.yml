@@ -26,7 +26,7 @@ jobs:
         uses: svenstaro/upload-release-action@master
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: Release.txt
+          file: Release.md
           tag: ${{ github.ref }}
           body: ${{ env.RELEASE_BODY }}
           overwrite: true
