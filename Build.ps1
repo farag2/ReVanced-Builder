@@ -1,17 +1,17 @@
 <#
 	.SYNOPSIS
 	Build ReVanced app using latest components:
-	  * YouTube 17.33.42;
+	  * YouTube 17.33.42 (latest supported);
 	  * ReVanced CLI;
 	  * ReVanced Patches;
 	  * ReVanced Integrations;
 	  * microG GmsCore;
-	  * Azul Zulu
+	  * Azul Zulu.
 
 	.NOTES
-	Supports Windows 10 x64 & Windows 11 only
+	After compiling microg.apk and compiled revanced.apk will be located in "Downloads folder\ReVanced"
 #>
-# Download all files to the "Downloads folder\ReVanced"
+# Download all files to "Downloads folder\ReVanced"
 $DownloadsFolder = Get-ItemPropertyValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{374DE290-123F-4565-9164-39C4925E467B}"
 if (-not (Test-Path -Path "$DownloadsFolder\ReVanced"))
 {
