@@ -11,7 +11,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@main
-      - name: Downloading
+      - name: Downloading YouTube
         run: |
           # https://apkpure.com/youtube/com.google.android.youtube/versions
           # YouTube 17.33.42
@@ -29,6 +29,8 @@ jobs:
           }
           Invoke-Webrequest @Parameters
 
+      - name: Downloading ReVanced CLI
+        run: |
           # https://github.com/revanced/revanced-cli
           $Parameters = @{
               Uri             = "https://api.github.com/repos/revanced/revanced-cli/releases/latest"
@@ -45,6 +47,9 @@ jobs:
           }
           Invoke-RestMethod @Parameters
 
+
+      - name: Downloading ReVanced Patches
+        run: |
           # https://github.com/revanced/revanced-patches
           $Parameters = @{
               Uri             = "https://api.github.com/repos/revanced/revanced-patches/releases/latest"
@@ -61,6 +66,8 @@ jobs:
           }
           Invoke-RestMethod @Parameters
 
+      - name: Downloading ReVanced Integrations
+        run: |
           # https://github.com/revanced/revanced-integrations
           $Parameters = @{
               Uri             = "https://api.github.com/repos/revanced/revanced-integrations/releases/latest"
@@ -76,6 +83,8 @@ jobs:
           }
           Invoke-RestMethod @Parameters
 
+      - name: Downloading GmsCore
+        run: |
           # https://github.com/microg/GmsCore
           $Parameters = @{
               Uri             = "https://api.github.com/repos/microg/GmsCore/releases/latest"
@@ -92,6 +101,8 @@ jobs:
           }
           Invoke-RestMethod @Parameters
 
+      - name: Downloading latest Zulu JDK
+        run: |
           # https://github.com/ScoopInstaller/Java/blob/master/bucket/zulu-jdk.json
           $Parameters = @{
               Uri             = "https://raw.githubusercontent.com/ScoopInstaller/Java/master/bucket/zulu-jdk.json"
@@ -107,6 +118,8 @@ jobs:
           }
           Invoke-RestMethod @Parameters
 
+      - name: Expanding Zulu JDK
+        run: |
           # Expand jdk_windows-x64_bin archive
           $Parameters = @{
               Path            = "$PSScriptRoot\jdk_windows-x64_bin.zip"
