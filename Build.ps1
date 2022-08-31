@@ -90,11 +90,10 @@ $Parameters = @{
 	UseBasicParsing = $true
 	Verbose         = $true
 }
-$Tag = (Invoke-RestMethod @Parameters).tag_name
-$Tag2 = $Tag.replace("v", "")
+$URL = ((Invoke-RestMethod @Parameters).assets | Where-Object -FilterScript {$_.browser_download_url -notmatch "asc"}).browser_download_url
 $Parameters = @{
-	Uri             = "https://github.com/microg/GmsCore/releases/download/$Tag/com.google.android.gms-$Tag2.apk"
-	Outfile         = "$DownloadsFolder\ReVanced\microg.apk"
+	Uri             = $URL
+	Outfile         = "$PSScriptRoot\ReVanced\microg.apk"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
