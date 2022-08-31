@@ -174,8 +174,8 @@ jobs:
 
       - name: Release.md
         run: |
-          test-path -path Release.md
-          $Release = (Get-Content -Path Release.md -Encoding utf8).replace("%", "[char]0x25").replace("\n", "[char]0x0A").replace("\r", "[char]0x0D") | Set-Content -Path Release.md -Force
+          Get-Content -Path Release.md -Encoding utf8 -Raw
+          $Release = (Get-Content -Path Release.md -Encoding utf8 -Raw).replace("%", "[char]0x25").replace("\n", "[char]0x0A").replace("\r", "[char]0x0D")
           echo "String is $Release"
           echo "Release_Body=$Release" >> $env:GITHUB_ENV
           echo "The string is: ${{ env.Release_Body }}"
