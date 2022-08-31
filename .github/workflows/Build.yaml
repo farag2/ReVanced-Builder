@@ -161,15 +161,7 @@ jobs:
         id: read_release
         run: |
           $Release = Get-Content -Path Release.md -Encoding utf8
-          echo "::set-output name=RELEASE_BODY::$Release"
-
-      - name: Upload Binaries to Release
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ github.ref }}
-          body: |
-            ${{ steps.read_release.outputs.RELEASE_BODY }}
+          echo "::set-output name=RELEASE_BODY::$($Release)"
 
       - name: Uploading ReVanced.zip to release
         uses: svenstaro/upload-release-action@master
@@ -177,6 +169,8 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ReVanced.zip
           tag: ${{ github.ref }}
+          body: |
+            ${{ steps.read_release.outputs.RELEASE_BODY }}
           overwrite: true
           file_glob: true
           prerelease: $false
