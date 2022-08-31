@@ -174,7 +174,7 @@ jobs:
 
       - name: Release.md
         run: |
-          $Release = (Get-Content -Path Release.md -Encoding utf8).replace("%", "[char]0x25").replace("\n", "[char]0x0A").replace("\r", "[char]0x0D")
+          $Release = (Get-Content -Path Release.md -Encoding utf8 -Raw).replace("%", "[char]0x25").replace("\n", "[char]0x0A").replace("\r", "[char]0x0D")
           echo $Release
           echo "Release_Body=$Release" >> $env:GITHUB_ENV
 
