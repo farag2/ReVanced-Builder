@@ -1,3 +1,17 @@
+<#
+	.SYNOPSIS
+	Build ReVanced app using latest components:
+	  * YouTube 17.33.42;
+	  * ReVanced CLI;
+	  * ReVanced Patches;
+	  * ReVanced Integrations;
+	  * microG GmsCore;
+	  * Azul Zulu
+
+	.NOTES
+	Supports Windows 10 x64 & Windows 11 only
+#>
+# Download all files to the "Downloads folder\ReVanced"
 $DownloadsFolder = Get-ItemPropertyValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{374DE290-123F-4565-9164-39C4925E467B}"
 if (-not (Test-Path -Path "$DownloadsFolder\ReVanced"))
 {
@@ -67,20 +81,21 @@ $Parameters = @{
 }
 Invoke-RestMethod @Parameters
 
-# https://apkpure.com/vanced-microg/com.mgoogle.android.gms
+# https://github.com/microg/GmsCore
 $Parameters = @{
-	Uri             = "https://apkpure.com/vanced-microg/com.mgoogle.android.gms/download?from=details"
+	Uri             = "https://api.github.com/repos/microg/GmsCore/releases/latest"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
-$URL = ((Invoke-Webrequest @Parameters).Links | Where-Object -FilterScript {$_.href -match "https://download.apkpure.com"}).href
+$Tag = (Invoke-RestMethod @Parameters).tag_name
+$Tag2 = $Tag.replace("v", "")
 $Parameters = @{
-	Uri             = $URL
+	Uri             = "https://github.com/microg/GmsCore/releases/download/$Tag/com.google.android.gms-$Tag2.apk"
 	Outfile         = "$DownloadsFolder\ReVanced\microg.apk"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
-Invoke-Webrequest @Parameters
+Invoke-RestMethod @Parameters
 
 # https://github.com/ScoopInstaller/Java/blob/master/bucket/zulu-jdk.json
 $Parameters = @{
