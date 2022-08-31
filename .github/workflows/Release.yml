@@ -17,7 +17,7 @@ jobs:
         id: read_release
         run: |
           # https://en.wikipedia.org/wiki/Percent-encoding
-          $Release = (Get-Content -Path Release.md -Encoding utf8 -Raw).replace("%", "%25").replace("*", "%2A").replace("`n", "%0A").replace("`r", "%0D")
+          $Release = (Get-Content -Path Release.md -Encoding utf8 -Raw).replace("%", "%25").replace("`n", "%0A").replace("`r", "%0D")
 
           echo "::set-output name=RELEASE_BODY::$Release"
 
