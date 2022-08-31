@@ -10,6 +10,9 @@
 
 	.NOTES
 	After compiling microg.apk and compiled revanced.apk will be located in "Downloads folder\ReVanced"
+
+	.LINKS
+	https://github.com/revanced
 #>
 # Download all files to "Downloads folder\ReVanced"
 $DownloadsFolder = Get-ItemPropertyValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{374DE290-123F-4565-9164-39C4925E467B}"
