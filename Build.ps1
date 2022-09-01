@@ -117,7 +117,7 @@ $Parameters = @{
 $URL = ((Invoke-RestMethod @Parameters).assets | Where-Object -FilterScript {$_.browser_download_url -notmatch "asc"}).browser_download_url
 $Parameters = @{
 	Uri             = $URL
-	Outfile         = "$PSScriptRoot\ReVanced\microg.apk"
+	Outfile         = "$DownloadsFolder\ReVanced\microg.apk"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
