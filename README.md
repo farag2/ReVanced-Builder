@@ -7,7 +7,7 @@ Build ReVanced package (.apk) easily than ever using latest ReVanced patches and
 ## Usage
 
 * To build `revanced.apk` locally you need just to run [`Build.ps1`](https://github.com/farag2/ReVanced_Builder/blob/main/Build.ps1) via PowerShell;
-* Configure [patches](https://github.com/revanced/revanced-patches) applied to `revanced.apk`. Dy defaulft, only following patches are applied:
+* Configure [patches](https://github.com/revanced/revanced-patches) applied to `revanced.apk`. By defaulft, only following patches are applied:
   * disable-create-button
   * hide-cast-button
   * return-youtube-dislike
@@ -38,7 +38,15 @@ Trigger the [`Build`](https://github.com/farag2/ReVanced_Builder/actions/workflo
 
 `ReVanced.zip` will contain a built `revanced.apk` & latest `microg.apk`.
 
+## Requirements if you compile locally
+
+* Windows 10 x64 or Windows 11
+* Windows PowerShell 5.1
+  * PowerShell 7 won't work due to it doesn't contain Trident HTML parser, so I have to use a 3rd party parser [AngleSharp](https://github.com/AngleSharp/AngleSharp);
+  * If you still want it, [get](https://github.com/farag2/ReVanced_Builder/blob/de0b988f3be738bfd6ea4bad3b3be91aee20aceb/.github/workflows/Build.yml#L23) code from Actions (it's run in PowerShell 7).
+
 ## Links
 
 * [ReVanced](https://github.com/revanced)
 * [Telegram](https://t.me/sophia_chat)
+* [AngleSharp]([https://t.me/sophia_chat](https://github.com/AngleSharp/AngleSharp))
