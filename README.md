@@ -1,3 +1,5 @@
+<a href="https://github.com/farag2/ReVanced_Builder/actions"><img src="https://img.shields.io/github/workflow/status/farag2/ReVanced_Builder/Build?label=GitHub%20Actions&logo=GitHub"></a>
+
 # ReVanced builder
 
 Build ReVanced package (.apk) easily than ever using latest ReVanced patches and dependencies
