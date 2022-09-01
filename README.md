@@ -32,6 +32,7 @@ Build ReVanced package (.apk) easily than ever using latest ReVanced patches and
 ```powershell
 git clone https://github.com/farag2/ReVanced_Builder
 ```
+
 Trigger the [`Build`](https://github.com/farag2/ReVanced_Builder/actions/workflows/Build.yml) Action manually to create [release page](https://github.com/farag2/ReVanced_Builder/releases/latest) with configured release notes showing dependencies used for building.
 
 ![image](https://user-images.githubusercontent.com/10544660/187949763-82fd7a07-8e4e-4527-b631-11920077141f.png)
