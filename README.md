@@ -49,4 +49,4 @@ Trigger the [`Build`](https://github.com/farag2/ReVanced_Builder/actions/workflo
 
 * [ReVanced](https://github.com/revanced)
 * [Telegram](https://t.me/sophia_chat)
-* [AngleSharp]([https://t.me/sophia_chat](https://github.com/AngleSharp/AngleSharp))
+* [AngleSharp](https://github.com/AngleSharp/AngleSharp)
