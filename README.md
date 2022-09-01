@@ -40,3 +40,4 @@ Trigger the [`Build`](https://github.com/farag2/ReVanced_Builder/actions/workflo
 ## Links
 
 [ReVanced](https://github.com/revanced)
+[Telegram](https://t.me/sophia_chat)
