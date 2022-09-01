@@ -1,7 +1,7 @@
 <#
 	.SYNOPSIS
 	Build ReVanced app using latest components:
-	  * YouTube 17.33.42 (latest supported);
+	  * YouTube (latest supported);
 	  * ReVanced CLI;
 	  * ReVanced Patches;
 	  * ReVanced Integrations;
@@ -21,17 +21,41 @@ if (-not (Test-Path -Path "$DownloadsFolder\ReVanced"))
 	New-Item -Path "$DownloadsFolder\ReVanced" -ItemType Directory -Force
 }
 
-# https://apkpure.com/youtube/com.google.android.youtube/versions
-# YouTube 17.33.42
+# Get latest supported YouTube client version via ReVanced JSON
+# It will let us to download always latest supported YouTube apk supportd by ReVanced team
+# https://github.com/revanced/revanced-patches/blob/main/patches.json
 $Parameters = @{
-	Uri             = "https://apkpure.com/youtube/com.google.android.youtube/download/1531188672-APK-1d33a9dd6b47ec963ea80d2437ef7d3f"
+	Uri             = "https://raw.githubusercontent.com/revanced/revanced-patches/main/patches.json"
 	UseBasicParsing = $true
+}
+$JSON = Invoke-RestMethod @Parameters
+$versions = ($JSON | Where-Object -FilterScript {$_.compatiblePackages.name -eq "com.google.android.youtube"}).compatiblePackages.versions
+$LatestSupported = $versions | Sort-Object -Descending -Unique | Select-Object -Last 1
+$LatestSupported = $LatestSupported.replace(".", "-")
+
+# Get unique key to generate direct link
+# https://www.apkmirror.com/apk/google-inc/youtube/
+$Parameters = @{
+	Uri             = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-2-android-apk-download/"
+	UseBasicParsing = $false # Disabled
 	Verbose         = $true
 }
-$URL = ((Invoke-Webrequest @Parameters).Links | Where-Object -FilterScript {$_.href -match "https://download.apkpure.com"}).href
+$Request = Invoke-Webrequest @Parameters
+$nameProp = $Request.ParsedHtml.getElementsByClassName("accent_bg btn btn-flat downloadButton") | ForEach-Object -Process {$_.nameProp}
+
 $Parameters = @{
-	Uri             = $URL
-	Outfile         = "$DownloadsFolder\ReVanced\youtube.apk"
+	Uri             = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-2-android-apk-download/download/$($nameProp)"
+	UseBasicParsing = $false # Disabled
+	Verbose         = $true
+}
+$URL_Part = ((Invoke-Webrequest @Parameters).Links | Where-Object -FilterScript {$_.innerHTML -eq "here"}).href
+# Replace "&amp;" with "&" to make it work
+$URL_Part = $URL_Part.Replace("&amp;", "&")
+
+# Finally, get the real link
+$Parameters = @{
+	Uri             = "https://www.apkmirror.com$URL_Part"
+	OutFile         = "$DownloadsFolder\ReVanced\youtube.apk"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
