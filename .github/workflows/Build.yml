@@ -58,7 +58,7 @@ jobs:
           # Finally, get the real link
           $Parameters = @{
               Uri             = "https://www.apkmirror.com$URL_Part"
-              OutFile         = "$PSScriptRoot\ReVanced\youtube.apk"
+              OutFile         = "$PSScriptRoot\youtube.apk"
               UseBasicParsing = $true
               Verbose         = $true
           }
