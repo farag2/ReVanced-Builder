@@ -64,7 +64,7 @@ jobs:
           }
           Invoke-Webrequest @Parameters
 
-          (Get-Content -Path Release.md -Encoding utf8).replace("YouTubeTag", $LatestSupportedYT) | Set-Content -Path Release.md -Encoding utf8 -Force
+          (Get-Content -Path Release.md -Encoding utf8).replace("YouTubeTag", $LatestSupported) | Set-Content -Path Release.md -Encoding utf8 -Force
 
       - name: Downloading ReVanced CLI
         run: |
