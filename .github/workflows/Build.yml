@@ -212,7 +212,7 @@ jobs:
         id: read_release
         run: |
           # https://en.wikipedia.org/wiki/Percent-encoding
-          $Release = (Get-Content -Path Release.md -Encoding utf8 -Raw).replace("%", "%25").replace("`n", "%0A").replace("`r", "%0D")
+          $Release = (Get-Content -Path Release.md -Encoding utf8 -Raw).replace("#", "%23").replace("`n", "%0A").replace("`r", "%0D")
 
           # https://trstringer.com/github-actions-multiline-strings/
           echo "::set-output name=RELEASE_BODY::$Release"
