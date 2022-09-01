@@ -13,14 +13,16 @@ jobs:
     steps:
       - uses: actions/checkout@main
 
-      - name: Downloading YouTube
+      - name: Installing AngleSharp
         run: |
+          # https://github.com/AngleSharp/AngleSharp
           Install-Package AngleSharp -Source https://www.nuget.org/api/v2 -SkipDependencies -Force
 
+      - name: Downloading YouTube
+        run: |
           # Get latest supported YouTube client version via ReVanced JSON
           # It will let us to download always latest YouTube apk supported by ReVanced team
           # https://github.com/revanced/revanced-patches/blob/main/patches.json
-
           $Parameters = @{
               Uri             = "https://raw.githubusercontent.com/revanced/revanced-patches/main/patches.json"
               UseBasicParsing = $true
