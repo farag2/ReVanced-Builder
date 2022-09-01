@@ -57,7 +57,7 @@ jobs:
 
           # Finally, get the real link
           $Parameters = @{
-              Uri             = "https://www.apkmirror.com$URL_Part"
+              Uri             = "https://www.apkmirror.com/wp-content/themes/APKMirror/download.php$Key"
               OutFile         = "$PSScriptRoot\youtube.apk"
               UseBasicParsing = $true
               Verbose         = $true
