@@ -22,7 +22,7 @@ Build ReVanced package (.apk) easily than ever using latest ReVanced patches and
   * remember-video-quality
   * video-ads
   * general-ads
-* The script will download all latest versions dependencies and build package using [Zulu JDK](https://www.azul.com/downloads/?package=jdk);
+* The script downloads latest available YouTube package supported by ReVanced Team from <https://apkmirror.com> (parses [JSON](https://github.com/revanced/revanced-patches/blob/main/patches.json)) and all dependencies and build package using [Zulu JDK](https://www.azul.com/downloads/?package=jdk);
 * Script installs no apps—everything will be held in your `Downloads folder\ReVanced`;
 * After compiling you get `revanced.apk` & `microg.apk` ready to be installed.
 
