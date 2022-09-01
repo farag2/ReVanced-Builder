@@ -1,5 +1,3 @@
-### Automatically generated release notes
-
 * YouTube YouTubeTag;
 * ReVanced CLI CLITag;
 * ReVanced Patches PatchesTag;
