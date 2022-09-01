@@ -22,7 +22,7 @@ if (-not (Test-Path -Path "$DownloadsFolder\ReVanced"))
 }
 
 # Get latest supported YouTube client version via ReVanced JSON
-# It will let us to download always latest supported YouTube apk supportd by ReVanced team
+# It will let us to download always latest YouTube apk supported by ReVanced team
 # https://github.com/revanced/revanced-patches/blob/main/patches.json
 $Parameters = @{
 	Uri             = "https://raw.githubusercontent.com/revanced/revanced-patches/main/patches.json"
