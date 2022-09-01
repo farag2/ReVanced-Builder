@@ -55,6 +55,8 @@ jobs:
           }
           Invoke-Webrequest @Parameters
 
+          (Get-Content -Path Release.md -Encoding utf8).replace("CLITag", $LatestSupported) | Set-Content -Path Release.md -Encoding utf8 -Force
+
       - name: Downloading ReVanced CLI
         run: |
           # https://github.com/revanced/revanced-cli
