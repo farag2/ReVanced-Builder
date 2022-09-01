@@ -1,6 +1,6 @@
 ### Automatically generated release notes
 
-* YouTube 17.33.42;
+* YouTube YouTubeTag;
 * ReVanced CLI CLITag;
 * ReVanced Patches PatchesTag;
 * ReVanced Integrations IntegrationsTag;
