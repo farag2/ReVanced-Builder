@@ -24,7 +24,8 @@ Build ReVanced package (.apk) easily than ever using latest ReVanced patches and
   * general-ads
 * The script downloads latest available YouTube package (parses [JSON](https://github.com/revanced/revanced-patches/blob/main/patches.json)) supported by ReVanced Team from <https://apkmirror.com> and all dependencies and build package using [Zulu JDK](https://www.azul.com/downloads/?package=jdk);
 * Script installs no apps—everything will be held in your `Downloads folder\ReVanced`;
-* After compiling you get `revanced.apk` & `microg.apk` ready to be installed.
+* After compiling you get `revanced.apk` & `microg.apk` ready to be installed;
+* Release notes are generated dynamically using the [Release.md](https://github.com/far…r/blob/main/Release.md).
 
 ## By using CI/CD
 
