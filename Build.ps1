@@ -14,6 +14,9 @@
 	.LINKS
 	https://github.com/revanced
 #>
+
+#Requires -Version 5.1
+
 # Download all files to "Downloads folder\ReVanced"
 $DownloadsFolder = Get-ItemPropertyValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{374DE290-123F-4565-9164-39C4925E467B}"
 if (-not (Test-Path -Path "$DownloadsFolder\ReVanced"))
