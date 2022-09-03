@@ -2,5 +2,5 @@
 * ReVanced CLI CLITag;
 * ReVanced Patches PatchesTag;
 * ReVanced Integrations IntegrationsTag;
-* Vanced MicroG GmsCoreTag;
+* Vanced MicroG MicroGTag;
 * Azul Zulu ZuluTag.
