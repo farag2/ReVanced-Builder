@@ -125,25 +125,24 @@ jobs:
 
           (Get-Content -Path Release.md -Encoding utf8).replace("IntegrationsTag", $Tag) | Set-Content -Path Release.md -Encoding utf8 -Force
 
-      - name: Downloading GmsCore
+      - name: Downloading Vanced MicroG
         run: |
-          # https://github.com/microg/GmsCore
+          # https://github.com/TeamVanced/VancedMicroG
           $Parameters = @{
-              Uri             = "https://api.github.com/repos/microg/GmsCore/releases/latest"
+              Uri             = "https://api.github.com/repos/TeamVanced/VancedMicroG/releases/latest"
               UseBasicParsing = $true
               Verbose         = $true
           }
           $Tag = (Invoke-RestMethod @Parameters).tag_name
-          $URL = ((Invoke-RestMethod @Parameters).assets | Where-Object -FilterScript {$_.browser_download_url -notmatch "asc"}).browser_download_url
           $Parameters = @{
-               Uri             = $URL
+               Uri             = "https://github.com/TeamVanced/VancedMicroG/releases/download/$Tag/microg.apk"
                Outfile         = "$PSScriptRoot\microg.apk"
                UseBasicParsing = $true
                Verbose         = $true
           }
           Invoke-RestMethod @Parameters
 
-          (Get-Content -Path Release.md -Encoding utf8).replace("GmsCoreTag", $Tag) | Set-Content -Path Release.md -Encoding utf8 -Force
+          (Get-Content -Path Release.md -Encoding utf8).replace("MicroGTag", $Tag) | Set-Content -Path Release.md -Encoding utf8 -Force
 
       - name: Downloading latest Zulu JDK
         run: |
