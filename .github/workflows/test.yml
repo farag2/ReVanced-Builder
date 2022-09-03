@@ -1,0 +1,34 @@
+name: Build
+
+on: 
+  push:
+    tags:
+      - "*"
+  workflow_dispatch:
+
+jobs:
+  patch:
+    runs-on: windows-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@main
+
+      - name: test.md
+        id: read_release
+        run: |
+          # https://en.wikipedia.org/wiki/Percent-encoding
+          $Release = (Get-Content -Path test.md -Encoding utf8 -Raw).replace("#", "%23").replace("`n", "%0A").replace("`r", "%0D")
+
+          # https://trstringer.com/github-actions-multiline-strings/
+          echo "::set-output name=RELEASE_BODY::$Release"
+
+      - name: Uploading
+        uses: svenstaro/upload-release-action@master
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: test.md
+          tag: ${{ github.ref }}
+          body: ${{ steps.read_release.outputs.RELEASE_BODY }}
+          overwrite: true
+          file_glob: true
+          prerelease: $false
