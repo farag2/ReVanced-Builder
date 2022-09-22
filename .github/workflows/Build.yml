@@ -216,6 +216,9 @@ jobs:
           # https://trstringer.com/github-actions-multiline-strings/
           echo "::set-output name=RELEASE_BODY::$Release"
 
+          $ReleaseName = Get-Date -f "yyyy.MM.dd"
+          echo "RELEASE_NAME=$ReleaseName" >> $env:GITHUB_ENV
+
       - name: Uploading
         uses: softprops/action-gh-release@master
         with:
