@@ -207,22 +207,19 @@ jobs:
           }
           Compress-Archive @Parameters
 
-      - name: Release.md
+      - name: ReleaseNotesTemplate
         id: read_release
         run: |
           # https://en.wikipedia.org/wiki/Percent-encoding
-          $Release = (Get-Content -Path Release.md -Encoding utf8 -Raw).replace("`n", "%0A").replace("`r", "%0D")
+          $Release = (Get-Content -Path ReleaseNotesTemplate.md -Encoding utf8 -Raw).replace("`n", "%0A").replace("`r", "%0D")
 
           # https://trstringer.com/github-actions-multiline-strings/
           echo "::set-output name=RELEASE_BODY::$Release"
 
-      - name: Uploading ReVanced.zip to release
-        uses: svenstaro/upload-release-action@master
+      - name: Uploading
+        uses: softprops/action-gh-release@master
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ReVanced.zip
-          tag: ${{ github.ref }}
+          name: ${{ env.RELEASE_NAME }}
+          token: ${{ github.token }}
+          files: ReVanced.zip
           body: ${{ steps.read_release.outputs.RELEASE_BODY }}
-          overwrite: true
-          file_glob: true
-          prerelease: $false
