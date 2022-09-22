@@ -64,7 +64,7 @@ jobs:
           }
           Invoke-Webrequest @Parameters
 
-          (Get-Content -Path Release.md -Encoding utf8).replace("YouTubeTag", $LatestSupported) | Set-Content -Path Release.md -Encoding utf8 -Force
+          (Get-Content -Path ReleaseNotesTemplate.md -Encoding utf8).replace("YouTubeTag", $LatestSupported) | Set-Content -Path Release.md -Encoding utf8 -Force
 
       - name: Downloading ReVanced CLI
         run: |
@@ -84,7 +84,7 @@ jobs:
           }
           Invoke-RestMethod @Parameters
 
-          (Get-Content -Path Release.md -Encoding utf8).replace("CLITag", $Tag) | Set-Content -Path Release.md -Encoding utf8 -Force
+          (Get-Content -Path ReleaseNotesTemplate.md -Encoding utf8).replace("CLITag", $Tag) | Set-Content -Path Release.md -Encoding utf8 -Force
 
       - name: Downloading ReVanced Patches
         run: |
@@ -104,7 +104,7 @@ jobs:
           }
           Invoke-RestMethod @Parameters
 
-          (Get-Content -Path Release.md -Encoding utf8).replace("PatchesTag", $Tag) | Set-Content -Path Release.md -Encoding utf8 -Force
+          (Get-Content -Path ReleaseNotesTemplate.md -Encoding utf8).replace("PatchesTag", $Tag) | Set-Content -Path Release.md -Encoding utf8 -Force
 
       - name: Downloading ReVanced Integrations
         run: |
@@ -123,7 +123,7 @@ jobs:
           }
           Invoke-RestMethod @Parameters
 
-          (Get-Content -Path Release.md -Encoding utf8).replace("IntegrationsTag", $Tag) | Set-Content -Path Release.md -Encoding utf8 -Force
+          (Get-Content -Path ReleaseNotesTemplate.md -Encoding utf8).replace("IntegrationsTag", $Tag) | Set-Content -Path Release.md -Encoding utf8 -Force
 
       - name: Downloading Vanced MicroG
         run: |
@@ -142,7 +142,7 @@ jobs:
           }
           Invoke-RestMethod @Parameters
 
-          (Get-Content -Path Release.md -Encoding utf8).replace("MicroGTag", $Tag) | Set-Content -Path Release.md -Encoding utf8 -Force
+          (Get-Content -Path ReleaseNotesTemplate.md -Encoding utf8).replace("MicroGTag", $Tag) | Set-Content -Path Release.md -Encoding utf8 -Force
 
       - name: Downloading latest Zulu JDK
         run: |
@@ -162,7 +162,7 @@ jobs:
           }
           Invoke-RestMethod @Parameters
 
-          (Get-Content -Path Release.md -Encoding utf8).replace("ZuluTag", $Tag) | Set-Content -Path Release.md -Encoding utf8 -Force
+          (Get-Content -Path ReleaseNotesTemplate.md -Encoding utf8).replace("ZuluTag", $Tag) | Set-Content -Path Release.md -Encoding utf8 -Force
 
       - name: Expanding Zulu JDK
         run: |
