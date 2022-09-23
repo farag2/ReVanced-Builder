@@ -18,13 +18,13 @@ jobs:
           # https://github.com/AngleSharp/AngleSharp
           Install-Package AngleSharp -Source https://www.nuget.org/api/v2 -SkipDependencies -Force
 
-      - name: Downloading YouTube
+      - name: YouTube
         run: |
-          New-Item -Path Temp -ItemType -Force
+          New-Item -Path Temp -ItemType Directory -Force
 
           . Scripts\YouTube.ps1
 
-      - name: Downloading ReVanced CLI
+      - name: ReVanced CLI
         run: |
           . Scripts\ReVanced_CLI.ps1
 
@@ -32,15 +32,15 @@ jobs:
         run: |
           . Scripts\ReVanced_Patches.ps1
 
-      - name: Downloading ReVanced Integrations
+      - name: ReVanced Integrations
         run: |
           . Scripts\ReVanced_Intergrations.ps1
 
-      - name: Downloading Vanced MicroG
+      - name: Vanced MicroG
         run: |
           . Scripts\MicroG.ps1
 
-      - name: Downloading latest Zulu JDK
+      - name: Zulu JDK
         run: |
           . Scripts\Zulu_JDK.ps1
 
