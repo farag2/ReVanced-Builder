@@ -36,7 +36,7 @@ $Key = ($Parsed.All | Where-Object -FilterScript { $_.InnerHtml -eq "here" }).Se
 # Finally, get the real link
 $Parameters = @{
     Uri             = "https://www.apkmirror.com/wp-content/themes/APKMirror/download.php$Key"
-    OutFile         = "$PSScriptRoot\youtube.apk"
+    OutFile         = "Temp\youtube.apk"
     UseBasicParsing = $true
     Verbose         = $true
 }
