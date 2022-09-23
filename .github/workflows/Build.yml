@@ -81,7 +81,7 @@ jobs:
         id: read_release
         run: |
           # https://en.wikipedia.org/wiki/Percent-encoding
-          $Release = (Get-Content -Path ReleaseNotesTemplate.md -Encoding utf8 -Raw).replace("`n", "%0A").replace("`r", "%0D").replace("YouTubeTag", "${{ env.LatestSupported }}").replace("CLITag", "${{ env.CLIvtag }}").replace("PatchesTag", "${{ env.Patchesvtag }}").replace("IntegrationsTag", "${{ env.IntegrationsTag }}").replace("MicroGTag", "${{ env.MicroGTag }}").replace("ZuluTag", "${{ env.ZuluTag }}")
+          $Release = (Get-Content -Path ReleaseNotesTemplate.md -Encoding utf8 -Raw).replace("`n", "%0A").replace("`r", "%0D").replace("YouTubeTag", "${{ env.LatestSupportedYT }}").replace("CLITag", "${{ env.CLIvtag }}").replace("PatchesTag", "${{ env.Patchesvtag }}").replace("IntegrationsTag", "${{ env.IntegrationsTag }}").replace("MicroGTag", "${{ env.MicroGTag }}").replace("ZuluTag", "${{ env.ZuluTag }}")
 
           # https://trstringer.com/github-actions-multiline-strings/
           echo "::set-output name=RELEASE_BODY::$Release"
