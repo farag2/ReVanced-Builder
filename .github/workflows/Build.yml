@@ -47,6 +47,9 @@ jobs:
       - name: Building
         run: |
           # https://github.com/revanced/revanced-patches
+          
+          (get-childitem -path temp).Name
+          
           & "Temp\jdk_windows-x64_bin\zulu*win_x64\bin\java.exe" `
           -jar "Temp\revanced-cli.jar" `
           --apk "Temp\youtube.apk" `
