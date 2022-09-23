@@ -159,14 +159,14 @@ Remove-Item -Path "$DownloadsFolder\ReVanced\jdk_windows-x64_bin.zip" -Force
 --apk "$DownloadsFolder\ReVanced\youtube.apk" `
 --bundles "$DownloadsFolder\ReVanced\revanced-patches.jar" `
 --merge "$DownloadsFolder\ReVanced\app-release-unsigned.apk" `
+--exclude hide-premium-navbar `
 --exclude timeline-ads `
---exclude premium-icon-reddit `
---exclude general-reddit-ads `
+--exclude premium-icon-reddit --exclude general-reddit-ads `
 --exclude pflotsh-ecmwf-subscription-unlock `
 --exclude minimized-playback-music --exclude tasteBuilder-remover --exclude hide-get-premium --exclude compact-header --exclude upgrade-button-remover --exclude background-play --exclude music-microg-support --exclude music-video-ads --exclude codecs-unlock --exclude exclusive-audio-playback `
 --exclude promo-code-unlock `
---exclude tiktok-download --exclude tiktok-seekbar --exclude tiktok-ads `
---exclude swipe-controls --exclude downloads --exclude amoled --exclude hide-autoplay-button --exclude premium-heading --exclude disable-fullscreen-panels --exclude old-quality-layout --exclude enable-wide-searchbar --exclude tablet-mini-player --exclude always-autorepeat --exclude enable-debugging --exclude custom-playback-speed --exclude hide-infocard-suggestions `
+--exclude tiktok-feed-filter --exclude tiktok-download --exclude tiktok-seekbar --exclude tiktok-force-login --exclude tiktok-settings --exclude tiktok-ads `
+--exclude downloads --exclude amoled --exclude hide-autoplay-button --exclude premium-heading --exclude disable-fullscreen-panels --exclude old-quality-layout --exclude enable-wide-searchbar --exclude tablet-mini-player --exclude always-autorepeat --exclude enable-debugging --exclude custom-playback-speed --exclude hide-infocard-suggestions `
 --clean `
 --temp-dir "$DownloadsFolder\ReVanced\Temp" `
 --out "$DownloadsFolder\ReVanced\revanced.apk"
