@@ -16,7 +16,7 @@ Invoke-RestMethod @Parameters
 
 echo "ZuluTag=$ZuluTag" >> $env:GITHUB_ENV
 
-Write-Verbose -Message Expanding Zulu JDK -Verbose
+Write-Verbose -Message "Expanding Zulu JDK" -Verbose
 
 $Parameters = @{
     Path            = "Temp\jdk_windows-x64_bin.zip"
