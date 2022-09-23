@@ -20,6 +20,8 @@ jobs:
 
       - name: Downloading YouTube
         run: |
+          New-Item -Path Temp -ItemType -Force
+
           . Scripts\YouTube.ps1
 
       - name: Downloading ReVanced CLI
@@ -42,27 +44,14 @@ jobs:
         run: |
           . Scripts\Zulu_JDK.ps1
 
-      - name: Expanding Zulu JDK
-        run: |
-          # Expand jdk_windows-x64_bin archive
-          $Parameters = @{
-              Path            = "$PSScriptRoot\jdk_windows-x64_bin.zip"
-              DestinationPath = "$PSScriptRoot\jdk_windows-x64_bin"
-              Force           = $true
-              Verbose         = $true
-          }
-          Expand-Archive @Parameters
-
-          Remove-Item -Path "$PSScriptRoot\jdk_windows-x64_bin.zip" -Force
-
       - name: Building
         run: |
           # https://github.com/revanced/revanced-patches
-          & "$PSScriptRoot\jdk_windows-x64_bin\zulu*win_x64\bin\java.exe" `
-          -jar "$PSScriptRoot\revanced-cli.jar" `
-          --apk "$PSScriptRoot\youtube.apk" `
-          --bundles "$PSScriptRoot\revanced-patches.jar" `
-          --merge "$PSScriptRoot\app-release-unsigned.apk" `
+          & "Temp\jdk_windows-x64_bin\zulu*win_x64\bin\java.exe" `
+          -jar "Temp\revanced-cli.jar" `
+          --apk "Temp\youtube.apk" `
+          --bundles "Temp\revanced-patches.jar" `
+          --merge "Temp\app-release-unsigned.apk" `
           --exclude timeline-ads `
           --exclude premium-icon-reddit `
           --exclude general-reddit-ads `
@@ -72,13 +61,13 @@ jobs:
           --exclude tiktok-download --exclude tiktok-seekbar --exclude tiktok-ads `
           --exclude downloads --exclude amoled --exclude hide-autoplay-button --exclude premium-heading --exclude disable-fullscreen-panels --exclude old-quality-layout --exclude enable-wide-searchbar --exclude tablet-mini-player --exclude always-autorepeat --exclude enable-debugging --exclude custom-playback-speed --exclude hide-infocard-suggestions `
           --clean `
-          --temp-dir "$PSScriptRoot\Temp" `
-          --out "$PSScriptRoot\revanced.apk"
+          --temp-dir "Temp\Temp" `
+          --out "Temp\revanced.apk"
 
       - name: Creating archive
         run: |
           $Parameters = @{
-              Path             = "$PSScriptRoot\revanced.apk", "$PSScriptRoot\microg.apk"
+              Path             = "Temp\revanced.apk", "Temp\microg.apk"
               DestinationPath  = "ReVanced.zip"
               CompressionLevel = "Fastest"
               Force            = $true
