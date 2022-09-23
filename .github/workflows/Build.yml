@@ -48,9 +48,10 @@ jobs:
         run: |
           # https://github.com/revanced/revanced-patches
           
-          (get-childitem -path Temp\jdk_windows-x64_bin -recurse).Name
-          
-          & "Temp\jdk_windows-x64_bin\zulu*win_x64\bin\java.exe" `
+          $JavaPath = (Resolve-Path -Path "Temp\jdk_windows-x64_bin\zulu*win_x64\bin\java.exe").Path
+          $JavaPath
+
+          & $JavaPath `
           -jar "Temp\revanced-cli.jar" `
           --apk "Temp\youtube.apk" `
           --bundles "Temp\revanced-patches.jar" `
