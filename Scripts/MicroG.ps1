@@ -7,7 +7,7 @@ $Parameters = @{
 $MicroGTag = (Invoke-RestMethod @Parameters).tag_name
 $Parameters = @{
      Uri             = "https://github.com/TeamVanced/VancedMicroG/releases/download/$MicroGTag/microg.apk"
-     Outfile         = "$PSScriptRoot\microg.apk"
+     Outfile         = "Temp\microg.apk"
      UseBasicParsing = $true
      Verbose         = $true
 }
