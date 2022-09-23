@@ -8,7 +8,7 @@ $CLIvtag = (Invoke-RestMethod @Parameters).tag_name
 $CLItag = $CLIvtag.replace("v", "")
 $Parameters = @{
     Uri   = "https://github.com/revanced/revanced-cli/releases/download/$CLIvtag/revanced-cli-$CLItag-all.jar"
-    Outfile         = "$PSScriptRoot\revanced-cli.jar"
+    Outfile         = "Temp\revanced-cli.jar"
     UseBasicParsing = $true
     Verbose         = $true
 }
