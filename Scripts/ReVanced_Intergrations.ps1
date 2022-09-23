@@ -7,7 +7,7 @@ $Parameters = @{
 $IntegrationsTag = (Invoke-RestMethod @Parameters).tag_name
 $Parameters = @{
     Uri             = "https://github.com/revanced/revanced-integrations/releases/download/$IntegrationsTag/app-release-unsigned.apk"
-    Outfile         = "$PSScriptRoot\app-release-unsigned.apk"
+    Outfile         = "Temp\app-release-unsigned.apk"
     UseBasicParsing = $true
     Verbose         = $true
 }
