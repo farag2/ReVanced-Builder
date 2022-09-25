@@ -48,6 +48,6 @@ Trigger the [`Build`](https://github.com/farag2/ReVanced_Builder/actions/workflo
 
 ## Links
 
-* [ReVanced](https://github.com/revanced)
+* [ReVanced Manager](https://github.com/revanced/revanced-manager)
 * [Telegram](https://t.me/sophia_chat)
 * [AngleSharp](https://github.com/AngleSharp/AngleSharp)
