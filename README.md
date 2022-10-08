@@ -7,21 +7,12 @@ Build ReVanced package (.apk) easily than ever using latest ReVanced patches and
 ## Usage
 
 * To build `revanced.apk` locally you need just to run [`Build.ps1`](https://github.com/farag2/ReVanced_Builder/blob/main/Build.ps1) via PowerShell;
-* Configure [patches](https://github.com/revanced/revanced-patches) applied to `revanced.apk`. By defaulft, only following patches are applied:
-  * disable-create-button
-  * hide-cast-button
-  * return-youtube-dislike
-  * hide-autoplay-button
-  * hide-watermark
-  * sponsorblock
-  * minimized-playback
-  * client-spoof
-  * microg-support
-  * settings
-  * hdr-auto-brightness
-  * remember-video-quality
-  * video-ads
-  * general-ads
+* All [patches](https://github.com/revanced/revanced-patches) except the followings applied to `revanced.apk`:
+  * always-autorepeat
+  * enable-wide-searchbar
+  * disable-fullscreen-panels
+  * premium-heading
+  * tablet-mini-player
 * The script downloads latest available YouTube package (parses [JSON](https://github.com/revanced/revanced-patches/blob/main/patches.json)) supported by ReVanced Team from <https://apkmirror.com> and all dependencies and build package using [Zulu JDK](https://www.azul.com/downloads/?package=jdk);
 * Script installs no apps—everything will be held in your `Downloads folder\ReVanced`;
 * After compiling you get `revanced.apk` & `microg.apk` ready to be installed;
