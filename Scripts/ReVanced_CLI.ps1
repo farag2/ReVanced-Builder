@@ -1,5 +1,5 @@
 # https://github.com/revanced/revanced-cli
-$Token = "${{ secrets.GITHUB_TOKEN }}"
+$Token = "`${{ secrets.GITHUB_TOKEN }}"
 $Headers = @{
 	Accept        = "application/json"
 	Authorization = "Bearer $Token"
