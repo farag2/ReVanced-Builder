@@ -56,7 +56,7 @@ jobs:
           --merge "Temp\revanced-integrations.apk" `
           -exclude always-autorepeat --exclude comments --exclude premium-heading --exclude hide-captions-button --exclude disable-fullscreen-panels `
           --clean `
-          --temp-dir "Temp\Temp" `
+          --temp-dir "Temp" `
           --out "Temp\revanced.apk"
 
       - name: Creating archive
