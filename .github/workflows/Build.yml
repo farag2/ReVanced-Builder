@@ -54,7 +54,7 @@ jobs:
           --apk "Temp\youtube.apk" `
           --bundle "Temp\revanced-patches.jar" `
           --merge "Temp\revanced-integrations.apk" `
-          -exclude always-autorepeat --exclude comments --exclude premium-heading --exclude hide-captions-button --exclude disable-fullscreen-panels `
+          --exclude comments --exclude premium-heading --exclude hide-captions-button --exclude disable-fullscreen-panels `
           --clean `
           --temp-dir "Temp" `
           --out "Temp\revanced.apk"
