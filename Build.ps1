@@ -105,7 +105,7 @@ $Parameters = @{
 }
 $Tag = (Invoke-RestMethod @Parameters).tag_name
 $Parameters = @{
-	Uri             = "https://github.com/revanced/revanced-integrations/releases/download/$Tag/app-release-unsigned.apk"
+	Uri             = "https://github.com/revanced/revanced-integrations/releases/download/$Tag/revanced-integrations-$Tag.apk"
 	Outfile         = "$DownloadsFolder\ReVanced\app-release-unsigned.apk"
 	UseBasicParsing = $true
 	Verbose         = $true
