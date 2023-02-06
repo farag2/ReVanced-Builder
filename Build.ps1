@@ -105,8 +105,8 @@ $Parameters = @{
 }
 $IntegrationsTag = (Invoke-RestMethod @Parameters).tag_name
 $Parameters = @{
-	Uri             = "https://github.com/revanced/revanced-integrations/releases/download/$IntegrationsTag/$($IntegrationsTag.replace(`"v`", `"`")).apk"
-	Outfile         = "$DownloadsFolder\ReVanced\$($IntegrationsTag.replace(`"v`", `"`")).apk"
+	Uri             = "https://github.com/revanced/revanced-integrations/releases/download/$IntegrationsTag/revanced-integrations-$($IntegrationsTag.replace(`"v`", `"`")).apk"
+	Outfile         = "$DownloadsFolder\ReVanced\revanced-integrations-$($IntegrationsTag.replace(`"v`", `"`")).apk"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
