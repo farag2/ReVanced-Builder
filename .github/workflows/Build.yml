@@ -52,7 +52,7 @@ jobs:
           & $JavaPath `
           -jar "Temp\revanced-cli.jar" `
           --apk "Temp\youtube.apk" `
-          --bundles "Temp\revanced-patches.jar" `
+          --bundle "Temp\revanced-patches.jar" `
           --merge "Temp\revanced-integrations.apk" `
           --exclude hide-time-and-seekbar --exclude always-autorepeat --exclude hide-captions-button --exclude disable-fullscreen-panels --exclude old-quality-layout `
           --clean `
