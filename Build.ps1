@@ -157,7 +157,7 @@ Remove-Item -Path "$DownloadsFolder\ReVanced\jdk_windows-x64_bin.zip" -Force
 & "$DownloadsFolder\ReVanced\jdk_windows-x64_bin\zulu*win_x64\bin\java.exe" `
 -jar "$DownloadsFolder\ReVanced\revanced-cli.jar" `
 --apk "$DownloadsFolder\ReVanced\youtube.apk" `
---bundles "$DownloadsFolder\ReVanced\revanced-patches.jar" `
+--bundle "$DownloadsFolder\ReVanced\revanced-patches.jar" `
 --merge "$DownloadsFolder\ReVanced\revanced-integrations.apk" `
 --exclude hide-time-and-seekbar --exclude always-autorepeat --exclude hide-captions-button --exclude disable-fullscreen-panels --exclude old-quality-layout `
 --clean `
