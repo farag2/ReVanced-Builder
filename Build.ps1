@@ -159,7 +159,7 @@ Remove-Item -Path "$DownloadsFolder\ReVanced\jdk_windows-x64_bin.zip" -Force
 --apk "$DownloadsFolder\ReVanced\youtube.apk" `
 --bundle "$DownloadsFolder\ReVanced\revanced-patches.jar" `
 --merge "$DownloadsFolder\ReVanced\revanced-integrations.apk" `
---exclude hide-time-and-seekbar --exclude always-autorepeat --exclude comments --exclude premium-heading`
+-exclude always-autorepeat --exclude comments --exclude premium-heading --exclude hide-captions-button --exclude disable-fullscreen-panels `
 --clean `
 --temp-dir "$DownloadsFolder\ReVanced\Temp" `
 --out "$DownloadsFolder\ReVanced\revanced.apk"
