@@ -1,12 +1,6 @@
 # https://github.com/revanced/revanced-cli
-$Token = "`${{ secrets.GITHUB_TOKEN }}"
-$Headers = @{
-	Accept        = "application/json"
-	Authorization = "Bearer $Token"
-}
 $Parameters = @{
 	Uri             = "https://api.github.com/repos/revanced/revanced-cli/releases/latest"
-	Headers         = $Headers
 	UseBasicParsing = $true
 	Verbose         = $true
 }
