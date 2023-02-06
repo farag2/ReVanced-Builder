@@ -53,7 +53,7 @@ jobs:
           -jar "Temp\revanced-cli.jar" `
           --apk "Temp\youtube.apk" `
           --bundles "Temp\revanced-patches.jar" `
-          --merge "Temp\app-release-unsigned.apk" `
+          --merge "Temp\revanced-integrations.apk" `
           --exclude hide-time-and-seekbar --exclude always-autorepeat --exclude hide-captions-button --exclude disable-fullscreen-panels --exclude old-quality-layout `
           --clean `
           --temp-dir "Temp\Temp" `
