@@ -5,7 +5,6 @@ $Parameters = @{
     Verbose         = $true
 }
 $URL = (Invoke-RestMethod @Parameters).architecture."64bit".url
-$ZuluTag = (Invoke-RestMethod @Parameters).version
 $Parameters = @{
     Uri             = $URL
     Outfile         = "Temp\jdk_windows-x64_bin.zip"
@@ -14,6 +13,12 @@ $Parameters = @{
 }
 Invoke-RestMethod @Parameters
 
+$Parameters = @{
+    Uri             = "https://raw.githubusercontent.com/ScoopInstaller/Java/master/bucket/zulu-jdk.json"
+    UseBasicParsing = $true
+    Verbose         = $true
+}
+$ZuluTag = (Invoke-RestMethod @Parameters).version
 echo "ZuluTag=$ZuluTag" >> $env:GITHUB_ENV
 
 Write-Verbose -Message "Expanding Zulu JDK" -Verbose
