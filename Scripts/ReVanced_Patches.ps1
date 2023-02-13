@@ -1,4 +1,3 @@
-
 # https://github.com/revanced/revanced-patches
 $Parameters = @{
     Uri             = "https://api.github.com/repos/revanced/revanced-patches/releases/latest"
