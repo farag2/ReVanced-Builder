@@ -1,12 +1,16 @@
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls13
 
-# https://github.com/ScoopInstaller/Java/blob/master/bucket/zulu17-jdk.json
+# https://app.swaggerhub.com/apis-docs/azul/zulu-download-community/1.0
 $Parameters = @{
-    Uri             = "https://raw.githubusercontent.com/ScoopInstaller/Java/master/bucket/zulu17-jdk.json"
-    UseBasicParsing = $true
-    Verbose         = $true
+	Uri             = "https://api.azul.com/zulu/download/community/v1.0/bundles/latest/?jdk_version=&bundle_type=jdk&javafx=false&ext=zip&os=windows&arch=x86&hw_bitness=64"
+	UseBasicParsing = $true
+	Verbose         = $true
 }
-$URL = (Invoke-RestMethod @Parameters).architecture."64bit".url
+$URL = (Invoke-RestMethod @Parameters).url
+
+$ZuluTag = [string](Invoke-RestMethod @Parameters).jdk_version -replace (" ", ".")
+echo "ZuluTag=$ZuluTag" >> $env:GITHUB_ENV
+
 $Parameters = @{
     Uri             = $URL
     Outfile         = "Temp\jdk_windows-x64_bin.zip"
@@ -14,15 +18,6 @@ $Parameters = @{
     Verbose         = $true
 }
 Invoke-RestMethod @Parameters
-
-# https://github.com/ScoopInstaller/Java/blob/master/bucket/zulu17-jdk.json
-$Parameters = @{
-    Uri             = "https://raw.githubusercontent.com/ScoopInstaller/Java/master/bucket/zulu17-jdk.json"
-    UseBasicParsing = $true
-    Verbose         = $true
-}
-$ZuluTag = (Invoke-RestMethod @Parameters).version
-echo "ZuluTag=$ZuluTag" >> $env:GITHUB_ENV
 
 Write-Verbose -Message "Expanding Zulu JDK" -Verbose
 
