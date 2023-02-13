@@ -59,6 +59,7 @@ jobs:
 
       - name: Creating archive
         run: |
+          get-childitem Temp -File -recurse -force
           $Parameters = @{
               Path             = "Temp\revanced.apk", "Temp\microg.apk"
               DestinationPath  = "ReVanced.zip"
