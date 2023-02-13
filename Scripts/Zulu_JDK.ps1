@@ -1,6 +1,6 @@
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls13
 
-# https://raw.githubusercontent.com/ScoopInstaller/Java/master/bucket/zulu17-jdk.json
+# https://github.com/ScoopInstaller/Java/blob/master/bucket/zulu17-jdk.json
 $Parameters = @{
     Uri             = "https://raw.githubusercontent.com/ScoopInstaller/Java/master/bucket/zulu17-jdk.json"
     UseBasicParsing = $true
