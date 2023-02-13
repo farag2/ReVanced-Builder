@@ -47,8 +47,6 @@ jobs:
       - name: Building
         run: |
           # https://github.com/revanced/revanced-patches
-          # $JavaPath = (Resolve-Path -Path "Temp\jdk_windows-x64_bin\zulu*win_x64\bin\java.exe").Path
-
           & "$env:ProgramFiles\Zulu\zulu-19\bin\java.exe" `
           -jar "Temp\revanced-cli.jar" `
           --apk "Temp\youtube.apk" `
@@ -56,7 +54,7 @@ jobs:
           --merge "Temp\revanced-integrations.apk" `
           --exclude comments --exclude premium-heading --exclude hide-captions-button --exclude disable-fullscreen-panels `
           --clean `
-          --temp-dir "Temp" `
+          --temp-dir "Temp\Temp" `
           --out "Temp\revanced.apk"
 
       - name: Creating archive
