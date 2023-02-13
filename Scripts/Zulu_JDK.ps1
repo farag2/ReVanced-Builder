@@ -1,8 +1,8 @@
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls13
 
-# https://github.com/ScoopInstaller/Java/blob/master/bucket/zulu-jdk.json
+# https://raw.githubusercontent.com/ScoopInstaller/Java/master/bucket/zulu17-jdk.json
 $Parameters = @{
-    Uri             = "https://raw.githubusercontent.com/ScoopInstaller/Java/master/bucket/zulu-jdk.json"
+    Uri             = "https://raw.githubusercontent.com/ScoopInstaller/Java/master/bucket/zulu17-jdk.json"
     UseBasicParsing = $true
     Verbose         = $true
 }
@@ -15,8 +15,9 @@ $Parameters = @{
 }
 Invoke-RestMethod @Parameters
 
+# https://github.com/ScoopInstaller/Java/blob/master/bucket/zulu17-jdk.json
 $Parameters = @{
-    Uri             = "https://raw.githubusercontent.com/ScoopInstaller/Java/master/bucket/zulu-jdk.json"
+    Uri             = "https://raw.githubusercontent.com/ScoopInstaller/Java/master/bucket/zulu17-jdk.json"
     UseBasicParsing = $true
     Verbose         = $true
 }
