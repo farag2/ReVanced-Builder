@@ -127,16 +127,16 @@ $Parameters = @{
 }
 Invoke-RestMethod @Parameters
 
-# https://github.com/ScoopInstaller/Java/blob/master/bucket/zulu-jdk.json
+# https://app.swaggerhub.com/apis-docs/azul/zulu-download-community/1.0
 $Parameters = @{
-	Uri             = "https://raw.githubusercontent.com/ScoopInstaller/Java/master/bucket/zulu-jdk.json"
+	Uri             = "https://api.azul.com/zulu/download/community/v1.0/bundles/latest/?jdk_version=&bundle_type=jdk&javafx=false&ext=zip&os=windows&arch=x86&hw_bitness=64"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
-$URL = (Invoke-RestMethod @Parameters).architecture."64bit".url
+$URL = (Invoke-RestMethod @Parameters).url
 $Parameters = @{
 	Uri             = $URL
-	Outfile         = "$DownloadsFolder\ReVanced\jdk_windows-x64_bin.zip"
+	Outfile         = "$DownloadsFolder\ReVanced\zulu-jdk-win_x64.zip"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
@@ -144,17 +144,17 @@ Invoke-RestMethod @Parameters
 
 # Expand jdk_windows-x64_bin archive
 $Parameters = @{
-	Path            = "$DownloadsFolder\ReVanced\jdk_windows-x64_bin.zip"
-	DestinationPath = "$DownloadsFolder\ReVanced\jdk_windows-x64_bin"
+	Path            = "$DownloadsFolder\ReVanced\zulu-jdk-win_x64.zip"
+	DestinationPath = "$DownloadsFolder\ReVanced\zulu-jdk-win_x64"
 	Force           = $true
 	Verbose         = $true
 }
 Expand-Archive @Parameters
 
-Remove-Item -Path "$DownloadsFolder\ReVanced\jdk_windows-x64_bin.zip" -Force
+Remove-Item -Path "$DownloadsFolder\ReVanced\zulu-jdk-win_x64.zip" -Force
 
 # https://github.com/revanced/revanced-patches
-& "$DownloadsFolder\ReVanced\jdk_windows-x64_bin\zulu*win_x64\bin\java.exe" `
+& "$DownloadsFolder\ReVanced\zulu-jdk-win_x64\zulu*win_x64\bin\java.exe" `
 -jar "$DownloadsFolder\ReVanced\revanced-cli.jar" `
 --apk "$DownloadsFolder\ReVanced\youtube.apk" `
 --bundle "$DownloadsFolder\ReVanced\revanced-patches.jar" `
