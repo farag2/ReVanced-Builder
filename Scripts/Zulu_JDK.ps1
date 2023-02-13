@@ -1,5 +1,7 @@
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls13
 
+winget install --id=Azul.Zulu.19.JDK --exact --accept-source-agreements
+<#
 # https://app.swaggerhub.com/apis-docs/azul/zulu-download-community/1.0
 $Parameters = @{
 	Uri             = "https://api.azul.com/zulu/download/community/v1.0/bundles/latest/?jdk_version=&bundle_type=jdk&javafx=false&ext=zip&os=windows&arch=x86&hw_bitness=64"
@@ -30,3 +32,4 @@ $Parameters = @{
 Expand-Archive @Parameters
 
 Remove-Item -Path "Temp\jdk_windows-x64_bin.zip" -Force
+#>
