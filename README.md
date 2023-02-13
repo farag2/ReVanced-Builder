@@ -1,4 +1,4 @@
-<a href="https://github.com/farag2/ReVanced_Builder/actions"><img src="https://img.shields.io/github/actions/workflow/status/farag2/ReVanced_Builder/Build.yml?label=GitHub%20Actions&logo=GitHub"></a>
+[![Telegram](https://img.shields.io/badge/Sophia%20Chat-Telegram-blue?style=flat&logo=Telegram)](https://t.me/sophia_chat) [![Builder](https://img.shields.io/github/actions/workflow/status/farag2/ReVanced_Builder/Build.yml?label=GitHub%20Actions&logo=GitHub)](https://github.com/farag2/ReVanced_Builder/actions)
 
 # ReVanced builder
 
