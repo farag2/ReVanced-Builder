@@ -2,9 +2,11 @@
 
 # ReVanced builder
 
-Build ReVanced package (.apk) easily than ever using latest ReVanced patches and dependencies lovally or via cloud
+Build ReVanced package (.apk) easily than ever using latest ReVanced patches and dependencies locally or via cloud
 
 ## Usage
+
+### Locally
 
 * To build `revanced.apk` locally you need just to run [`Build.ps1`](https://github.com/farag2/ReVanced_Builder/blob/main/Build.ps1) via PowerShell;
 * All [patches](https://github.com/revanced/revanced-patches) except the followings applied to `revanced.apk`:
@@ -18,7 +20,7 @@ Build ReVanced package (.apk) easily than ever using latest ReVanced patches and
 * After compiling you get `revanced.apk` & `microg.apk` ready to be installed;
 * Release notes are generated dynamically using the [Release.md](https://github.com/far…r/blob/main/Release.md) template.
 
-## By using CI/CD
+### By using CI/CD
 
 ```powershell
 git clone https://github.com/farag2/ReVanced_Builder
