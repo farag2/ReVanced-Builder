@@ -2,17 +2,17 @@
 
 # ReVanced builder
 
-Build ReVanced package (.apk) easily than ever using latest ReVanced patches and dependencies
+Build ReVanced package (.apk) easily than ever using latest ReVanced patches and dependencies lovally or via cloud
 
 ## Usage
 
 * To build `revanced.apk` locally you need just to run [`Build.ps1`](https://github.com/farag2/ReVanced_Builder/blob/main/Build.ps1) via PowerShell;
 * All [patches](https://github.com/revanced/revanced-patches) except the followings applied to `revanced.apk`:
-  * always-autorepeat
-  * enable-wide-searchbar
-  * disable-fullscreen-panels
+  * comments
   * premium-heading
-  * tablet-mini-player
+  * hide-captions-button
+  * disable-fullscreen-panels
+
 * The script downloads latest available YouTube package (having parsed [JSON](https://github.com/revanced/revanced-patches/blob/main/patches.json)) supported by ReVanced Team from <https://apkmirror.com> and all dependencies and build package using [Zulu JDK](https://www.azul.com/downloads/?package=jdk);
 * Script installs no apps—everything will be held in your `Downloads folder\ReVanced`;
 * After compiling you get `revanced.apk` & `microg.apk` ready to be installed;
@@ -35,7 +35,7 @@ Trigger the [`Build`](https://github.com/farag2/ReVanced_Builder/actions/workflo
 * Windows 10 x64 or Windows 11
 * Windows PowerShell 5.1
   * PowerShell 7 won't work due to it doesn't contain Trident HTML parser, so I have to use a 3rd party parser [AngleSharp](https://github.com/AngleSharp/AngleSharp);
-  * If you still want it, [get](https://github.com/farag2/ReVanced_Builder/blob/de0b988f3be738bfd6ea4bad3b3be91aee20aceb/.github/workflows/Build.yml#L23) code from Actions (it's run in PowerShell 7).
+  * If you still want it, [get](https://github.com/farag2/ReVanced_Builder/blob/main/Scripts/YouTube.ps1#L13) code from Actions (it's run in PowerShell 7).
 
 ## Links
 
