@@ -22,7 +22,7 @@ Invoke-RestMethod @Parameters
 Write-Verbose -Message "Installing Zulu JDK" -Verbose
 
 $Arguments = @(
-	"/a `"Temp\zulu-jdk-win_x64.msi`"",
+	"/i `"Temp\zulu-jdk-win_x64.msi`"",
 	"/quiet",
 	"/qb",
 	"/norestart"
