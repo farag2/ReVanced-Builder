@@ -47,7 +47,7 @@ jobs:
       - name: Building
         run: |
           # https://github.com/revanced/revanced-patches
-          & "$env:ProgramFiles\Zulu\zulu-19\bin\java.exe" `
+          & "$env:ProgramFiles\Zulu\zulu*\bin\java.exe" `
           -jar "Temp\revanced-cli.jar" `
           --apk "Temp\youtube.apk" `
           --bundle "Temp\revanced-patches.jar" `
