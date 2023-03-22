@@ -85,4 +85,4 @@ jobs:
           name: ${{ env.RELEASE_NAME }}
           token: ${{ github.token }}
           files: ReVanced.zip
-          body: ${{ steps.read_release.outputs.ReleaseBody }}
+          body_path: ${{ steps.read_release.outputs.ReleaseBody }}
