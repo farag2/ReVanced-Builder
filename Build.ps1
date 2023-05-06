@@ -18,6 +18,10 @@
 #Requires -Version 5.1
 # Doesn't work on PowerShell 7.2 due it doesn't contains IE parser engine. You have to use a 3rd party module to make it work like it's presented in CI/CD config: AngleSharp
 
+# Progress bar can significantly impact cmdlet performance
+# https://github.com/PowerShell/PowerShell/issues/2138
+$ProgressPreference = "SilentlyContinue"
+
 # Download all files to "Downloads folder\ReVanced"
 $DownloadsFolder = Get-ItemPropertyValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{374DE290-123F-4565-9164-39C4925E467B}"
 if (-not (Test-Path -Path "$DownloadsFolder\ReVanced"))
@@ -126,6 +130,12 @@ $Parameters = @{
 	Verbose         = $true
 }
 Invoke-RestMethod @Parameters
+
+# Sometimes older version of zulu-jdk causes conflict, so remove older version before proceeding.
+if (Test-Path -Path "$DownloadsFolder\ReVanced\zulu-jdk-win_x64")
+{
+	Remove-Item -Path "$DownloadsFolder\ReVanced\zulu-jdk-win_x64" -Recurse -Force
+}
 
 # https://app.swaggerhub.com/apis-docs/azul/zulu-download-community/1.0
 $Parameters = @{
