@@ -43,8 +43,9 @@ $LatestSupported = $LatestSupported.replace(".", "-")
 
 # Get unique key to generate direct link
 # https://www.apkmirror.com/apk/google-inc/youtube/
+# We need NON-bundle version
 $Parameters = @{
-	Uri             = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-android-apk-download/"
+	Uri             = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-2-android-apk-download/"
 	UseBasicParsing = $false # Disabled
 	Verbose         = $true
 }
@@ -52,7 +53,7 @@ $Request = Invoke-Webrequest @Parameters
 $nameProp = $Request.ParsedHtml.getElementsByClassName("accent_bg btn btn-flat downloadButton") | ForEach-Object -Process {$_.nameProp}
 
 $Parameters = @{
-	Uri             = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-android-apk-download/download/$($nameProp)"
+	Uri             = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-2-android-apk-download/download/$($nameProp)"
 	UseBasicParsing = $false # Disabled
 	Verbose         = $true
 }
