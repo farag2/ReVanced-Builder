@@ -16,7 +16,7 @@
 #>
 
 #Requires -Version 5.1
-# Doesn't work on PowerShell 7.2 due it doesn't contains IE parser engine. You have to use a 3rd party module to make it work like it's presented in CI/CD config: AngleSharp
+# Doesn't work on PowerShell 7.3 due it doesn't contains IE parser engine. You have to use a 3rd party module to make it work like it's presented in CI/CD config: AngleSharp
 
 # Progress bar can significantly impact cmdlet performance
 # https://github.com/PowerShell/PowerShell/issues/2138
@@ -32,6 +32,7 @@ if (-not (Test-Path -Path "$DownloadsFolder\ReVanced"))
 # Get latest supported YouTube client version via ReVanced JSON
 # It will let us to download always latest YouTube apk supported by ReVanced team
 # https://github.com/revanced/revanced-patches/blob/main/patches.json
+
 $Parameters = @{
 	Uri             = "https://raw.githubusercontent.com/revanced/revanced-patches/main/patches.json"
 	UseBasicParsing = $true
@@ -44,16 +45,32 @@ $LatestSupported = $LatestSupported.replace(".", "-")
 # Get unique key to generate direct link
 # https://www.apkmirror.com/apk/google-inc/youtube/
 # We need NON-bundle version
-$Parameters = @{
-	Uri             = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-2-android-apk-download/"
-	UseBasicParsing = $false # Disabled
-	Verbose         = $true
+# We choose an alive link depending on YouTube version. Sometimes with "-2" in URL, sometimes not
+try
+{
+	# with "-2"
+	$Parameters = @{
+		Uri             = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-2-android-apk-download/"
+		UseBasicParsing = $false # Disabled
+		Verbose         = $true
+	}
+	$Request = Invoke-Webrequest @Parameters
 }
-$Request = Invoke-Webrequest @Parameters
+catch [System.Net.WebException]
+{
+	# without "-2"
+	$Parameters = @{
+		Uri             = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-android-apk-download/"
+		UseBasicParsing = $false # Disabled
+		Verbose         = $true
+	}
+	$Request = Invoke-Webrequest @Parameters
+}
+
 $nameProp = $Request.ParsedHtml.getElementsByClassName("accent_bg btn btn-flat downloadButton") | ForEach-Object -Process {$_.nameProp}
 
 $Parameters = @{
-	Uri             = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-2-android-apk-download/download/$($nameProp)"
+	Uri             = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-android-apk-download/download/$($nameProp)"
 	UseBasicParsing = $false # Disabled
 	Verbose         = $true
 }
@@ -164,15 +181,16 @@ Expand-Archive @Parameters
 
 Remove-Item -Path "$DownloadsFolder\ReVanced\zulu-jdk-win_x64.zip" -Force
 
-# https://github.com/revanced/revanced-patches
+# https://revanced.app/patches?pkg=com.google.android.youtube
+# https://github.com/ReVanced/revanced-cli/blob/main/docs/1_usage.md
 & "$DownloadsFolder\ReVanced\zulu-jdk-win_x64\zulu*win_x64\bin\java.exe" `
 -jar "$DownloadsFolder\ReVanced\revanced-cli.jar" `
---apk "$DownloadsFolder\ReVanced\youtube.apk" `
---bundle "$DownloadsFolder\ReVanced\revanced-patches.jar" `
+patch "$DownloadsFolder\ReVanced\youtube.apk" `
+--patch-bundle "$DownloadsFolder\ReVanced\revanced-patches.jar" `
 --merge "$DownloadsFolder\ReVanced\revanced-integrations.apk" `
 --exclude always-autorepeat --exclude comments --exclude premium-heading --exclude hide-captions-button --exclude disable-fullscreen-panels `
---clean `
---temp-dir "$DownloadsFolder\ReVanced\Temp" `
+--purge `
+--resource-cache "$DownloadsFolder\ReVanced\Temp" `
 --out "$DownloadsFolder\ReVanced\revanced.apk"
 
 Invoke-Item -Path "$DownloadsFolder\ReVanced"
