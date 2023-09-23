@@ -32,7 +32,6 @@ if (-not (Test-Path -Path "$DownloadsFolder\ReVanced"))
 # Get latest supported YouTube client version via ReVanced JSON
 # It will let us to download always latest YouTube apk supported by ReVanced team
 # https://github.com/revanced/revanced-patches/blob/main/patches.json
-
 $Parameters = @{
 	Uri             = "https://raw.githubusercontent.com/revanced/revanced-patches/main/patches.json"
 	UseBasicParsing = $true
@@ -44,8 +43,8 @@ $LatestSupported = $LatestSupported.replace(".", "-")
 
 # Get unique key to generate direct link
 # https://www.apkmirror.com/apk/google-inc/youtube/
-# We need NON-bundle version
-# We choose an alive link depending on YouTube version. Sometimes with "-2" in URL, sometimes not
+# We need a NON-bundle version
+# We choose an alive link depending on YouTube version. Sometimes with "-2" in URL, sometimes not. Firstly, we check with "-2" in URL
 try
 {
 	# with "-2"
@@ -55,6 +54,8 @@ try
 		Verbose         = $true
 	}
 	$Request = Invoke-Webrequest @Parameters
+
+	$Uri = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-2-android-apk-download/"
 }
 catch [System.Net.WebException]
 {
@@ -65,12 +66,14 @@ catch [System.Net.WebException]
 		Verbose         = $true
 	}
 	$Request = Invoke-Webrequest @Parameters
+
+	$Uri = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-android-apk-download/"
 }
 
 $nameProp = $Request.ParsedHtml.getElementsByClassName("accent_bg btn btn-flat downloadButton") | ForEach-Object -Process {$_.nameProp}
 
 $Parameters = @{
-	Uri             = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-android-apk-download/download/$($nameProp)"
+	Uri             = "$($Uri)/download/$($nameProp)"
 	UseBasicParsing = $false # Disabled
 	Verbose         = $true
 }
