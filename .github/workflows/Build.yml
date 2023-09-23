@@ -49,12 +49,12 @@ jobs:
           # https://github.com/revanced/revanced-patches
           & "$env:ProgramFiles\Zulu\zulu*\bin\java.exe" `
           -jar "Temp\revanced-cli.jar" `
-          --apk "Temp\youtube.apk" `
-          --bundle "Temp\revanced-patches.jar" `
+          patch "Temp\youtube.apk" `
+          --patch-bundle "Temp\revanced-patches.jar" `
           --merge "Temp\revanced-integrations.apk" `
           --exclude comments --exclude premium-heading --exclude hide-captions-button --exclude disable-fullscreen-panels `
-          --clean `
-          --temp-dir "Temp\Temp" `
+          --purge `
+          --resource-cache "Temp\Temp" `
           --out "Temp\revanced.apk"
 
       - name: Creating archive
