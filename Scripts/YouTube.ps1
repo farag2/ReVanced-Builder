@@ -29,7 +29,7 @@ try
 
 	$Uri = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-2-android-apk-download/"
 }
-catch [System.Net.WebException]
+catch
 {
 	# without "-2"
 	$Parameters = @{
