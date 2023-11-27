@@ -41,35 +41,34 @@ $versions = ($JSON | Where-Object -FilterScript {$_.compatiblePackages.name -eq 
 $LatestSupported = $versions | Sort-Object -Descending -Unique | Select-Object -First 1
 $LatestSupported = $LatestSupported.replace(".", "-")
 
-# Get unique key to generate direct link
-# https://www.apkmirror.com/apk/google-inc/youtube/
 # We need a NON-bundle version
-# We choose an alive link depending on YouTube version. Sometimes with "-2" in URL, sometimes not. Firstly, we check with "-2" in URL
-try
-{
-	# with "-2"
-	$Parameters = @{
-		Uri             = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-2-android-apk-download/"
-		UseBasicParsing = $false # Disabled
-		Verbose         = $true
-	}
-	$Request = Invoke-Webrequest @Parameters
-
-	$Uri = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-2-android-apk-download/"
+# We check whether output exists. The link that has the output is what we need then
+# https://www.apkmirror.com/apk/google-inc/youtube/
+$Parameters = @{
+	Uri             = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-android-apk-download/"
+	UseBasicParsing = $false # Disabled
+	Verbose         = $true
 }
-catch [System.Net.WebException]
+$UriParse = (Invoke-Webrequest @Parameters).Links.outerHTML | Where-Object -FilterScript {$_ -like "*YouTube $($LatestSupported.replace("-", ".")) (nodpi)*"}
+if ($UriParse)
 {
-	# without "-2"
-	$Parameters = @{
-		Uri             = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-android-apk-download/"
-		UseBasicParsing = $false # Disabled
-		Verbose         = $true
-	}
 	$Request = Invoke-Webrequest @Parameters
-
 	$Uri = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-android-apk-download/"
 }
 
+$Parameters = @{
+	Uri             = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-2-android-apk-download/"
+	UseBasicParsing = $false # Disabled
+	Verbose         = $true
+}
+$UriParse = (Invoke-Webrequest @Parameters).Links.outerHTML | Where-Object -FilterScript {$_ -like "*YouTube $($LatestSupported.replace("-", ".")) (nodpi)*"}
+if ($UriParse)
+{
+	$Request = Invoke-Webrequest @Parameters
+	$Uri = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-2-android-apk-download/"
+}
+
+# Get unique key to generate direct link
 $nameProp = $Request.ParsedHtml.getElementsByClassName("accent_bg btn btn-flat downloadButton") | ForEach-Object -Process {$_.nameProp}
 
 $Parameters = @{
@@ -198,4 +197,7 @@ patch "$DownloadsFolder\ReVanced\youtube.apk" `
 
 Invoke-Item -Path "$DownloadsFolder\ReVanced"
 
-Write-Warning -Message "Latest available revanced.apk & microg.apk are ready in `"$DownloadsFolder\ReVanced`""
+if (Test-Path -Path "$DownloadsFolder\ReVanced")
+{
+	Write-Warning -Message "Latest available revanced.apk & microg.apk are ready in `"$DownloadsFolder\ReVanced`""
+}
