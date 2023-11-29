@@ -50,6 +50,7 @@ $Parameters = @{
 	Verbose         = $true
 }
 $UriParse = (Invoke-Webrequest @Parameters).Links.outerHTML | Where-Object -FilterScript {$_ -like "*YouTube $($LatestSupported.replace("-", ".")) (nodpi)*"}
+# Check if variable contains a data
 if ($UriParse)
 {
 	$Request = Invoke-Webrequest @Parameters
@@ -62,6 +63,7 @@ $Parameters = @{
 	Verbose         = $true
 }
 $UriParse = (Invoke-Webrequest @Parameters).Links.outerHTML | Where-Object -FilterScript {$_ -like "*YouTube $($LatestSupported.replace("-", ".")) (nodpi)*"}
+# Check if variable contains a data
 if ($UriParse)
 {
 	$Request = Invoke-Webrequest @Parameters
