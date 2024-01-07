@@ -65,4 +65,4 @@ $Parameters = @{
 }
 Invoke-Webrequest @Parameters
 
-echo "LatestSupportedYT=$LatestSupportedYT.replace('-', '.')" >> $env:GITHUB_ENV
+echo "LatestSupportedYT=$($LatestSupportedYT.replace('-', '.'))" >> $env:GITHUB_ENV
