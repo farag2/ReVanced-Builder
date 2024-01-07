@@ -2,8 +2,8 @@
 # It will let us to download always latest YouTube apk supported by ReVanced team
 # https://github.com/revanced/revanced-patches/blob/main/patches.json
 $Parameters = @{
-    Uri             = "https://raw.githubusercontent.com/revanced/revanced-patches/main/patches.json"
-    UseBasicParsing = $true
+	Uri             = "https://raw.githubusercontent.com/revanced/revanced-patches/main/patches.json"
+	UseBasicParsing = $true
 }
 $JSON = Invoke-RestMethod @Parameters
 $versions = ($JSON | Where-Object -FilterScript {$_.compatiblePackages.name -eq "com.google.android.youtube"}).compatiblePackages.versions
@@ -15,13 +15,14 @@ Add-Type -Path $AngleSharpAssemblyPath
 
 # We need a NON-bundle version
 # We check whether output exists. The link that has the output is what we need then
-# https://www.apkmirror.com/apk/google-inc/youtube/try
+# https://www.apkmirror.com/apk/google-inc/youtube/
 $Parameters = @{
 	Uri             = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-android-apk-download/"
 	UseBasicParsing = $false # Disabled
 	Verbose         = $true
 }
-$UriParse = (Invoke-Webrequest @Parameters).Links | Where-Object -FilterScript {($_.innerText -like "Download APK*") -and ($_.innerText -notmatch "Bundle")}
+$UriParse = (Invoke-Webrequest @Parameters).Links | Where-Object -FilterScript {($_.outerHTML -match "Download APK") -and ($_.outerHTML -notmatch "Bundle")}
+
 # Check if variable contains a data
 if ($UriParse)
 {
@@ -34,7 +35,8 @@ $Parameters = @{
 	UseBasicParsing = $false # Disabled
 	Verbose         = $true
 }
-$UriParse = (Invoke-Webrequest @Parameters).Links | Where-Object -FilterScript {($_.innerText -like "Download APK*") -and ($_.innerText -notmatch "Bundle")}
+$UriParse = (Invoke-Webrequest @Parameters).Links | Where-Object -FilterScript {($_.outerHTML -match "Download APK") -and ($_.outerHTML -notmatch "Bundle")}
+
 # Check if variable contains a data
 if ($UriParse)
 {
