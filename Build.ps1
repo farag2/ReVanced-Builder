@@ -49,12 +49,12 @@ $Parameters = @{
 	UseBasicParsing = $false # Disabled
 	Verbose         = $true
 }
-$UriParse = (Invoke-Webrequest @Parameters).Links.outerHTML | Where-Object -FilterScript {$_ -like "*YouTube $($LatestSupported.replace("-", ".")) (nodpi)*"}
+$UriParse = (Invoke-Webrequest @Parameters).Links | Where-Object -FilterScript {($_.innerText -like "Download APK*") -and ($_.innerText -notmatch "Bundle")}
 # Check if variable contains a data
 if ($UriParse)
 {
 	$Request = Invoke-Webrequest @Parameters
-	$Uri = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-android-apk-download/"
+	$Uri     = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-android-apk-download/"
 }
 
 $Parameters = @{
@@ -62,12 +62,12 @@ $Parameters = @{
 	UseBasicParsing = $false # Disabled
 	Verbose         = $true
 }
-$UriParse = (Invoke-Webrequest @Parameters).Links.outerHTML | Where-Object -FilterScript {$_ -like "*YouTube $($LatestSupported.replace("-", ".")) (nodpi)*"}
+$UriParse = (Invoke-Webrequest @Parameters).Links | Where-Object -FilterScript {($_.innerText -like "Download APK*") -and ($_.innerText -notmatch "Bundle")}
 # Check if variable contains a data
 if ($UriParse)
 {
 	$Request = Invoke-Webrequest @Parameters
-	$Uri = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-2-android-apk-download/"
+	$Uri     = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-2-android-apk-download/"
 }
 
 # Get unique key to generate direct link
@@ -78,11 +78,9 @@ $Parameters = @{
 	UseBasicParsing = $false # Disabled
 	Verbose         = $true
 }
-$URL_Part = ((Invoke-Webrequest @Parameters).Links | Where-Object -FilterScript {$_.innerHTML -eq "here"}).href
-# Replace "&amp;" with "&" to make it work
-$URL_Part = $URL_Part.Replace("&amp;", "&")
+$URL_Part = ((Invoke-Webrequest @Parameters).Links | Where-Object -FilterScript {$_.innerHTML -eq "here"}).href.Replace("&amp;", "&")
 
-# Finally, get the real link
+# Get the real link
 $Parameters = @{
 	Uri             = "https://www.apkmirror.com$URL_Part"
 	OutFile         = "$DownloadsFolder\ReVanced\youtube.apk"
@@ -140,13 +138,13 @@ Invoke-RestMethod @Parameters
 
 # https://github.com/TeamVanced/VancedMicroG
 $Parameters = @{
-	Uri             = "https://api.github.com/repos/TeamVanced/VancedMicroG/releases/latest"
+	Uri             = "https://api.github.com/repos/inotia00/VancedMicroG/releases/latest"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
 $Tag = (Invoke-RestMethod @Parameters).tag_name
 $Parameters = @{
-	Uri             = "https://github.com/TeamVanced/VancedMicroG/releases/download/$Tag/microg.apk"
+	Uri             = "https://github.com/inotia00/VancedMicroG/releases/download/$Tag/microg.apk"
 	Outfile         = "$DownloadsFolder\ReVanced\microg.apk"
 	UseBasicParsing = $true
 	Verbose         = $true
@@ -198,8 +196,3 @@ patch "$DownloadsFolder\ReVanced\youtube.apk" `
 --out "$DownloadsFolder\ReVanced\revanced.apk"
 
 Invoke-Item -Path "$DownloadsFolder\ReVanced"
-
-if (Test-Path -Path "$DownloadsFolder\ReVanced")
-{
-	Write-Warning -Message "Latest available revanced.apk & microg.apk are ready in `"$DownloadsFolder\ReVanced`""
-}
