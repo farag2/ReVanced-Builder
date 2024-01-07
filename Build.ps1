@@ -136,7 +136,7 @@ $Parameters = @{
 }
 Invoke-RestMethod @Parameters
 
-# https://github.com/TeamVanced/VancedMicroG
+# https://github.com/inotia00/VancedMicroG
 $Parameters = @{
 	Uri             = "https://api.github.com/repos/inotia00/VancedMicroG/releases/latest"
 	UseBasicParsing = $true
