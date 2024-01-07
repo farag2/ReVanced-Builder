@@ -21,12 +21,12 @@ $Parameters = @{
 	UseBasicParsing = $false # Disabled
 	Verbose         = $true
 }
-$UriParse = (Invoke-Webrequest @Parameters).Links.outerHTML | Where-Object -FilterScript {$_ -like "*YouTube $($LatestSupported.replace("-", ".")) (nodpi)*"}
+$UriParse = (Invoke-Webrequest @Parameters).Links | Where-Object -FilterScript {($_.innerText -like "Download APK*") -and ($_.innerText -notmatch "Bundle")}
 # Check if variable contains a data
 if ($UriParse)
 {
 	$Request = Invoke-Webrequest @Parameters
-	$Uri = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-android-apk-download/"
+	$Uri     = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-android-apk-download/"
 }
 
 $Parameters = @{
@@ -34,12 +34,12 @@ $Parameters = @{
 	UseBasicParsing = $false # Disabled
 	Verbose         = $true
 }
-$UriParse = (Invoke-Webrequest @Parameters).Links.outerHTML | Where-Object -FilterScript {$_ -like "*YouTube $($LatestSupported.replace("-", ".")) (nodpi)*"}
+$UriParse = (Invoke-Webrequest @Parameters).Links | Where-Object -FilterScript {($_.innerText -like "Download APK*") -and ($_.innerText -notmatch "Bundle")}
 # Check if variable contains a data
 if ($UriParse)
 {
 	$Request = Invoke-Webrequest @Parameters
-	$Uri = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-2-android-apk-download/"
+	$Uri     = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-2-android-apk-download/"
 }
 
 $Parsed = (New-Object -TypeName AngleSharp.Html.Parser.HtmlParser).ParseDocument($Request.Content)
@@ -54,7 +54,7 @@ $Request = Invoke-Webrequest @Parameters
 $Parsed = (New-Object -TypeName AngleSharp.Html.Parser.HtmlParser).ParseDocument($Request.Content)
 $Key = ($Parsed.All | Where-Object -FilterScript {$_.InnerHtml -eq "here"}).Search
 
-# Finally, get the real link
+# Get the real link
 $Parameters = @{
 	Uri             = "https://www.apkmirror.com/wp-content/themes/APKMirror/download.php$Key"
 	OutFile         = "Temp\youtube.apk"
