@@ -22,10 +22,9 @@ Invoke-RestMethod @Parameters
 Write-Verbose -Message "Installing Zulu JDK" -Verbose
 
 $Arguments = @(
-	"/i `"Temp\zulu-jdk-win_x64.msi`"",
-	"/quiet",
-	"/qb",
-	"/norestart"
+	"/a `"Tempzulu-jdk-win_x64.msi`"",
+	"TARGETDIR=`"Temp\ReVanced\zulu-jdk-win_x64`""
+	"/qb"
 )
 Start-Process -FilePath "msiexec" -ArgumentList $Arguments -Wait
 
