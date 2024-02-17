@@ -119,11 +119,7 @@ $Parameters = @{
 }
 Invoke-RestMethod @Parameters
 
-# Sometimes older version of zulu-jdk causes conflict, so remove older version before proceeding.
-if (Test-Path -Path "$DownloadsFolder\ReVanced\zulu-jdk-win_x64")
-{
-	Remove-Item -Path "$DownloadsFolder\ReVanced\zulu-jdk-win_x64" -Recurse -Force
-}
+Remove-Item -Path "$DownloadsFolder\ReVanced\zulu-jdk-win_x64" -Recurse -Force -ErrorAction Ignore
 
 # https://app.swaggerhub.com/apis-docs/azul/zulu-download-community/1.0
 $Parameters = @{
@@ -132,26 +128,28 @@ $Parameters = @{
 	Verbose         = $true
 }
 $URL = (Invoke-RestMethod @Parameters).url
+
+# Save zulu-jdk-win_x64.msi as zulu-jdk-win_x64.zip with purpose
 $Parameters = @{
 	Uri             = $URL
-	Outfile         = "$DownloadsFolder\ReVanced\zulu-jdk-win_x64.msi"
+	Outfile         = "$DownloadsFolder\ReVanced\zulu-jdk-win_x64.zip"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
 Invoke-RestMethod @Parameters
 
-$Arguments = @(
-	"/a `"$DownloadsFolder\ReVanced\zulu-jdk-win_x64.msi`"",
-	"TARGETDIR=`"$DownloadsFolder\ReVanced\zulu-jdk-win_x64`""
-	"/qb"
-)
-Start-Process -FilePath "msiexec" -ArgumentList $Arguments -Wait
-
-Remove-Item -Path "$DownloadsFolder\ReVanced\zulu-jdk-win_x64.msi" -Force
+# Expand jdk_windows-x64_bin archive
+$Parameters = @{
+	Path            = "$DownloadsFolder\ReVanced\zulu-jdk-win_x64.zip"
+	DestinationPath = "$DownloadsFolder\ReVanced\zulu-jdk-win_x64"
+	Force           = $true
+	Verbose         = $true
+}
+Expand-Archive @Parameters
 
 # https://revanced.app/patches?pkg=com.google.android.youtube
 # https://github.com/ReVanced/revanced-cli/blob/main/docs/1_usage.md
-& "$DownloadsFolder\ReVanced\zulu-jdk-win_x64\Program Files\Zulu\zulu*\bin\java.exe" `
+& "$DownloadsFolder\ReVanced\zulu-jdk-win_x64\zulu*win_x64\bin\java.exe" `
 -jar "$DownloadsFolder\ReVanced\revanced-cli.jar" `
 patch "$DownloadsFolder\ReVanced\youtube.apk" `
 --patch-bundle "$DownloadsFolder\ReVanced\revanced-patches.jar" `
