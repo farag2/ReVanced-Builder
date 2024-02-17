@@ -132,24 +132,22 @@ $URL = (Invoke-RestMethod @Parameters).url
 # Save zulu-jdk-win_x64.msi as zulu-jdk-win_x64.zip with purpose
 $Parameters = @{
 	Uri             = $URL
-	Outfile         = "$DownloadsFolder\ReVanced\zulu-jdk-win_x64.zip"
+	Outfile         = "$DownloadsFolder\ReVanced\zulu-jdk-win_x64.msi"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
 Invoke-RestMethod @Parameters
 
-# Expand jdk_windows-x64_bin archive
-$Parameters = @{
-	Path            = "$DownloadsFolder\ReVanced\zulu-jdk-win_x64.zip"
-	DestinationPath = "$DownloadsFolder\ReVanced\zulu-jdk-win_x64"
-	Force           = $true
-	Verbose         = $true
-}
-Expand-Archive @Parameters
+$Arguments = @(
+	"/a `"$DownloadsFolder\ReVanced\zulu-jdk-win_x64.msi`""
+	"TARGETDIR=`"D:\$DownloadsFolder\ReVanced\Zulu`""
+	"/qb"
+)
+Start-Process "msiexec" -ArgumentList $Arguments -Wait
 
 # https://revanced.app/patches?pkg=com.google.android.youtube
 # https://github.com/ReVanced/revanced-cli/blob/main/docs/1_usage.md
-& "$DownloadsFolder\ReVanced\zulu-jdk-win_x64\zulu*win_x64\bin\java.exe" `
+& "$DownloadsFolder\ReVanced\Zulu\Program Files\Zulu\zulu*\bin\java.exe" `
 -jar "$DownloadsFolder\ReVanced\revanced-cli.jar" `
 patch "$DownloadsFolder\ReVanced\youtube.apk" `
 --patch-bundle "$DownloadsFolder\ReVanced\revanced-patches.jar" `
