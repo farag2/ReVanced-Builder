@@ -27,6 +27,4 @@ $Parameters = @{
 }
 Invoke-Webrequest @Parameters
 
-(Get-Item -Path "Temp\youtube.apk").Length/1mb
-
 echo "LatestSupportedYT=$($LatestSupportedYT.replace('-', '.'))" >> $env:GITHUB_ENV
