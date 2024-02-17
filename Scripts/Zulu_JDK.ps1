@@ -14,7 +14,7 @@ echo "ZuluTag=$ZuluTag" >> $env:GITHUB_ENV
 # Save zulu-jdk-win_x64.msi as zulu-jdk-win_x64.zip with purpose
 $Parameters = @{
 	Uri             = $URL
-	Outfile         = "$DownloadsFolder\ReVanced\zulu-jdk-win_x64.zip"
+	Outfile         = "Temp\ReVanced\zulu-jdk-win_x64.zip"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
@@ -24,8 +24,8 @@ Write-Verbose -Message "Installing Zulu JDK" -Verbose
 
 # Expand jdk_windows-x64_bin archive
 $Parameters = @{
-	Path            = "$DownloadsFolder\ReVanced\zulu-jdk-win_x64.zip"
-	DestinationPath = "$DownloadsFolder\ReVanced\zulu-jdk-win_x64"
+	Path            = "Temp\ReVanced\zulu-jdk-win_x64.zip"
+	DestinationPath = "Temp\ReVanced\zulu-jdk-win_x64"
 	Force           = $true
 	Verbose         = $true
 }
