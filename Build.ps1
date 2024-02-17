@@ -42,47 +42,16 @@ $LatestSupported = $versions | Sort-Object -Descending -Unique | Select-Object -
 $LatestSupported = $LatestSupported.replace(".", "-")
 
 # We need a NON-bundle version
-# We check whether output exists. The link that has the output is what we need then
-# https://www.apkmirror.com/apk/google-inc/youtube/
+# https://apkpure.net/ru/youtube/com.google.android.youtube/versions
 $Parameters = @{
-	Uri             = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-android-apk-download/"
-	UseBasicParsing = $false # Disabled
+	Uri             = "https://apkpure.net/ru/youtube/com.google.android.youtube/download/$($LatestSupported)"
+	UseBasicParsing = $true
 	Verbose         = $true
 }
-$UriParse = (Invoke-Webrequest @Parameters).Links | Where-Object -FilterScript {($_.innerText -like "Download APK*") -and ($_.innerText -notmatch "Bundle")}
-# Check if variable contains a data
-if ($UriParse)
-{
-	$Request = Invoke-Webrequest @Parameters
-	$Uri     = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-android-apk-download/"
-}
+$DownloadURL = (Invoke-Webrequest @Parameters).Links.href | Where-Object -FilterScript {$_ -match "APK/com.google.android.youtube"} | Select-Object -Index 1
 
 $Parameters = @{
-	Uri             = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-2-android-apk-download/"
-	UseBasicParsing = $false # Disabled
-	Verbose         = $true
-}
-$UriParse = (Invoke-Webrequest @Parameters).Links | Where-Object -FilterScript {($_.innerText -like "Download APK*") -and ($_.innerText -notmatch "Bundle")}
-# Check if variable contains a data
-if ($UriParse)
-{
-	$Request = Invoke-Webrequest @Parameters
-	$Uri     = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-2-android-apk-download/"
-}
-
-# Get unique key to generate direct link
-$nameProp = $Request.ParsedHtml.getElementsByClassName("accent_bg btn btn-flat downloadButton") | ForEach-Object -Process {$_.nameProp}
-
-$Parameters = @{
-	Uri             = "$($Uri)/download/$($nameProp)"
-	UseBasicParsing = $false # Disabled
-	Verbose         = $true
-}
-$URL_Part = ((Invoke-Webrequest @Parameters).Links | Where-Object -FilterScript {$_.innerHTML -eq "here"}).href.Replace("&amp;", "&")
-
-# Get the real link
-$Parameters = @{
-	Uri             = "https://www.apkmirror.com$URL_Part"
+	Uri             = $DownloadURL
 	OutFile         = "$DownloadsFolder\ReVanced\youtube.apk"
 	UseBasicParsing = $true
 	Verbose         = $true
