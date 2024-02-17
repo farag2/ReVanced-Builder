@@ -141,13 +141,13 @@ $Parameters = @{
 Invoke-RestMethod @Parameters
 
 $Arguments = @(
-	"/a `"$DownloadsFolder\zulu-jdk-win_x64.msi`"",
+	"/a `"$DownloadsFolder\ReVanced\zulu-jdk-win_x64.msi`"",
 	"TARGETDIR=`"$DownloadsFolder\ReVanced\zulu-jdk-win_x64`""
 	"/qb"
 )
 Start-Process -FilePath "msiexec" -ArgumentList $Arguments -Wait
 
-Remove-Item -Path "$DownloadsFolder\zulu-jdk-win_x64.msi" -Force
+Remove-Item -Path "$DownloadsFolder\ReVanced\zulu-jdk-win_x64.msi" -Force
 
 # https://revanced.app/patches?pkg=com.google.android.youtube
 # https://github.com/ReVanced/revanced-cli/blob/main/docs/1_usage.md
