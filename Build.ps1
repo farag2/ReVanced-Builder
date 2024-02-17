@@ -146,8 +146,8 @@ $Parameters = @{
 	Verbose         = $true
 }
 Expand-Archive @Parameters
-pause
-#Remove-Item -Path "$DownloadsFolder\ReVanced\zulu-jdk-win_x64.zip" -Force
+
+Remove-Item -Path "$DownloadsFolder\ReVanced\zulu-jdk-win_x64.zip" -Force
 
 # https://revanced.app/patches?pkg=com.google.android.youtube
 # https://github.com/ReVanced/revanced-cli/blob/main/docs/1_usage.md
