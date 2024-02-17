@@ -16,7 +16,6 @@
 #>
 
 #Requires -Version 5.1
-# Doesn't work on PowerShell 7.3 due it doesn't contains IE parser engine. You have to use a 3rd party module to make it work like it's presented in CI/CD config: AngleSharp
 
 # Progress bar can significantly impact cmdlet performance
 # https://github.com/PowerShell/PowerShell/issues/2138
