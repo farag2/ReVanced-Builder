@@ -140,7 +140,7 @@ Invoke-RestMethod @Parameters
 
 $Arguments = @(
 	"/a `"$DownloadsFolder\ReVanced\zulu-jdk-win_x64.msi`""
-	"TARGETDIR=`"D:\$DownloadsFolder\ReVanced\Zulu`""
+	"TARGETDIR=`"$DownloadsFolder\ReVanced\Zulu`""
 	"/qb"
 )
 Start-Process "msiexec" -ArgumentList $Arguments -Wait
