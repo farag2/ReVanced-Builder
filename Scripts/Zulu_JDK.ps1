@@ -20,7 +20,7 @@ $Parameters = @{
 }
 Invoke-RestMethod @Parameters
 
-Write-Verbose -Message "Installing Zulu JDK" -Verbose
+Write-Verbose -Message "Expanding Zulu JDK" -Verbose
 
 # Expand jdk_windows-x64_bin archive
 $Parameters = @{
