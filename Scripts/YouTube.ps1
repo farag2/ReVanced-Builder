@@ -20,7 +20,7 @@ $DownloadURL = (Invoke-Webrequest @Parameters).Links.href | Where-Object -Filter
 
 $Parameters = @{
 	Uri             = $DownloadURL
-	OutFile         = "Temp\youtube.apk"
+	OutFile         = "ReVanced\youtube.apk"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
