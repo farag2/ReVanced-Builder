@@ -15,7 +15,7 @@ jobs:
 
       - name: YouTube
         run: |
-          New-Item -Path Temp -ItemType Directory -Force
+          New-Item -Path ReVanced -ItemType Directory -Force
 
           . Scripts\YouTube.ps1
 
