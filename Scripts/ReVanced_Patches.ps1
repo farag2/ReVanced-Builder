@@ -8,7 +8,7 @@ $Patchesvtag = (Invoke-RestMethod @Parameters).tag_name
 $Patchestag = $Patchesvtag.replace("v", "")
 $Parameters = @{
     Uri             = "https://github.com/revanced/revanced-patches/releases/download/$Patchesvtag/revanced-patches-$Patchestag.jar"
-    Outfile         = "Temp\revanced-patches.jar"
+    Outfile         = "ReVanced\revanced-patches.jar"
     UseBasicParsing = $true
     Verbose         = $true
 }
