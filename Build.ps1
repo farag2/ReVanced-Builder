@@ -67,6 +67,7 @@ $Parameters = @{
 	UseBasicParsing = $true
 	Verbose         = $true
 }
+
 $Tag = (Invoke-RestMethod @Parameters).tag_name
 $Tag2 = $Tag.replace("v", "")
 $Parameters = @{
@@ -83,6 +84,7 @@ $Parameters = @{
 	UseBasicParsing = $true
 	Verbose         = $true
 }
+
 $Tag = (Invoke-RestMethod @Parameters).tag_name
 $Tag2 = $Tag.replace("v", "")
 $Parameters = @{
@@ -100,6 +102,7 @@ $Parameters = @{
 	Verbose         = $true
 }
 $IntegrationsTag = (Invoke-RestMethod @Parameters).tag_name
+
 $Parameters = @{
 	Uri             = "https://github.com/revanced/revanced-integrations/releases/download/$IntegrationsTag/revanced-integrations-$($IntegrationsTag.replace(`"v`", `"`")).apk"
 	Outfile         = "$DownloadsFolder\ReVanced\revanced-integrations.apk"
@@ -115,6 +118,7 @@ $Parameters = @{
 	Verbose         = $true
 }
 $Tag = (Invoke-RestMethod @Parameters).tag_name
+
 $Parameters = @{
 	Uri             = "https://github.com/inotia00/VancedMicroG/releases/download/$Tag/microg.apk"
 	Outfile         = "$DownloadsFolder\ReVanced\microg.apk"
@@ -133,7 +137,6 @@ $Parameters = @{
 }
 $URL = (Invoke-RestMethod @Parameters).url
 
-# Save zulu-jdk-win_x64.msi as zulu-jdk-win_x64.zip with purpose
 $Parameters = @{
 	Uri             = $URL
 	Outfile         = "$DownloadsFolder\ReVanced\zulu-jdk-win_x64.zip"
@@ -142,7 +145,6 @@ $Parameters = @{
 }
 Invoke-RestMethod @Parameters
 
-# Expand jdk_windows-x64_bin archive
 $Parameters = @{
 	Path            = "$DownloadsFolder\ReVanced\zulu-jdk-win_x64.zip"
 	DestinationPath = "$DownloadsFolder\ReVanced\zulu-jdk-win_x64"
