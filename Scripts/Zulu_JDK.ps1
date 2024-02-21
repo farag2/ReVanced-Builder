@@ -13,7 +13,7 @@ echo "ZuluTag=$ZuluTag" >> $env:GITHUB_ENV
 
 $Parameters = @{
     Uri             = $URL
-    Outfile         = "Temp\zulu-jdk-win_x64.msi"
+    Outfile         = "ReVanced\zulu-jdk-win_x64.msi"
     UseBasicParsing = $true
     Verbose         = $true
 }
@@ -22,11 +22,11 @@ Invoke-RestMethod @Parameters
 Write-Verbose -Message "Installing Zulu JDK" -Verbose
 
 $Arguments = @(
-	"/i `"Temp\zulu-jdk-win_x64.msi`"",
+	"/i `"ReVanced\zulu-jdk-win_x64.msi`"",
 	"/quiet",
 	"/qb",
 	"/norestart"
 )
 Start-Process -FilePath "msiexec" -ArgumentList $Arguments -Wait
 
-Remove-Item -Path "Temp\zulu-jdk-win_x64.msi" -Force
+Remove-Item -Path "ReVanced\zulu-jdk-win_x64.msi" -Force
