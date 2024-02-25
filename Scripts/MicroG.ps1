@@ -11,6 +11,6 @@ $Parameters = @{
 	UseBasicParsing = $true
 	Verbose         = $true
 }
-Invoke-RestMethod @Parameter
+Invoke-RestMethod @Parameters
 
 echo "MicroGTag=$MicroGTag" >> $env:GITHUB_ENV
