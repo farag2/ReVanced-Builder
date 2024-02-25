@@ -15,21 +15,21 @@ jobs:
 
       - name: YouTube
         run: |
-          New-Item -Path ReVanced -ItemType Directory -Force
+          New-Item -Path ReVancedTemp -ItemType Directory -Force
 
           . Scripts\YouTube.ps1
 
-      - name: ReVanced CLI
+      - name: ReVancedTemp CLI
         run: |
-          . Scripts\ReVanced_CLI.ps1
+          . Scripts\ReVancedTemp_CLI.ps1
 
-      - name: Downloading ReVanced Patches
+      - name: Downloading ReVancedTemp Patches
         run: |
-          . Scripts\ReVanced_Patches.ps1
+          . Scripts\ReVancedTemp_Patches.ps1
 
-      - name: ReVanced Integrations
+      - name: ReVancedTemp Integrations
         run: |
-          . Scripts\ReVanced_Intergrations.ps1
+          . Scripts\ReVancedTemp_Intergrations.ps1
 
       - name: Vanced MicroG
         run: |
@@ -43,20 +43,20 @@ jobs:
         run: |
           # https://github.com/revanced/revanced-patches
           & "$env:ProgramFiles\Zulu\zulu*\bin\java.exe" `
-          -jar "ReVanced\revanced-cli.jar" `
-          patch "ReVanced\youtube.apk" `
-          --patch-bundle "ReVanced\revanced-patches.jar" `
-          --merge "ReVanced\revanced-integrations.apk" `
+          -jar "ReVancedTemp\revanced-cli.jar" `
+          patch "ReVancedTemp\youtube.apk" `
+          --patch-bundle "ReVancedTemp\revanced-patches.jar" `
+          --merge "ReVancedTemp\revanced-integrations.apk" `
           --exclude comments --exclude premium-heading --exclude hide-captions-button --exclude disable-fullscreen-panels `
           --purge `
-          --resource-cache "ReVanced\Temp" `
-          --out "ReVanced\revanced.apk"
+          --resource-cache "ReVancedTemp\Temp" `
+          --out "ReVancedTemp\revanced.apk"
 
       - name: Creating archive
         run: |
           $Parameters = @{
-              Path             = "ReVanced\revanced.apk", "ReVanced\microg.apk"
-              DestinationPath  = "ReVanced.zip"
+              Path             = "ReVancedTemp\revanced.apk", "ReVancedTemp\microg.apk"
+              DestinationPath  = "ReVancedTemp.zip"
               CompressionLevel = "Fastest"
               Force            = $true
           }
@@ -79,5 +79,5 @@ jobs:
         with:
           name: ${{ env.RELEASE_NAME }}
           token: ${{ github.token }}
-          files: ReVanced.zip
+          files: ReVancedTemp.zip
           body_path: ${{ steps.read_release.outputs.ReleaseBody }}
