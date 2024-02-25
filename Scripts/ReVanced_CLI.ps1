@@ -9,7 +9,7 @@ $CLItag = $CLIvtag.replace("v", "")
 
 $Parameters = @{
 	Uri             = "https://github.com/revanced/revanced-cli/releases/download/$CLIvtag/revanced-cli-$CLItag-all.jar"
-	Outfile         = "ReVanced\revanced-cli.jar"
+	Outfile         = "ReVancedTemp\revanced-cli.jar"
 	Headers         = $Headers
 	UseBasicParsing = $true
 	Verbose         = $true
