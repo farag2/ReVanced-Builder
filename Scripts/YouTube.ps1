@@ -1,5 +1,5 @@
-# Get latest supported YouTube client version via ReVanced JSON
-# It will let us to download always latest YouTube apk supported by ReVanced team
+# Get latest supported YouTube client version via ReVancedTemp JSON
+# It will let us to download always latest YouTube apk supported by ReVancedTemp team
 # https://github.com/revanced/revanced-patches/blob/main/patches.json
 $Parameters = @{
 	Uri             = "https://raw.githubusercontent.com/revanced/revanced-patches/main/patches.json"
@@ -20,7 +20,7 @@ $DownloadURL = (Invoke-Webrequest @Parameters).Links.href | Where-Object -Filter
 
 $Parameters = @{
 	Uri             = $DownloadURL
-	OutFile         = "ReVanced\youtube.apk"
+	OutFile         = "ReVancedTemp\youtube.apk"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
