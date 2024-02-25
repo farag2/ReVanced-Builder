@@ -19,17 +19,17 @@ jobs:
 
           . Scripts\YouTube.ps1
 
-      - name: ReVancedTemp CLI
+      - name: ReVanced CLI
         run: |
-          . Scripts\ReVancedTemp_CLI.ps1
+          . Scripts\ReVanced_CLI.ps1
 
       - name: Downloading ReVancedTemp Patches
         run: |
-          . Scripts\ReVancedTemp_Patches.ps1
+          . Scripts\ReVanced_Patches.ps1
 
-      - name: ReVancedTemp Integrations
+      - name: ReVanced Integrations
         run: |
-          . Scripts\ReVancedTemp_Intergrations.ps1
+          . Scripts\ReVanced_Intergrations.ps1
 
       - name: Vanced MicroG
         run: |
