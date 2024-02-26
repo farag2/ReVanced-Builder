@@ -1,5 +1,4 @@
 # https://github.com/inotia00/VancedMicroG
-# https://github.com/TeamVanced/VancedMicroG/releases/download/v0.2.24.220220-220220001/microg.apk
 $Parameters = @{
 	Uri             = "https://api.github.com/repos/inotia00/VancedMicroG/releases/latest"
 	UseBasicParsing = $true
