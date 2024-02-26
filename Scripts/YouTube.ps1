@@ -12,7 +12,7 @@ $LatestSupported = $versions | Sort-Object -Descending -Unique | Select-Object -
 # We need a NON-bundle version
 # https://apkpure.net/ru/youtube/com.google.android.youtube/versions
 $Parameters = @{
-	Uri             = "https://apkpure.net/ru/youtube/com.google.android.youtube/download/$($LatestSupported)"
+	Uri             = "https://apkpure.net/youtube/com.google.android.youtube/download/$($LatestSupported)"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
