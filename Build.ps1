@@ -162,7 +162,8 @@ Remove-Item -Path "$DownloadsFolder\ReVanced\zulu-jdk-win_x64.zip" -Force
 patch "$DownloadsFolder\ReVanced\youtube.apk" `
 --patch-bundle "$DownloadsFolder\ReVanced\revanced-patches.jar" `
 --merge "$DownloadsFolder\ReVanced\revanced-integrations.apk" `
---exclude always-autorepeat --exclude comments --exclude premium-heading --exclude hide-captions-button --exclude disable-fullscreen-panels `
+# --exclude always-autorepeat --exclude comments --exclude premium-heading --exclude hide-captions-button --exclude disable-fullscreen-panels `
+--exclude always-autorepeat --exclude comments --exclude hide-captions-button `
 --purge `
 --resource-cache "$DownloadsFolder\ReVanced\Temp" `
 --out "$DownloadsFolder\ReVanced\revanced.apk"
