@@ -1,6 +1,7 @@
 # https://app.swaggerhub.com/apis-docs/azul/zulu-download-community/1.0
+# https://api.azul.com/zulu/download/community/v1.0/bundles/latest/?jdk_version=21&bundle_type=jdk&javafx=false&ext=msi&os=windows&arch=x86&hw_bitness=64
 $Parameters = @{
-	Uri             = "https://api.azul.com/zulu/download/community/v1.0/bundles/latest/?jdk_version=&bundle_type=jdk&javafx=false&ext=msi&os=windows&arch=x86&hw_bitness=64"
+	Uri             = "https://api.azul.com/zulu/download/community/v1.0/bundles/latest/?jdk_version=17&bundle_type=jdk&javafx=false&ext=msi&os=windows&arch=x86&hw_bitness=64"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
