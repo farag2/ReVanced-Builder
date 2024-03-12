@@ -55,7 +55,7 @@ jobs:
         run: |
           $Parameters = @{
               Path             = "ReVancedTemp\revanced.apk", "ReVancedTemp\microg.apk"
-              DestinationPath  = "ReVancedTemp.zip"
+              DestinationPath  = "ReVanced.zip"
               CompressionLevel = "Fastest"
               Force            = $true
           }
