@@ -49,7 +49,6 @@ jobs:
           --merge "ReVancedTemp\revanced-integrations.apk" `
           --exclude comments --exclude premium-heading --exclude hide-captions-button --exclude disable-fullscreen-panels `
           --purge `
-          --resource-cache "ReVancedTemp\Temp" `
           --out "ReVancedTemp\revanced.apk"
 
       - name: Creating archive
