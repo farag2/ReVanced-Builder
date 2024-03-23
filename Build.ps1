@@ -145,14 +145,6 @@ $Parameters = @{
 }
 Invoke-RestMethod @Parameters
 
-$Parameters = @{
-	Path            = "$DownloadsFolder\ReVanced\zulu-jdk-win_x64.zip"
-	DestinationPath = "$DownloadsFolder\ReVanced\zulu-jdk-win_x64"
-	Force           = $true
-	Verbose         = $true
-}
-Expand-Archive @Parameters
-
 $Arguments = @(
 	"/i `"$DownloadsFolder\ReVanced\zulu-jdk-win_x64.msi`"",
 	"/quiet",
