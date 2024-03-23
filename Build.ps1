@@ -139,7 +139,7 @@ $URL = (Invoke-RestMethod @Parameters).url
 
 $Parameters = @{
 	Uri             = $URL
-	Outfile         = "$DownloadsFolder\ReVanced\zulu-jdk-win_x64.zip"
+	Outfile         = "$DownloadsFolder\ReVanced\zulu-jdk-win_x64.msi"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
@@ -153,7 +153,15 @@ $Parameters = @{
 }
 Expand-Archive @Parameters
 
-Remove-Item -Path "$DownloadsFolder\ReVanced\zulu-jdk-win_x64.zip" -Force
+$Arguments = @(
+	"/i `"$DownloadsFolder\ReVanced\zulu-jdk-win_x64.msi`"",
+	"/quiet",
+	"/qb",
+	"/norestart"
+)
+Start-Process -FilePath "msiexec" -ArgumentList $Arguments -Wait
+
+Remove-Item -Path "$DownloadsFolder\ReVanced\zulu-jdk-win_x64.msi" -Force
 
 # https://revanced.app/patches?pkg=com.google.android.youtube
 # https://github.com/ReVanced/revanced-cli/blob/main/docs/1_usage.md
