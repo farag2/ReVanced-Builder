@@ -145,26 +145,25 @@ $Parameters = @{
 }
 Invoke-RestMethod @Parameters
 
+# Extract zulu-jdk-win_x64.msi to zulu-jdk-win_x64 folder
 $Arguments = @(
-	"/i `"$DownloadsFolder\ReVanced\zulu-jdk-win_x64.msi`"",
-	"/quiet",
-	"/qb",
-	"/norestart"
+	"/a `"$DownloadsFolder\ReVanced\zulu-jdk-win_x64.msi`"",
+	"TARGETDIR=`"$DownloadsFolder\ReVanced\zulu-jdk-win_x64`""
+	"/qb"
 )
-Start-Process -FilePath "msiexec" -ArgumentList $Arguments -Wait
+Start-Process "msiexec" -ArgumentList $Arguments -Wait
 
 Remove-Item -Path "$DownloadsFolder\ReVanced\zulu-jdk-win_x64.msi" -Force
 
 # https://revanced.app/patches?pkg=com.google.android.youtube
 # https://github.com/ReVanced/revanced-cli/blob/main/docs/1_usage.md
-& "$DownloadsFolder\ReVanced\zulu-jdk-win_x64\zulu*\bin\java.exe" `
+& "$DownloadsFolder\ReVanced\zulu-jdk-win_x64\Program Files\Zulu\zulu*\bin\java.exe" `
 -jar "$DownloadsFolder\ReVanced\revanced-cli.jar" `
 patch "$DownloadsFolder\ReVanced\youtube.apk" `
 --patch-bundle "$DownloadsFolder\ReVanced\revanced-patches.jar" `
 --merge "$DownloadsFolder\ReVanced\revanced-integrations.apk" `
 --exclude comments --exclude premium-heading --exclude hide-captions-button --exclude disable-fullscreen-panels `
 --purge `
---resource-cache "$DownloadsFolder\ReVanced\Temp" `
 --out "$DownloadsFolder\ReVanced\revanced.apk"
 
 Invoke-Item -Path "$DownloadsFolder\ReVanced"
