@@ -8,6 +8,8 @@ $Parameters = @{
 $JSON = Invoke-RestMethod @Parameters
 $versions = ($JSON | Where-Object -FilterScript {$_.compatiblePackages.name -eq "com.google.android.youtube"}).compatiblePackages.versions
 $LatestSupported = $versions | Sort-Object -Descending -Unique | Select-Object -First 1
+# Temp workaround
+$LatestSupported = "19.09.37"
 
 # We need a NON-bundle version
 # https://apkpure.net/ru/youtube/com.google.android.youtube/versions
