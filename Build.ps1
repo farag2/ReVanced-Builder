@@ -113,7 +113,7 @@ Invoke-RestMethod @Parameters
 
 # https://github.com/ReVanced/GmsCore
 $Parameters = @{
-	Uri             = "https://api.github.com/repos/inotia00/VancedMicroG/releases/latest"
+	Uri             = "https://api.github.com/repos/ReVanced/GmsCore/releases/latest"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
