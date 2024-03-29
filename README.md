@@ -15,10 +15,10 @@ Build ReVanced package (.apk) easily than ever using latest ReVanced patches and
   * hide-captions-button
   * disable-fullscreen-panels
 
-* The script downloads latest available YouTube package (having parsed [JSON](https://github.com/revanced/revanced-patches/blob/main/patches.json)) supported by ReVanced Team from <https://apkpure.net> and all dependencies and build package using [Zulu JDK](https://www.azul.com/downloads/?package=jdk);
+* The script downloads latest available YouTube package (having parsed [JSON](https://api.revanced.app/v2/patches/latest)) supported by ReVanced Team from <https://apkpure.net> and all dependencies and build package using [Zulu JDK](https://www.azul.com/downloads/?package=jdk);
 * Script installs no apps—everything will be held in your `Downloads folder\ReVanced`;
 * After compiling you get `revanced.apk` & `microg.apk` ready to be installed;
-* Release notes are generated dynamically using the [Release.md](https://github.com/far…r/blob/main/Release.md) template.
+* Release notes are generated dynamically using the [Release.md](https://github.com/farag2/ReVanced_Builder/blob/main/ReleaseNotesTemplate.md) template.
 
 ### By using CI/CD
 
@@ -35,9 +35,7 @@ Trigger the [`Build`](https://github.com/farag2/ReVanced_Builder/actions/workflo
 ## Requirements if you compile locally
 
 * Windows 10 x64 or Windows 11
-* Windows PowerShell 5.1
-  * PowerShell 7 won't work due to it doesn't contain Trident HTML parser, so I have to use a 3rd party parser [AngleSharp](https://github.com/AngleSharp/AngleSharp);
-  * If you still want it, [get](https://github.com/farag2/ReVanced_Builder/blob/main/Scripts/YouTube.ps1#L13) code from Actions (it's run in PowerShell 7).
+* Windows PowerShell 5.1/PowerShell 7.
 
 ## Links
 
