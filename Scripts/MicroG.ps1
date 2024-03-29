@@ -5,6 +5,7 @@ $Parameters = @{
 	Verbose         = $true
 }
 $URL = (Invoke-RestMethod @Parameters).assets.browser_download_url
+$MicroGTag = (Invoke-RestMethod @Parameters).tag_name
 
 $Parameters = @{
 	Uri             = $URL
