@@ -5,7 +5,7 @@
 	  * ReVanced CLI;
 	  * ReVanced Patches;
 	  * ReVanced Integrations;
-	  * microG GmsCore;
+	  * ReVanced microG GmsCore;
 	  * Azul Zulu.
 
 	.NOTES
