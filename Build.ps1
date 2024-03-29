@@ -33,16 +33,14 @@ if (-not (Test-Path -Path "$DownloadsFolder\ReVanced"))
 	New-Item -Path "$DownloadsFolder\ReVanced" -ItemType Directory -Force
 }
 
-# Get latest supported YouTube client version via ReVanced JSON
-# It will let us to download always latest YouTube apk supported by ReVanced team
-# https://github.com/revanced/revanced-patches/blob/main/patches.json
+# Get the latest supported YouTube version to patch
+# https://api.revanced.app/docs/swagger
 $Parameters = @{
-	Uri             = "https://raw.githubusercontent.com/revanced/revanced-patches/main/patches.json"
+	Uri             = "https://api.revanced.app/v2/patches/latest"
 	UseBasicParsing = $true
+	Verbose         = $true
 }
-$JSON = Invoke-RestMethod @Parameters
-$versions = ($JSON | Where-Object -FilterScript {$_.compatiblePackages.name -eq "com.google.android.youtube"}).compatiblePackages.versions
-$LatestSupported = $versions | Sort-Object -Descending -Unique | Select-Object -First 1
+$LatestSupported = ((Invoke-RestMethod @Parameters).patches | Where-Object -FilterScript {$_.name -eq "Video ads"}).compatiblePackages.versions | Sort-Object -Descending -Unique | Select-Object -First 1
 
 # We need a NON-bundle version
 # https://apkpure.net/ru/youtube/com.google.android.youtube/versions
