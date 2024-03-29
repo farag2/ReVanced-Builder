@@ -1,12 +1,13 @@
-# https://github.com/inotia00/VancedMicroG
+# https://github.com/ReVanced/GmsCore
 $Parameters = @{
-	Uri             = "https://api.github.com/repos/inotia00/VancedMicroG/releases/latest"
+	Uri             = "https://api.github.com/repos/ReVanced/GmsCore/releases/latest"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
-$MicroGTag = (Invoke-RestMethod @Parameters).tag_name
+$URL = (Invoke-RestMethod @Parameters).assets.browser_download_url
+
 $Parameters = @{
-	Uri             = "https://github.com/inotia00/VancedMicroG/releases/download/$MicroGTag/microg.apk"
+	Uri             = $URL
 	Outfile         = "ReVancedTemp\microg.apk"
 	UseBasicParsing = $true
 	Verbose         = $true
