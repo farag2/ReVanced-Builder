@@ -4,7 +4,8 @@ $Parameters = @{
 	UseBasicParsing = $true
 	Verbose         = $true
 }
-$URL = (Invoke-RestMethod @Parameters).assets.browser_download_url
+# Default apk
+$URL = (Invoke-RestMethod @Parameters).assets.browser_download_url | Where-Object -FilterScript {$_ -notmatch "hw"}
 $MicroGTag = (Invoke-RestMethod @Parameters).tag_name
 
 $Parameters = @{
