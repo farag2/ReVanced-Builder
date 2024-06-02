@@ -115,7 +115,7 @@ $Parameters = @{
 	UseBasicParsing = $true
 	Verbose         = $true
 }
-$URL = (Invoke-RestMethod @Parameters).assets.browser_download_url
+$URL = (Invoke-RestMethod @Parameters).assets.browser_download_url | Where-Object -FilterScript {$_ -notmatch "hw"}
 
 $Parameters = @{
 	Uri             = $URL
