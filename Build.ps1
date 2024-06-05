@@ -1,12 +1,12 @@
 <#
 	.SYNOPSIS
 	Build ReVanced app using latest components:
-	  * YouTube (latest supported);
-	  * ReVanced CLI;
-	  * ReVanced Patches;
-	  * ReVanced Integrations;
-	  * ReVanced microG GmsCore;
-	  * Azul Zulu.
+	YouTube (latest supported);
+	ReVanced CLI;
+	ReVanced Patches;
+	ReVanced Integrations;
+	ReVanced microG GmsCore;
+	Azul Zulu.
 
 	.NOTES
 	After compiling, microg.apk and compiled revanced.apk will be located in "Downloads folder\ReVanced"
@@ -115,11 +115,24 @@ $Parameters = @{
 	UseBasicParsing = $true
 	Verbose         = $true
 }
-$URL = (Invoke-RestMethod @Parameters).assets.browser_download_url | Where-Object -FilterScript {$_ -notmatch "hw"}
+# Default microg.apk
+$URL_Default = (Invoke-RestMethod @Parameters).assets.browser_download_url | Where-Object -FilterScript {$_ -notmatch "hw"}
+# microg.apk for Huawei, Xiaomi
+$URL_Vendors = (Invoke-RestMethod @Parameters).assets.browser_download_url | Where-Object -FilterScript {$_ -match "hw"}
 
+# Default microg.apk
 $Parameters = @{
-	Uri             = $URL
+	Uri             = $URL_Default
 	Outfile         = "$DownloadsFolder\ReVanced\microg.apk"
+	UseBasicParsing = $true
+	Verbose         = $true
+}
+Invoke-RestMethod @Parameters
+
+# microg.apk for Huawei, Xiaomi
+$Parameters = @{
+	Uri             = $URL_Vendors
+	Outfile         = "$DownloadsFolder\ReVanced\microg_for_huawei_xiaomi.apk"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
