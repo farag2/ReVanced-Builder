@@ -35,9 +35,6 @@ jobs:
           }
           $ZIP.Dispose()
 
-          # Load AngleSharp
-          Add-Type -Path "AngleSharp\AngleSharp.dll"
-
       - name: YouTube
         run: |
           . Scripts\YouTube.ps1
