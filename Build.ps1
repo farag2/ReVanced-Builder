@@ -206,3 +206,15 @@ patch "$DownloadsFolder\ReVanced\youtube.apk" `
 --out "$DownloadsFolder\ReVanced\revanced.apk"
 
 Invoke-Item -Path "$DownloadsFolder\ReVanced"
+
+$Files = @(
+	"$DownloadsFolder\ReVanced\revanced-temporary-files",
+	"$DownloadsFolder\ReVanced\zulu-jdk-win_x64",
+	"$DownloadsFolder\ReVanced\revanced.keystore",
+	"$DownloadsFolder\ReVanced\revanced-cli.jar",
+	"$DownloadsFolder\ReVanced\revanced-integrations.apk",
+	"$DownloadsFolder\ReVanced\revanced-options.json",
+	"$DownloadsFolder\ReVanced\revanced-patches.jar",
+	"$DownloadsFolder\ReVanced\youtube.apk"
+)
+Remove-Item -Path $Files -Recurse -Force
