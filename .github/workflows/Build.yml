@@ -20,7 +20,7 @@ jobs:
           # https://www.nuget.org/packages/AngleSharp/
           $Parameters = @{
               Uri             = "https://www.nuget.org/api/v2/package/AngleSharp"
-              OutFile         = "AngleSharp\anglesharp.nupkg"
+              OutFile         = "anglesharp.nupkg"
               UseBasicParsing = $true
               Verbose         = $true
           }
@@ -29,9 +29,9 @@ jobs:
           Add-Type -Assembly System.IO.Compression.FileSystem
 
           Add-Type -Assembly System.IO.Compression.FileSystem
-          $ZIP = [IO.Compression.ZipFile]::OpenRead("AngleSharp\anglesharp.nupkg")
+          $ZIP = [IO.Compression.ZipFile]::OpenRead("anglesharp.nupkg")
           $ZIP.Entries| Where-Object -FilterScript {($_.FullName -eq "lib/net8.0/AngleSharp.xml") -or ($_.FullName -eq "lib/net8.0/AngleSharp.dll")} | ForEach-Object -Process {
-              [IO.Compression.ZipFileExtensions]::ExtractToFile($_, "AngleSharp\$($_.Name)", $true)
+              [IO.Compression.ZipFileExtensions]::ExtractToFile($_, "$($_.Name)", $true)
           }
           $ZIP.Dispose()
 
