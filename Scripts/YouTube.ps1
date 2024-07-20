@@ -5,9 +5,9 @@ $Parameters = @{
 	UseBasicParsing = $true
 	Verbose         = $true
 }
-$LatestSupported = ((Invoke-RestMethod @Parameters).patches | Where-Object -FilterScript {$_.name -eq "Video ads"}).compatiblePackages.versions | Sort-Object -Descending -Unique | Select-Object -First 1
+$LatestSupportedYT = ((Invoke-RestMethod @Parameters).patches | Where-Object -FilterScript {$_.name -eq "Video ads"}).compatiblePackages.versions | Sort-Object -Descending -Unique | Select-Object -First 1
 
-$LatestSupported = $LatestSupported.Replace(".", "-")
+$LatestSupported = $LatestSupportedYT.Replace(".", "-")
 
 # We need a NON-bundle version
 # https://www.apkmirror.com/apk/google-inc/youtube/
