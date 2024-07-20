@@ -9,7 +9,7 @@ $Patchestag = $Patchesvtag.replace("v", "")
 
 $Parameters = @{
 	Uri             = "https://github.com/revanced/revanced-patches/releases/download/$Patchesvtag/revanced-patches-$Patchestag.jar"
-	Outfile         = "ReVancedTemp\revanced-patches.jar"
+	Outfile         = "ReVanced_Builder\revanced-patches.jar"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
