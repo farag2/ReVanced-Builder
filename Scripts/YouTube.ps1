@@ -25,6 +25,9 @@ $Parameters = @{
 }
 $Request2 = Invoke-Webrequest @Parameters
 
+[System.AppDomain]::CurrentDomain.GetAssemblies()
+[System.AppDomain]::CurrentDomain.GetAssemblies() | Where-Object -FilterScript {$_.Location -match "Angle"}
+
 @($Request, $Request2) | ForEach-Object -Process {
 	$RequestVariable = $_
 
