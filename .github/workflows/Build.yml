@@ -15,7 +15,7 @@ jobs:
 
       - name: AngleSharp
         run: |
-          New-Item -Path AngleSharp -ItemType Directory -Force
+          New-Item -Path ReVanced_Builder -ItemType Directory -Force
 
           # https://www.nuget.org/packages/AngleSharp/
           $Parameters = @{
