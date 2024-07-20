@@ -25,6 +25,9 @@ $Parameters = @{
 }
 $Request2 = Invoke-Webrequest @Parameters
 
+# Load AngleSharp
+Add-Type -Path "AngleSharp\AngleSharp.dll"
+	  
 [System.AppDomain]::CurrentDomain.GetAssemblies()
 [System.AppDomain]::CurrentDomain.GetAssemblies() | Where-Object -FilterScript {$_.Location -match "Angle"}
 
