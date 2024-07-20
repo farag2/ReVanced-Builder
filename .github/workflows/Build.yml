@@ -13,17 +13,40 @@ jobs:
     steps:
       - uses: actions/checkout@main
 
+      - name: AngleSharp
+        run: |
+          New-Item -Path AngleSharp -ItemType Directory -Force
+
+          # https://www.nuget.org/packages/AngleSharp/
+          $Parameters = @{
+              Uri             = "https://www.nuget.org/api/v2/package/AngleSharp"
+              OutFile         = "AngleSharp\anglesharp.nupkg"
+              UseBasicParsing = $true
+              Verbose         = $true
+          }
+          Invoke-Webrequest @Parameters
+
+          Add-Type -Assembly System.IO.Compression.FileSystem
+
+          Add-Type -Assembly System.IO.Compression.FileSystem
+          $ZIP = [IO.Compression.ZipFile]::OpenRead("AngleSharp\anglesharp.nupkg")
+          $ZIP.Entries| Where-Object -FilterScript {($_.FullName -eq "lib/net8.0/AngleSharp.xml") -or ($_.FullName -eq "lib/net8.0/AngleSharp.dll")} | ForEach-Object -Process {
+              [IO.Compression.ZipFileExtensions]::ExtractToFile($_, "AngleSharp\$($_.Name)", $true)
+          }
+          $ZIP.Dispose()
+
+          # Load AngleSharp
+          Add-Type -Path "AngleSharp\AngleSharp.dll"
+
       - name: YouTube
         run: |
-          New-Item -Path ReVancedTemp -ItemType Directory -Force
-
           . Scripts\YouTube.ps1
 
       - name: ReVanced CLI
         run: |
           . Scripts\ReVanced_CLI.ps1
 
-      - name: Downloading ReVancedTemp Patches
+      - name: Downloading ReVanced Patches
         run: |
           . Scripts\ReVanced_Patches.ps1
 
@@ -43,18 +66,18 @@ jobs:
         run: |
           # https://github.com/revanced/revanced-patches
           & "$env:ProgramFiles\Zulu\zulu*\bin\java.exe" `
-          -jar "ReVancedTemp\revanced-cli.jar" `
-          patch "ReVancedTemp\youtube.apk" `
-          --patch-bundle "ReVancedTemp\revanced-patches.jar" `
-          --merge "ReVancedTemp\revanced-integrations.apk" `
+          -jar "ReVanced_Builder\revanced-cli.jar" `
+          patch "ReVanced_Builder\youtube.apk" `
+          --patch-bundle "ReVanced_Builder\revanced-patches.jar" `
+          --merge "ReVanced_Builder\revanced-integrations.apk" `
           --exclude comments --exclude premium-heading --exclude hide-captions-button --exclude disable-fullscreen-panels `
           --purge `
-          --out "ReVancedTemp\revanced.apk"
+          --out "ReVanced_Builder\revanced.apk"
 
       - name: Creating archive
         run: |
           $Parameters = @{
-              Path             = "ReVancedTemp\revanced.apk", "ReVancedTemp\microg.apk"
+              Path             = "ReVanced_Builder\revanced.apk", "ReVanced_Builder\microg.apk"
               DestinationPath  = "ReVanced.zip"
               CompressionLevel = "Fastest"
               Force            = $true
