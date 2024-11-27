@@ -44,6 +44,8 @@ $LatestSupported = ((Invoke-RestMethod @Parameters).patches | Where-Object -Filt
 
 $LatestSupported = $LatestSupported.Replace(".", "-")
 
+Write-Verbose -Message "Downloading the latest supported YouTube apk" -Verbose
+
 # We need a NON-bundle version
 # https://www.apkmirror.com/apk/google-inc/youtube/
 $Parameters = @{
@@ -87,6 +89,8 @@ $Parameters = @{
 }
 Invoke-Webrequest @Parameters
 
+Write-Verbose -Message "Downloading ReVanced cli" -Verbose
+
 # https://github.com/revanced/revanced-cli
 $Parameters = @{
 	Uri             = "https://api.github.com/repos/revanced/revanced-cli/releases/latest"
@@ -104,6 +108,8 @@ $Parameters = @{
 }
 Invoke-RestMethod @Parameters
 
+Write-Verbose -Message "Downloading ReVanced patches" -Verbose
+
 # https://github.com/revanced/revanced-patches
 $Parameters = @{
 	Uri             = "https://api.github.com/repos/revanced/revanced-patches/releases/latest"
@@ -111,31 +117,18 @@ $Parameters = @{
 	Verbose         = $true
 }
 
-$Tag = (Invoke-RestMethod @Parameters).tag_name
-$Tag2 = $Tag.replace("v", "")
+$Patchesvtag = (Invoke-RestMethod @Parameters).tag_name
+$Patchestag = $Patchesvtag.replace("v", "")
+
 $Parameters = @{
-	Uri             = "https://github.com/revanced/revanced-patches/releases/download/$Tag/revanced-patches-$Tag2.jar"
-	Outfile         = "$DownloadsFolder\ReVanced\revanced-patches.jar"
+	Uri             = "https://github.com/revanced/revanced-patches/releases/download/$Patchesvtag/patches-$Patchestag.rvp"
+	Outfile         = "$DownloadsFolder\ReVanced\revanced-patches.rvp"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
 Invoke-RestMethod @Parameters
 
-# https://github.com/revanced/revanced-integrations
-$Parameters = @{
-	Uri             = "https://api.github.com/repos/revanced/revanced-integrations/releases/latest"
-	UseBasicParsing = $true
-	Verbose         = $true
-}
-$IntegrationsTag = (Invoke-RestMethod @Parameters).tag_name
-
-$Parameters = @{
-	Uri             = "https://github.com/revanced/revanced-integrations/releases/download/$IntegrationsTag/revanced-integrations-$($IntegrationsTag.replace(`"v`", `"`")).apk"
-	Outfile         = "$DownloadsFolder\ReVanced\revanced-integrations.apk"
-	UseBasicParsing = $true
-	Verbose         = $true
-}
-Invoke-RestMethod @Parameters
+Write-Verbose -Message "Downloading ReVanced GmsCore" -Verbose
 
 # https://github.com/ReVanced/GmsCore
 $Parameters = @{
@@ -168,6 +161,8 @@ Invoke-RestMethod @Parameters
 
 Remove-Item -Path "$DownloadsFolder\ReVanced\zulu-jdk-win_x64" -Recurse -Force -ErrorAction Ignore
 
+Write-Verbose -Message "Downloading Azul Zulu" -Verbose
+
 # https://app.swaggerhub.com/apis-docs/azul/zulu-download-community/1.0
 $Parameters = @{
 	Uri             = "https://api.azul.com/zulu/download/community/v1.0/bundles/latest/?jdk_version=21&bundle_type=jdk&javafx=false&ext=msi&os=windows&arch=x86&hw_bitness=64"
@@ -195,13 +190,11 @@ Start-Process "msiexec" -ArgumentList $Arguments -Wait
 Remove-Item -Path "$DownloadsFolder\ReVanced\zulu-jdk-win_x64.msi" -Force
 
 # https://revanced.app/patches?pkg=com.google.android.youtube
-# https://github.com/ReVanced/revanced-cli/blob/main/docs/1_usage.md
+# https://github.com/ReVanced/revanced-cli/tree/main/docs
 & "$DownloadsFolder\ReVanced\zulu-jdk-win_x64\Program Files\Zulu\zulu*\bin\java.exe" `
 -jar "$DownloadsFolder\ReVanced\revanced-cli.jar" `
 patch "$DownloadsFolder\ReVanced\youtube.apk" `
---patch-bundle "$DownloadsFolder\ReVanced\revanced-patches.jar" `
---merge "$DownloadsFolder\ReVanced\revanced-integrations.apk" `
---exclude comments --exclude premium-heading --exclude hide-captions-button --exclude disable-fullscreen-panels `
+--patches "$DownloadsFolder\ReVanced\revanced-patches.rvp" `
 --purge `
 --out "$DownloadsFolder\ReVanced\revanced.apk"
 
@@ -212,9 +205,8 @@ $Files = @(
 	"$DownloadsFolder\ReVanced\zulu-jdk-win_x64",
 	"$DownloadsFolder\ReVanced\revanced.keystore",
 	"$DownloadsFolder\ReVanced\revanced-cli.jar",
-	"$DownloadsFolder\ReVanced\revanced-integrations.apk",
 	"$DownloadsFolder\ReVanced\revanced-options.json",
-	"$DownloadsFolder\ReVanced\revanced-patches.jar",
+	"$DownloadsFolder\ReVanced\revanced-patches.rvp",
 	"$DownloadsFolder\ReVanced\youtube.apk"
 )
 Remove-Item -Path $Files -Recurse -Force
