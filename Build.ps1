@@ -205,7 +205,6 @@ $Files = @(
 	"$DownloadsFolder\ReVanced\zulu-jdk-win_x64",
 	"$DownloadsFolder\ReVanced\revanced.keystore",
 	"$DownloadsFolder\ReVanced\revanced-cli.jar",
-	"$DownloadsFolder\ReVanced\revanced-options.json",
 	"$DownloadsFolder\ReVanced\revanced-patches.rvp",
 	"$DownloadsFolder\ReVanced\youtube.apk"
 )
