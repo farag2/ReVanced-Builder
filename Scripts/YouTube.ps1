@@ -5,9 +5,10 @@ $Parameters = @{
 	UseBasicParsing = $true
 	Verbose         = $true
 }
-$LatestSupportedYT = ((Invoke-RestMethod @Parameters).patches | Where-Object -FilterScript {$_.name -eq "Video ads"}).compatiblePackages.versions | Sort-Object -Descending -Unique | Select-Object -First 1
-
-$LatestSupported = $LatestSupportedYT.Replace(".", "-")
+$JSON = (Invoke-Webrequest @Parameters).Content | ConvertFrom-Json
+$versions = ($JSON | Where-Object -FilterScript {$_.name -eq "Video ads"})
+$LatestSupported = $versions.compatiblePackages."com.google.android.youtube" | Sort-Object -Descending -Unique | Select-Object -First 1
+$LatestSupported = $LatestSupported.Replace(".", "-")
 
 # We need a NON-bundle version
 # https://www.apkmirror.com/apk/google-inc/youtube/
