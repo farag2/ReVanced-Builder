@@ -34,14 +34,15 @@ if (-not (Test-Path -Path "$DownloadsFolder\ReVanced"))
 }
 
 # Get the latest supported YouTube version to patch
-# https://api.revanced.app/docs/swagger
+# https://api.revanced.app
 $Parameters = @{
-	Uri             = "https://api.revanced.app/v2/patches/latest"
+	Uri             = "https://api.revanced.app/v4/patches/list"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
-$LatestSupported = ((Invoke-RestMethod @Parameters).patches | Where-Object -FilterScript {$_.name -eq "Video ads"}).compatiblePackages.versions | Sort-Object -Descending -Unique | Select-Object -First 1
-
+$JSON = (Invoke-Webrequest @Parameters).Content | ConvertFrom-Json
+$versions = ($JSON | Where-Object -FilterScript {$_.name -eq "Video ads"})
+$LatestSupported = $versions.compatiblePackages.'com.google.android.youtube' | Sort-Object -Descending -Unique | Select-Object -First 1
 $LatestSupported = $LatestSupported.Replace(".", "-")
 
 Write-Verbose -Message "Downloading the latest supported YouTube apk" -Verbose
