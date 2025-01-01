@@ -16,4 +16,14 @@ $Parameters = @{
 }
 Invoke-RestMethod @Parameters
 
+# Huawei apk
+$URL = (Invoke-RestMethod @Parameters).assets.browser_download_url | Where-Object -FilterScript {$_ -match "hw"}
+$Parameters = @{
+	Uri             = $URL
+	Outfile         = "ReVanced_Builder\microg-huawei.apk"
+	UseBasicParsing = $true
+	Verbose         = $true
+}
+Invoke-RestMethod @Parameters
+
 echo "MicroGTag=$MicroGTag" >> $env:GITHUB_ENV
