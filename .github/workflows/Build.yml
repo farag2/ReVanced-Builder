@@ -69,7 +69,7 @@ jobs:
       - name: Creating archive
         run: |
           $Parameters = @{
-              Path             = "ReVanced_Builder\revanced.apk", "ReVanced_Builder\microg.apk"
+              Path             = "ReVanced_Builder\revanced.apk", "ReVanced_Builder\microg.apk", "ReVanced_Builder\microg-huawei.apk"
               DestinationPath  = "ReVanced.zip"
               CompressionLevel = "Fastest"
               Force            = $true
