@@ -10,7 +10,7 @@ $MicroGTag = (Invoke-RestMethod @URLParameters).tag_name
 
 $Parameters = @{
 	Uri             = $URL
-	Outfile         = ReVanced_Builder\microg.apk"
+	Outfile         = "ReVanced_Builder\microg.apk"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
