@@ -6,21 +6,21 @@ $Parameters = @{
 	Verbose         = $true
 }
 $JSON = (Invoke-Webrequest @Parameters).Content | ConvertFrom-Json
-$versions = ($JSON | Where-Object -FilterScript {$_.name -eq "Video ads"})
-$LatestSupported = $versions.compatiblePackages."com.google.android.youtube" | Sort-Object -Descending -Unique | Select-Object -First 1
-$LatestSupported = $LatestSupported.Replace(".", "-")
+$Patches = ($JSON | Where-Object -FilterScript {$_.name -eq "Video ads"})
+$LatestSupportedYT = $Patches.compatiblePackages."com.google.android.youtube" | Sort-Object -Descending -Unique | Select-Object -First 1
+$LatestSupportedYT = $LatestSupportedYT.Replace(".", "-")
 
 # We need a NON-bundle version
 # https://www.apkmirror.com/apk/google-inc/youtube/
 $Parameters = @{
-	Uri             = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-android-apk-download/"
+	Uri             = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupportedYT)-release/youtube-$($LatestSupportedYT)-android-apk-download/"
 	UseBasicParsing = $false # Disabled
 	Verbose         = $true
 }
 $Request = Invoke-Webrequest @Parameters
 
 $Parameters = @{
-	Uri             = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-2-android-apk-download/"
+	Uri             = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupportedYT)-release/youtube-$($LatestSupportedYT)-2-android-apk-download/"
 	UseBasicParsing = $false # Disabled
 	Verbose         = $true
 }
@@ -28,7 +28,7 @@ $Request2 = Invoke-Webrequest @Parameters
 
 # Load AngleSharp
 Add-Type -Path "AngleSharp.dll"
-	  
+
 @($Request, $Request2) | ForEach-Object -Process {
 	$RequestVariable = $_
 
