@@ -1,7 +1,7 @@
 # Get the latest supported YouTube version to patch
 # https://api.revanced.app/docs/swagger
 $Parameters = @{
-	Uri             = "https://api.revanced.app/v2/patches/latest"
+	Uri             = "https://api.revanced.app/v4/patches/list"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
