@@ -10,7 +10,7 @@ $MicroGTag = (Invoke-RestMethod @URLParameters).tag_name
 
 $Parameters = @{
 	Uri             = $URL
-	Outfile         = "D:\Downloads\Cien.Anos.de.Soledad.S01.1080p.WEB-DL.4xRus.Spa-alekartem\microg.apk"
+	Outfile         = ReVanced_Builder\microg.apk"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
@@ -20,7 +20,7 @@ Invoke-RestMethod @Parameters
 $URL = (Invoke-RestMethod @URLParameters).assets.browser_download_url | Where-Object -FilterScript {$_ -match "hw"}
 $Parameters = @{
 	Uri             = $URL
-	Outfile         = "D:\Downloads\Cien.Anos.de.Soledad.S01.1080p.WEB-DL.4xRus.Spa-alekartem\microg-huawei.apk"
+	Outfile         = "ReVanced_Builder\microg-huawei.apk"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
