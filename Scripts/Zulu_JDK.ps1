@@ -6,7 +6,7 @@ $Parameters = @{
 }
 $URL = (Invoke-RestMethod @Parameters).url
 
-$ZuluTag = [string](Invoke-RestMethod @Parameters).jdk_version -replace (" ", ".")
+$ZuluTag = (Invoke-RestMethod @Parameters).jdk_version -join "."
 echo "ZuluTag=$ZuluTag" >> $env:GITHUB_ENV
 
 $Parameters = @{
