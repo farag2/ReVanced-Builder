@@ -50,6 +50,7 @@ $DownloadURL = $Request.Links.href | Where-Object -FilterScript {$_ -match "down
 
 $Parameters = @{
 	Uri             = "https://www.apkmirror.com/$DownloadURL"
+	OutFile         = "ReVanced_Builder\youtube.apk"
 	UserAgent       = "Mozilla/5.0 (Linux; Android 13; itel A665L Build/TP1A.220624.014) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.7204.45 Mobile Safari/537.36"
 	UseBasicParsing = $true
 	Verbose         = $true
