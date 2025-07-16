@@ -85,6 +85,7 @@ $DownloadURL = $Request.Links.href | Where-Object -FilterScript {$_ -match "down
 $Parameters = @{
 	Uri             = "https://www.apkmirror.com/$DownloadURL"
 	OutFile         = "$DownloadsFolder\ReVanced\youtube.apk"
+	UserAgent       = "Mozilla/5.0 (Linux; Android 13; itel A665L Build/TP1A.220624.014) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.7204.45 Mobile Safari/537.36"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
@@ -101,6 +102,7 @@ $Parameters = @{
 
 $Tag = (Invoke-RestMethod @Parameters).tag_name
 $Tag2 = $Tag.replace("v", "")
+
 $Parameters = @{
 	Uri             = "https://github.com/revanced/revanced-cli/releases/download/$Tag/revanced-cli-$Tag2-all.jar"
 	Outfile         = "$DownloadsFolder\ReVanced\revanced-cli.jar"
@@ -154,7 +156,7 @@ Invoke-RestMethod @Parameters
 # microg.apk for Huawei, Xiaomi
 $Parameters = @{
 	Uri             = $URL_Vendors
-	Outfile         = "$DownloadsFolder\ReVanced\microg_for_huawei_xiaomi.apk"
+	Outfile         = "$DownloadsFolder\ReVanced\microg_for_huawei.apk"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
