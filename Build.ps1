@@ -134,6 +134,7 @@ Invoke-RestMethod @Parameters
 Write-Verbose -Message "Downloading ReVanced GmsCore" -Verbose
 
 # https://github.com/ReVanced/GmsCore
+# https://github.com/WSTxda/MicroG-RE
 $Parameters = @{
 	Uri             = "https://api.github.com/repos/ReVanced/GmsCore/releases/latest"
 	UseBasicParsing = $true
