@@ -27,10 +27,8 @@ jobs:
           Invoke-Webrequest @Parameters
 
           Add-Type -Assembly System.IO.Compression.FileSystem
-
-          Add-Type -Assembly System.IO.Compression.FileSystem
           $ZIP = [IO.Compression.ZipFile]::OpenRead("anglesharp.nupkg")
-          $ZIP.Entries| Where-Object -FilterScript {($_.FullName -eq "lib/net8.0/AngleSharp.xml") -or ($_.FullName -eq "lib/net8.0/AngleSharp.dll")} | ForEach-Object -Process {
+          $ZIP.Entries | Where-Object {($_.FullName -eq "lib/net8.0/AngleSharp.xml") -or ($_.FullName -eq "lib/net8.0/AngleSharp.dll")} | ForEach-Object {
               [IO.Compression.ZipFileExtensions]::ExtractToFile($_, "$($_.Name)", $true)
           }
           $ZIP.Dispose()
@@ -57,8 +55,6 @@ jobs:
 
       - name: Building
         run: |
-          # https://revanced.app/patches?pkg=com.google.android.youtube
-          # https://github.com/ReVanced/revanced-cli/tree/main/docs
           & "$env:ProgramFiles\Zulu\zulu*\bin\java.exe" `
           -jar "ReVanced_Builder\revanced-cli.jar" `
           patch "ReVanced_Builder\youtube.apk" `
@@ -79,18 +75,35 @@ jobs:
       - name: ReleaseNotesTemplate
         id: read_release
         run: |
-          # https://en.wikipedia.org/wiki/Percent-encoding
-          (Get-Content -Path ReleaseNotesTemplate.md -Encoding utf8 -Raw).replace("YouTubeTag", "${{ env.LatestSupportedYT }}").replace("CLITag", "${{ env.CLIvtag }}").replace("PatchesTag", "${{ env.Patchesvtag }}").replace("MicroGTag", "${{ env.MicroGTag }}").replace("ZuluTag", "${{ env.ZuluTag }}") | Set-Content -Path ReleaseNotesTemplate.md -Encoding utf8 -Force
+          (Get-Content -Path ReleaseNotesTemplate.md -Encoding utf8 -Raw).
+            replace("YouTubeTag", "${{ env.LatestSupportedYT }}").
+            replace("CLITag", "${{ env.CLIvtag }}").
+            replace("PatchesTag", "${{ env.Patchesvtag }}").
+            replace("MicroGTag", "${{ env.MicroGTag }}").
+            replace("ZuluTag", "${{ env.ZuluTag }}") |
+            Set-Content -Path ReleaseNotesTemplate.md -Encoding utf8 -Force
 
-          # https://trstringer.com/github-actions-multiline-strings/
           Add-Content -Path $env:GITHUB_OUTPUT -Value "ReleaseBody=ReleaseNotesTemplate.md"
 
           $ReleaseName = Get-Date -f "yyyy.MM.dd"
           echo "RELEASE_NAME=$ReleaseName" >> $env:GITHUB_ENV
 
+      # ✅ Automatically create a tag if the workflow is run manually
+      - name: Create Tag (for manual runs)
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          $tag = "manual-$(Get-Date -f 'yyyyMMdd-HHmmss')"
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git tag $tag
+          git push origin $tag
+          echo "TAG_NAME=$tag" >> $env:GITHUB_ENV
+
+      # ✅ Upload release, works both for push tags and manual runs
       - name: Uploading
         uses: softprops/action-gh-release@master
         with:
+          tag_name: ${{ env.TAG_NAME || github.ref_name }}
           name: ${{ env.RELEASE_NAME }}
           token: ${{ github.token }}
           files: ReVanced.zip
