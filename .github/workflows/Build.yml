@@ -93,5 +93,7 @@ jobs:
         with:
           name: ${{ env.RELEASE_NAME }}
           token: ${{ github.token }}
-          files: ReVanced.zip
+          if: github.ref_type == 'tag'
+          with:
+            files: ReVanced.zip
           body_path: ${{ steps.read_release.outputs.ReleaseBody }}
