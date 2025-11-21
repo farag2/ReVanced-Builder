@@ -93,7 +93,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           name: ${{ env.RELEASE_NAME }}
-          tag_name: 'Revanced Build by ayonovdenizs_'
+          tag_name: 'Revanced'
           token: ${{ github.token }}
           files: ReVanced.zip
           body_path: ${{ steps.read_release.outputs.ReleaseBody }}
