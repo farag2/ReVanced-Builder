@@ -93,6 +93,6 @@ jobs:
         with:
           name: ${{ env.RELEASE_NAME }}
           token: ${{ github.token }}
-          if: github.ref_type == 'tag'
+          if: github.ref_type == 'revanced'
           files: ReVanced.zip
           body_path: ${{ steps.read_release.outputs.ReleaseBody }}
