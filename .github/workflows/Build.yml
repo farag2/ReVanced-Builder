@@ -89,10 +89,10 @@ jobs:
           echo "RELEASE_NAME=$ReleaseName" >> $env:GITHUB_ENV
 
       - name: Uploading
-        uses: softprops/action-gh-release@master
+        uses: softprops/action-gh-release@v2
         with:
           name: ${{ env.RELEASE_NAME }}
+          tag_name: 'Revanced Build by ayonovdenizs_'
           token: ${{ github.token }}
-          if: github.ref_type == 'revanced'
           files: ReVanced.zip
           body_path: ${{ steps.read_release.outputs.ReleaseBody }}
