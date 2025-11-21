@@ -5,16 +5,15 @@ on:
     tags:
       - "*"
   workflow_dispatch:
-  permissions:
-  contents: write
 
 jobs:
   patch:
     runs-on: windows-latest
+    permissions:
+      contents: write
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@main
-
       - name: AngleSharp
         run: |
           New-Item -Path ReVanced_Builder -ItemType Directory -Force
