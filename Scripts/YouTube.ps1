@@ -1,5 +1,5 @@
 # Get the latest supported YouTube version to patch
-# https://api.revanced.app/docs/swagger
+# https://api.revanced.app
 $Parameters = @{
 	Uri             = "https://api.revanced.app/v4/patches/list"
 	UseBasicParsing = $true
@@ -58,3 +58,4 @@ $Parameters = @{
 Invoke-Webrequest @Parameters
 
 echo "LatestSupportedYT=$LatestSupportedYT" >> $env:GITHUB_ENV
+
