@@ -1,11 +1,16 @@
 # https://github.com/revanced/revanced-patches
 $Parameters = @{
-	Uri             = "https://api.github.com/revanced/revanced-patches/releases/latest"
-	UseBasicParsing = $true
-	Verbose         = $true
+    Uri = "https://api.github.com/repos/revanced/revanced-patches/releases/latest"
+    Headers = @{
+        "User-Agent" = "ReVanced-Builder"
+        "Accept"     = "application/vnd.github+json"
+    }
+    Verbose = $true
 }
+
 $Patchesvtag = (Invoke-RestMethod @Parameters).tag_name
-$Patchestag = $Patchesvtag.replace("v", "")
+$Patchestag  = $Patchesvtag.Replace("v", "")
+
 
 $Parameters = @{
 	Uri             = "https://github.com/revanced/revanced-patches/releases/download/$Patchesvtag/patches-$Patchestag.rvp"
@@ -16,4 +21,5 @@ $Parameters = @{
 Invoke-RestMethod @Parameters
 
 echo "Patchesvtag=$Patchesvtag" >> $env:GITHUB_ENV
+
 
