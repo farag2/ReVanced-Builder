@@ -1,6 +1,6 @@
 name: Build
 
-on: 
+on:
   push:
     tags:
       - "*"
@@ -10,98 +10,144 @@ jobs:
   patch:
     runs-on: windows-latest
     timeout-minutes: 5
-    steps:
-      - uses: actions/checkout@main
 
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # -------------------------
+      # AngleSharp
+      # -------------------------
       - name: AngleSharp
         run: |
           New-Item -Path ReVanced_Builder -ItemType Directory -Force
 
-          # https://www.nuget.org/packages/AngleSharp/
           $Parameters = @{
               Uri             = "https://www.nuget.org/api/v2/package/AngleSharp"
               OutFile         = "anglesharp.nupkg"
               UseBasicParsing = $true
               Verbose         = $true
           }
-          Invoke-Webrequest @Parameters
+          Invoke-WebRequest @Parameters
 
           Add-Type -Assembly System.IO.Compression.FileSystem
           $ZIP = [IO.Compression.ZipFile]::OpenRead("anglesharp.nupkg")
-          $ZIP.Entries | Where-Object {($_.FullName -eq "lib/net8.0/AngleSharp.xml") -or ($_.FullName -eq "lib/net8.0/AngleSharp.dll")} | ForEach-Object {
-              [IO.Compression.ZipFileExtensions]::ExtractToFile($_, "$($_.Name)", $true)
-          }
+          $ZIP.Entries |
+            Where-Object {
+              $_.FullName -in @(
+                "lib/net8.0/AngleSharp.dll",
+                "lib/net8.0/AngleSharp.xml"
+              )
+            } |
+            ForEach-Object {
+              [IO.Compression.ZipFileExtensions]::ExtractToFile(
+                $_,
+                "$($_.Name)",
+                $true
+              )
+            }
           $ZIP.Dispose()
 
+      # -------------------------
+      # Download YouTube APK
+      # -------------------------
       - name: YouTube
         run: |
           . Scripts\YouTube.ps1
 
+      # -------------------------
+      # ReVanced CLI
+      # -------------------------
       - name: ReVanced CLI
         run: |
           . Scripts\ReVanced_CLI.ps1
 
-      - name: Downloading ReVanced Patches
+      # -------------------------
+      # ReVanced Patches (FIXED)
+      # -------------------------
+      - name: ReVanced Patches
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           . Scripts\ReVanced_Patches.ps1
 
+      # -------------------------
+      # Vanced MicroG
+      # -------------------------
       - name: Vanced MicroG
         run: |
           . Scripts\MicroG.ps1
 
+      # -------------------------
+      # Zulu JDK
+      # -------------------------
       - name: Zulu JDK
         run: |
           . Scripts\Zulu_JDK.ps1
 
+      # -------------------------
+      # Build APK
+      # -------------------------
       - name: Building
         run: |
           & "$env:ProgramFiles\Zulu\zulu*\bin\java.exe" `
-          -jar "ReVanced_Builder\revanced-cli.jar" `
-          patch "ReVanced_Builder\youtube.apk" `
-          --patches "ReVanced_Builder\revanced-patches.rvp" `
-          --purge `
-          --out "ReVanced_Builder\revanced.apk"
+            -jar "ReVanced_Builder\revanced-cli.jar" `
+            patch "ReVanced_Builder\youtube.apk" `
+            --patches "ReVanced_Builder\revanced-patches.rvp" `
+            --purge `
+            --out "ReVanced_Builder\revanced.apk"
 
+      # -------------------------
+      # Create ZIP
+      # -------------------------
       - name: Creating archive
         run: |
-          $Parameters = @{
-              Path             = "ReVanced_Builder\revanced.apk", "ReVanced_Builder\microg.apk", "ReVanced_Builder\microg-huawei.apk"
-              DestinationPath  = "ReVanced.zip"
-              CompressionLevel = "Fastest"
-              Force            = $true
-          }
-          Compress-Archive @Parameters
+          Compress-Archive `
+            -Path `
+              "ReVanced_Builder\revanced.apk", `
+              "ReVanced_Builder\microg.apk", `
+              "ReVanced_Builder\microg-huawei.apk" `
+            -DestinationPath "ReVanced.zip" `
+            -CompressionLevel Fastest `
+            -Force
 
+      # -------------------------
+      # Prepare Release Notes
+      # -------------------------
       - name: ReleaseNotesTemplate
         id: read_release
         run: |
-          (Get-Content -Path ReleaseNotesTemplate.md -Encoding utf8 -Raw).
-            replace("YouTubeTag", "${{ env.LatestSupportedYT }}").
-            replace("CLITag", "${{ env.CLIvtag }}").
-            replace("PatchesTag", "${{ env.Patchesvtag }}").
-            replace("MicroGTag", "${{ env.MicroGTag }}").
-            replace("ZuluTag", "${{ env.ZuluTag }}") |
-            Set-Content -Path ReleaseNotesTemplate.md -Encoding utf8 -Force
+          (Get-Content ReleaseNotesTemplate.md -Raw -Encoding utf8).
+            Replace("YouTubeTag",  "${{ env.LatestSupportedYT }}").
+            Replace("CLITag",      "${{ env.CLIvtag }}").
+            Replace("PatchesTag",  "${{ env.PATCHESVTAG }}").
+            Replace("MicroGTag",   "${{ env.MicroGTag }}").
+            Replace("ZuluTag",     "${{ env.ZuluTag }}") |
+            Set-Content ReleaseNotesTemplate.md -Encoding utf8 -Force
 
-          Add-Content -Path $env:GITHUB_OUTPUT -Value "ReleaseBody=ReleaseNotesTemplate.md"
+          echo "ReleaseBody=ReleaseNotesTemplate.md" >> $env:GITHUB_OUTPUT
 
-          $ReleaseName = Get-Date -f "yyyy.MM.dd"
+          $ReleaseName = Get-Date -Format "yyyy.MM.dd"
           echo "RELEASE_NAME=$ReleaseName" >> $env:GITHUB_ENV
 
-      # ✅ Automatically create a tag if the workflow is run manually
-      - name: Create Tag (for manual runs)
+      # -------------------------
+      # Create tag for manual runs
+      # -------------------------
+      - name: Create Tag (manual run)
         if: github.event_name == 'workflow_dispatch'
         run: |
-          $tag = "manual-$(Get-Date -f 'yyyyMMdd-HHmmss')"
+          $tag = "manual-$(Get-Date -Format 'yyyyMMdd-HHmmss')"
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git tag $tag
           git push origin $tag
           echo "TAG_NAME=$tag" >> $env:GITHUB_ENV
 
-      # ✅ Upload release, works both for push tags and manual runs
+      # -------------------------
+      # Upload Release
+      # -------------------------
       - name: Uploading
-        uses: softprops/action-gh-release@master
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.TAG_NAME || github.ref_name }}
           name: ${{ env.RELEASE_NAME }}
