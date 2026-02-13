@@ -40,10 +40,8 @@ $Parameters = @{
 	UseBasicParsing = $true
 	Verbose         = $true
 }
-$JSON = (Invoke-Webrequest @Parameters).Content | ConvertFrom-Json
-$versions = ($JSON | Where-Object -FilterScript {$_.name -eq "Video ads"})
-$LatestSupported = $versions.compatiblePackages.'com.google.android.youtube' | Sort-Object -Descending -Unique | Select-Object -First 1
-$LatestSupported = $LatestSupported.Replace(".", "-")
+$Patches = Invoke-RestMethod @Parameters  | Where-Object -FilterScript {$_.name -eq "Video ads"}
+$Patches.compatiblePackages."com.google.android.youtube" | Sort-Object -Descending -Unique | Select-Object -First 1
 
 Write-Verbose -Message "Downloading the latest supported YouTube apk" -Verbose
 
