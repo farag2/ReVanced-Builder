@@ -93,41 +93,43 @@ $Options.AddUserProfilePreference("download.prompt_for_download", $false)
 $driver = New-Object -TypeName OpenQA.Selenium.Edge.EdgeDriver("ReVanced_Builder\msedgedriver.exe", $Options)
 
 # https://www.apkmirror.com/apk/google-inc/youtube/
-$APKMirrorURLs = @(
-	"https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-android-apk-download/",
-	"https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-2-android-apk-download/"
-)
-foreach ($APKMirrorURL in $APKMirrorURLs)
+$APKMirrorURL = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-2-android-apk-download/"
+
+Write-Verbose -Message "Trying URL $APKMirrorURL" -Verbose
+
+$driver.Navigate().GoToUrl($APKMirrorURL)
+$ButtonTitle = $driver.FindElement([OpenQA.Selenium.By]::CssSelector("a.downloadButton"))
+
+# We need a NON-bundle version
+if ($ButtonTitle.Text.Trim() -match "DOWNLOAD APK BUNDLE")
 {
-	Write-Verbose -Message "Trying URL $APKMirrorURL" -Verbose
+	$ButtonTitle.Text.Trim()
+	Write-Verbose -Message "$APKMirrorURL doesn't match criteria. Continue loop" -Verbose
 
-	$driver.Navigate().GoToUrl($APKMirrorURL)
-	$ButtonTitle = $driver.FindElement([OpenQA.Selenium.By]::CssSelector("a.downloadButton"))
+	continue
+}
 
-	# We need a NON-bundle version
-	if ($ButtonTitle.Text.Trim() -match "DOWNLOAD APK BUNDLE")
-	{
-		$ButtonTitle.Text.Trim()
-		Write-Verbose -Message "$APKMirrorURL doesn't match criteria. Continue loop" -Verbose
+$DownloadURL = $ButtonTitle.GetAttribute("href")
 
-		continue
-	}
+# Download youtube.apk
+$driver.Navigate().GoToUrl($DownloadURL)
+# $driver.FindElement([OpenQA.Selenium.By]::Id("download-link")).GetAttribute("href")
 
-	$DownloadURL = $ButtonTitle.GetAttribute("href")
+if (Test-Path -Path ReVanced_Builder\*.apk)
+{
+	Write-Verbose -Message "youtube.apk downloaded" -Verbose
 
-	# Download youtube.apk
-	$driver.Navigate().GoToUrl($DownloadURL)
-	# $driver.FindElement([OpenQA.Selenium.By]::Id("download-link")).GetAttribute("href")
+	$driver.Quit()
+	exit
+}
+else
+{
+	Write-Verbose -Message "Cannot download youtube.apk" -Verbose
 
-	if (Test-Path -Path ReVanced_Builder\*.apk)
-	{
-		Write-Verbose -Message "youtube.apk downloaded" -Verbose
-
-		$driver.Quit()
-		exit
-	}
+	# Exit with a non-zero status to fail the job
+	exit 1
 }
 
 Get-Process -Name msedgedriver, msedge -ErrorAction Ignore | Stop-Process -Force -ErrorAction Ignore
 
-#echo "LatestSupportedYT=$LatestSupportedYT" >> $env:GITHUB_ENV
+echo "LatestSupportedYT=$LatestSupportedYT" >> $env:GITHUB_ENV
