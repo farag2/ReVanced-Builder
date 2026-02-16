@@ -38,17 +38,18 @@ jobs:
         run: |
           # https://revanced.app/patches?pkg=com.google.android.youtube
           # https://github.com/ReVanced/revanced-cli/tree/main/docs
+
           & "$env:ProgramFiles\Zulu\zulu*\bin\java.exe" `
           -jar "ReVanced_Builder\revanced-cli.jar" `
           patch "ReVanced_Builder\youtube.apk" `
           --patches "ReVanced_Builder\revanced-patches.rvp" `
           --purge `
-          --out "ReVanced_Builder\revanced.apk"
+          --out "ReVanced_Builder\youtube_revanced.apk"
 
       - name: Creating archive
         run: |
           $Parameters = @{
-              Path             = "ReVanced_Builder\revanced.apk", "ReVanced_Builder\microg.apk", "ReVanced_Builder\microg-huawei.apk"
+              Path             = "ReVanced_Builder\youtube_revanced.apk", "ReVanced_Builder\microg.apk", "ReVanced_Builder\microg-huawei.apk"
               DestinationPath  = "ReVanced.zip"
               CompressionLevel = "Fastest"
               Force            = $true
@@ -74,4 +75,5 @@ jobs:
           token: ${{ github.token }}
           files: ReVanced.zip
           body_path: ${{ steps.read_release.outputs.ReleaseBody }}
+
 
