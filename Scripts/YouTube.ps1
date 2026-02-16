@@ -116,33 +116,33 @@ $DownloadURL = $ButtonTitle.GetAttribute("href")
 $DownloadURL
 # Download youtube.apk
 $driver.Navigate().GoToUrl($DownloadURL)
-$DownloadURL = $driver.FindElement([OpenQA.Selenium.By]::Id("download-link")).GetAttribute("href")
-$DownloadURL
-$driver.Navigate().GoToUrl($DownloadURL)
+# $driver.FindElement([OpenQA.Selenium.By]::Id("download-link")).GetAttribute("href")
 test-path -Path D:\Desktop\ReVanced_Builder\*.crdownload
 Start-Sleep -Seconds 10
 test-path -Path D:\Desktop\ReVanced_Builder\*.crdownload
 Get-ChildItem -Path ReVanced_Builder
 
 $DownloadsFolder = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{374DE290-123F-4565-9164-39C4925E467B}"
-$DownloadsFolder
-Get-ChildItem -Path $DownloadsFolder
-
-if (Test-Path -Path ReVanced_Builder\*.apk)
+if (Test-Path -Path $DownloadsFolder\*.apk)
 {
-	Write-Verbose -Message "youtube.apk downloaded" -Verbose
-
-	$driver.Quit()
-	exit
+	$Parameters = @{
+		Path        = "$DownloadsFolder\*.apk"
+		Destination = "ReVanced_Builder"
+		Force       = $true
+	}
+	Copy-Item @Parameters
 }
 else
 {
 	Write-Verbose -Message "Cannot download youtube.apk" -Verbose
+	Get-ChildItem -Path ReVanced_Builder
+	Get-ChildItem -Path $DownloadsFolder
 
 	# Exit with a non-zero status to fail the job
 	exit 1
 }
 
+$driver.Quit()
 Get-Process -Name msedgedriver, msedge -ErrorAction Ignore | Stop-Process -Force -ErrorAction Ignore
 
 echo "LatestSupportedYT=$LatestSupportedYT" >> $env:GITHUB_ENV
