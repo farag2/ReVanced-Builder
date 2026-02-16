@@ -114,7 +114,8 @@ $DownloadURL = $ButtonTitle.GetAttribute("href")
 $DownloadURL
 # Download youtube.apk
 $driver.Navigate().GoToUrl($DownloadURL)
-# $driver.FindElement([OpenQA.Selenium.By]::Id("download-link")).GetAttribute("href")
+$DownloadURL = $driver.FindElement([OpenQA.Selenium.By]::Id("download-link")).GetAttribute("href")
+$driver.Navigate().GoToUrl($DownloadURL)
 
 Get-ChildItem -Path ReVanced_Builder
 
