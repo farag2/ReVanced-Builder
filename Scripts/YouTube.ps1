@@ -99,12 +99,24 @@ Write-Verbose -Message "Trying URL $APKMirrorURL" -Verbose
 
 $driver.Navigate().GoToUrl($APKMirrorURL)
 $ButtonTitle = $driver.FindElement([OpenQA.Selenium.By]::CssSelector("a.downloadButton"))
-$ButtonTitle.Text.Trim()
-$DownloadURL = $ButtonTitle.GetAttribute("href")
 
+$ButtonTitle.Text.Trim()
+
+if ($ButtonTitle.Text.Trim() -match "DOWNLOAD APK BUNDLE")
+{
+	Write-Verbose -Message "$ButtonTitle.Text.Trim() matches 'BUNDLE'" -Verbose
+
+	$driver.Quit()
+	exit
+}
+
+$DownloadURL = $ButtonTitle.GetAttribute("href")
+$DownloadURL
 # Download youtube.apk
 $driver.Navigate().GoToUrl($DownloadURL)
 # $driver.FindElement([OpenQA.Selenium.By]::Id("download-link")).GetAttribute("href")
+
+Get-ChildItem -Path ReVanced_Builder
 
 if (Test-Path -Path ReVanced_Builder\*.apk)
 {
