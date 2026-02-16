@@ -84,8 +84,6 @@ Write-Verbose -Message "Adding web driver" -Verbose
 Add-Type -Path "ReVanced_Builder\WebDriver.dll"
 
 $Options = New-Object -TypeName OpenQA.Selenium.Edge.EdgeOptions
-$Options.AddArgument("--headless=new")
-$Options.AddArgument("--window-size=1280,720")
 $Options.AddArgument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0")
 $Options.AddUserProfilePreference("download.default_directory", "ReVanced_Builder")
 $Options.AddUserProfilePreference("download.directory_upgrade", $true)
