@@ -111,13 +111,20 @@ $DownloadURL = $ButtonTitle.GetAttribute("href")
 $DownloadURL
 # Download youtube.apk
 $driver.Navigate().GoToUrl($DownloadURL)
-$DownloadURL = $driver.FindElement([OpenQA.Selenium.By]::Id("download-link")).GetAttribute("href")
-$DownloadURL
-$driver.Navigate().GoToUrl($DownloadURL)
+#$driver.FindElement([OpenQA.Selenium.By]::Id("download-link")).GetAttribute("href")
 
+# ###
 $DownloadsFolder = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{374DE290-123F-4565-9164-39C4925E467B}"
-$DownloadsFolder
-Test-Path -Path "$DownloadsFolder\*.apk"
+do
+{
+	$APK = Test-Path -Path "$DownloadsFolder\*.apk"
+	if (-not $APK)
+	{
+		Start-Sleep -Seconds 5
+	}
+}
+while (-not $APK)
+
 Get-ChildItem -Path $DownloadsFolder
 
 $Parameters = @{
