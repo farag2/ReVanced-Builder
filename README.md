@@ -16,7 +16,7 @@ Trigger the [`Build`](https://github.com/farag2/ReVanced_Builder/actions/workflo
 
 ![image](https://user-images.githubusercontent.com/10544660/187949763-82fd7a07-8e4e-4527-b631-11920077141f.png)
 
-`ReVanced.zip` will contain a built `youtube.apk` & latest `microg.apk`.
+`ReVanced.zip` will contain a built `youtube_revanced.apk` & latest `microg.apk`.
 
 ## Links
 
