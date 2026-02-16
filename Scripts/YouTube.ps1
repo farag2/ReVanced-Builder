@@ -118,6 +118,9 @@ $DownloadURL = $driver.FindElement([OpenQA.Selenium.By]::Id("download-link")).Ge
 $DownloadURL
 $driver.Navigate().GoToUrl($DownloadURL)
 
+test-path -Path D:\Desktop\ReVanced_Builder\*.crdownload
+Start-Sleep -Seconds 10
+test-path -Path D:\Desktop\ReVanced_Builder\*.crdownload
 Get-ChildItem -Path ReVanced_Builder
 
 if (Test-Path -Path ReVanced_Builder\*.apk)
