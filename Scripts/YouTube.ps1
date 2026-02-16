@@ -1,6 +1,4 @@
-host
-
-New-Item -Path ReVanced_Builder -ItemType Directory -Force
+#Requires -Version 7.4
 
 # Get the latest supported YouTube version to patch
 # https://api.revanced.app
@@ -15,28 +13,22 @@ $LatestSupported = $LatestSupportedYT.Replace(".", "-")
 
 Get-Process -Name msedgedriver, msedge -ErrorAction Ignore | Stop-Process -Force -ErrorAction Ignore
 
-# Get Microsoft Edge version
-$Parameters = @{
-	Uri             = "https://edgeupdates.microsoft.com/api/products"
-	UseBasicParsing = $true
-	Verbose         = $true
-}
-$products = Invoke-RestMethod @Parameters
-$EdgeVersion = (($products | Where-Object -FilterScript {$_.Product -eq "Stable"}).Releases | Where-Object -FilterScript {($_.Architecture -eq "x64") -and ($_.Platform -eq "Windows")}).ProductVersion
-
 Write-Verbose -Message "Microsoft Edge driver" -Verbose
-"https://msedgedriver.microsoft.com/$EdgeVersion/edgedriver_win64.zip"
+
+# Get runner Microsoft Edge Version
+# https://edgeupdates.microsoft.com/api/products
+# https://github.com/GoogleChromeLabs/chrome-for-testing/blob/main/data/last-known-good-versions-with-downloads.json
+$RunnerEdgeVersion = (Get-Item -Path "${env:ProgramFiles(x86)}\Microsoft\Edge\Application\msedge.exe").VersionInfo.FileVersion
 
 # Download Microsoft Edge driver
-# https://github.com/GoogleChromeLabs/chrome-for-testing/blob/main/data/last-known-good-versions-with-downloads.json
 # https://developer.microsoft.com/microsoft-edge/tools/webdriver/
 $Parameters = @{
-	Uri             = "https://msedgedriver.microsoft.com/$EdgeVersion/edgedriver_win64.zip"
+	Uri             = "https://msedgedriver.microsoft.com/$RunnerEdgeVersion/edgedriver_win64.zip"
 	OutFile         = "ReVanced_Builder\edgedriver_win64.zip"
 	UseBasicParsing = $true
 	Verbose         = $true
 }
-$EdgewebdriverURL = ((Invoke-RestMethod @Parameters).channels.Stable.downloads.chromedriver | Where-Object -FilterScript {$_.platform -eq "win64"}).url
+Invoke-Webrequest @Parameters
 
 Write-Verbose -Message "Selenium web driver" -Verbose
 
@@ -137,4 +129,3 @@ foreach ($APKMirrorURL in $APKMirrorURLs)
 Get-Process -Name msedgedriver, msedge -ErrorAction Ignore | Stop-Process -Force -ErrorAction Ignore
 
 #echo "LatestSupportedYT=$LatestSupportedYT" >> $env:GITHUB_ENV
-
