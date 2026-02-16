@@ -1,5 +1,7 @@
 #Requires -Version 7.4
 
+New-Item -Path ReVanced_Builder -ItemType Directory -Force
+
 # Get the latest supported YouTube version to patch
 # https://api.revanced.app
 $Parameters = @{
