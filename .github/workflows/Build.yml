@@ -13,27 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@main
 
-      - name: AngleSharp
-        run: |
-          New-Item -Path ReVanced_Builder -ItemType Directory -Force
-
-          # https://www.nuget.org/packages/AngleSharp/
-          $Parameters = @{
-              Uri             = "https://www.nuget.org/api/v2/package/AngleSharp"
-              OutFile         = "anglesharp.nupkg"
-              UseBasicParsing = $true
-              Verbose         = $true
-          }
-          Invoke-Webrequest @Parameters
-
-          Add-Type -Assembly System.IO.Compression.FileSystem
-
-          $ZIP = [IO.Compression.ZipFile]::OpenRead("anglesharp.nupkg")
-          $ZIP.Entries | Where-Object -FilterScript {$_.FullName -in @("lib/net8.0/AngleSharp.dll", "lib/net8.0/AngleSharp.xml")} | ForEach-Object -Process {
-              [IO.Compression.ZipFileExtensions]::ExtractToFile($_, "$($_.Name)", $true)
-          }
-          $ZIP.Dispose()
-            
       - name: YouTube
         run: |
           . Scripts\YouTube.ps1
@@ -94,5 +73,3 @@ jobs:
           token: ${{ github.token }}
           files: ReVanced.zip
           body_path: ${{ steps.read_release.outputs.ReleaseBody }}
-
-
