@@ -1,5 +1,7 @@
 host
 
+New-Item -Path ReVanced_Builder -ItemType Directory -Force
+
 # Get the latest supported YouTube version to patch
 # https://api.revanced.app
 $Parameters = @{
@@ -135,3 +137,4 @@ foreach ($APKMirrorURL in $APKMirrorURLs)
 Get-Process -Name msedgedriver, msedge -ErrorAction Ignore | Stop-Process -Force -ErrorAction Ignore
 
 #echo "LatestSupportedYT=$LatestSupportedYT" >> $env:GITHUB_ENV
+
