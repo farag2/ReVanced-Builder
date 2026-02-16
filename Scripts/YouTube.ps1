@@ -113,19 +113,20 @@ $DownloadURL
 $driver.Navigate().GoToUrl($DownloadURL)
 #$driver.FindElement([OpenQA.Selenium.By]::Id("download-link")).GetAttribute("href")
 
-# ###
 $DownloadsFolder = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{374DE290-123F-4565-9164-39C4925E467B}"
+(Get-ChildItem -Path $DownloadsFolder).Count
+
+# Wait until apk is being downloaded
 do
 {
 	$APK = Test-Path -Path "$DownloadsFolder\*.apk"
 	if (-not $APK)
 	{
+		"Waiting for an APK file to be downloaded..."
 		Start-Sleep -Seconds 5
 	}
 }
 while (-not $APK)
-
-Get-ChildItem -Path $DownloadsFolder
 
 $Parameters = @{
 	Path        = "$DownloadsFolder\*.apk"
@@ -134,7 +135,7 @@ $Parameters = @{
 }
 Copy-Item @Parameters
 
-Get-ChildItem -Path ReVanced_Builder
+Get-Item -Path "ReVanced_Builder\*.apk" | Rename-Item -NewName youtube.apk -Force
 
 $driver.Quit()
 Get-Process -Name msedgedriver, msedge -ErrorAction Ignore | Stop-Process -Force -ErrorAction Ignore
