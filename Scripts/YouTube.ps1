@@ -80,7 +80,7 @@ Remove-Item -Path $Paths -Force -Recurse
 
 Write-Verbose -Message "Adding web driver" -Verbose
 
-# Start parsing pages
+# Start parsing page
 Add-Type -Path "ReVanced_Builder\WebDriver.dll"
 
 $Options = New-Object -TypeName OpenQA.Selenium.Edge.EdgeOptions
@@ -97,6 +97,7 @@ Write-Verbose -Message "Trying URL $APKMirrorURL" -Verbose
 $driver.Navigate().GoToUrl($APKMirrorURL)
 $ButtonTitle = $driver.FindElement([OpenQA.Selenium.By]::CssSelector("a.downloadButton"))
 
+# Get button title. We need a NON-bundle version only
 $ButtonTitle.Text.Trim()
 
 if ($ButtonTitle.Text.Trim() -match "DOWNLOAD APK BUNDLE")
@@ -110,11 +111,12 @@ if ($ButtonTitle.Text.Trim() -match "DOWNLOAD APK BUNDLE")
 $DownloadURL = $ButtonTitle.GetAttribute("href")
 $DownloadURL
 # Download youtube.apk
+# Waiting for Edge to finish downloading
 $driver.Navigate().GoToUrl($DownloadURL)
 #$driver.FindElement([OpenQA.Selenium.By]::Id("download-link")).GetAttribute("href")
 
+# Get runned Downloads folder
 $DownloadsFolder = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{374DE290-123F-4565-9164-39C4925E467B}"
-(Get-ChildItem -Path $DownloadsFolder).Count
 
 # Wait until apk is being downloaded
 do
@@ -128,6 +130,7 @@ do
 }
 while (-not $APK)
 
+# Copy APK to ReVanced_Builder folder
 $Parameters = @{
 	Path        = "$DownloadsFolder\*.apk"
 	Destination = "ReVanced_Builder"
@@ -135,6 +138,7 @@ $Parameters = @{
 }
 Copy-Item @Parameters
 
+# Rename file to youtube.apk
 Get-Item -Path "ReVanced_Builder\*.apk" | Rename-Item -NewName youtube.apk -Force
 
 $driver.Quit()
