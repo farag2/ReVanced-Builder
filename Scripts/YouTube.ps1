@@ -99,16 +99,7 @@ Write-Verbose -Message "Trying URL $APKMirrorURL" -Verbose
 
 $driver.Navigate().GoToUrl($APKMirrorURL)
 $ButtonTitle = $driver.FindElement([OpenQA.Selenium.By]::CssSelector("a.downloadButton"))
-
-# We need a NON-bundle version
-if ($ButtonTitle.Text.Trim() -match "DOWNLOAD APK BUNDLE")
-{
-	$ButtonTitle.Text.Trim()
-	Write-Verbose -Message "$APKMirrorURL doesn't match criteria. Continue loop" -Verbose
-
-	continue
-}
-
+$ButtonTitle.Text.Trim()
 $DownloadURL = $ButtonTitle.GetAttribute("href")
 
 # Download youtube.apk
