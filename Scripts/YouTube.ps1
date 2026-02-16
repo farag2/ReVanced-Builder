@@ -124,6 +124,10 @@ Start-Sleep -Seconds 10
 test-path -Path D:\Desktop\ReVanced_Builder\*.crdownload
 Get-ChildItem -Path ReVanced_Builder
 
+$DownloadsFolder = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{374DE290-123F-4565-9164-39C4925E467B}"
+$DownloadsFolder
+Get-ChildItem -Path $DownloadsFolder
+
 if (Test-Path -Path ReVanced_Builder\*.apk)
 {
 	Write-Verbose -Message "youtube.apk downloaded" -Verbose
