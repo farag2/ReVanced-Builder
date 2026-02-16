@@ -6,8 +6,6 @@ Build ReVanced YouTube package (.apk) easily than ever using the latest ReVanced
 
 ## Usage
 
-### By using CI/CD
-
 ```powershell
 git clone https://github.com/farag2/ReVanced_Builder
 ```
