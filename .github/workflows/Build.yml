@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - "*"
+
   workflow_dispatch:
 
 jobs:
@@ -73,3 +74,4 @@ jobs:
           token: ${{ github.token }}
           files: ReVanced.zip
           body_path: ${{ steps.read_release.outputs.ReleaseBody }}
+
