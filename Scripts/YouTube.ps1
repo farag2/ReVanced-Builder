@@ -88,9 +88,11 @@ $Options.AddArgument("--headless=new")
 $Options.AddArgument("--window-size=1280,720")
 $Options.AddArgument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0")
 $Options.AddUserProfilePreference("download.default_directory", "ReVanced_Builder")
+$Options.AddUserProfilePreference("download.directory_upgrade", $true)
 $Options.AddUserProfilePreference("download.prompt_for_download", $false)
 
-$driver = New-Object -TypeName OpenQA.Selenium.Edge.EdgeDriver("ReVanced_Builder\msedgedriver.exe", $Options)
+$Service = [OpenQA.Selenium.Edge.EdgeDriverService]::CreateDefaultService("ReVanced_Builder", "msedgedriver.exe")
+$driver = New-Object -TypeName OpenQA.Selenium.Edge.EdgeDriver($Service, $Options)
 
 # https://www.apkmirror.com/apk/google-inc/youtube/
 $APKMirrorURL = "https://www.apkmirror.com/apk/google-inc/youtube/youtube-$($LatestSupported)-release/youtube-$($LatestSupported)-2-android-apk-download/"
@@ -117,7 +119,6 @@ $driver.Navigate().GoToUrl($DownloadURL)
 $DownloadURL = $driver.FindElement([OpenQA.Selenium.By]::Id("download-link")).GetAttribute("href")
 $DownloadURL
 $driver.Navigate().GoToUrl($DownloadURL)
-
 test-path -Path D:\Desktop\ReVanced_Builder\*.crdownload
 Start-Sleep -Seconds 10
 test-path -Path D:\Desktop\ReVanced_Builder\*.crdownload
