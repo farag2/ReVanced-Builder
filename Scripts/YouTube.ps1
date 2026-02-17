@@ -9,8 +9,8 @@ $Parameters = @{
 	UseBasicParsing = $true
 	Verbose         = $true
 }
-$Patches = (Invoke-RestMethod @Parameters | Where-Object -FilterScript {$_.name -eq "Video ads"})
-$LatestSupportedYT = $Patches.compatiblePackages."com.google.android.youtube" | Sort-Object -Descending -Unique | Select-Object -First 1
+$Patches = Invoke-RestMethod @Parameters
+$LatestSupportedYT = ($Patches | Where-Object -FilterScript {$_.name -eq "Video ads"}).compatiblePackages."com.google.android.youtube" | Sort-Object -Descending -Unique | Select-Object -First 1
 $LatestSupported = $LatestSupportedYT.Replace(".", "-")
 
 Get-Process -Name msedgedriver, msedge -ErrorAction Ignore | Stop-Process -Force -ErrorAction Ignore
