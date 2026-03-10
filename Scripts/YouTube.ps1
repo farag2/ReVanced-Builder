@@ -110,10 +110,12 @@ if ($ButtonTitle.Text.Trim() -match "DOWNLOAD APK BUNDLE")
 
 $DownloadURL = $ButtonTitle.GetAttribute("href")
 $DownloadURL
+
 # Download youtube.apk
 # Waiting for Edge to finish downloading
 $driver.Navigate().GoToUrl($DownloadURL)
-#$driver.FindElement([OpenQA.Selenium.By]::Id("download-link")).GetAttribute("href")
+$DownloadURL = $driver.FindElement([OpenQA.Selenium.By]::Id("download-link")).GetAttribute("href")
+$driver.Navigate().GoToUrl($DownloadURL)
 
 # Get runned Downloads folder
 $DownloadsFolder = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{374DE290-123F-4565-9164-39C4925E467B}"
@@ -122,6 +124,7 @@ $DownloadsFolder = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows
 do
 {
 	$APK = Test-Path -Path "$DownloadsFolder\*.apk"
+	Get-ChildItem -Path $DownloadsFolder
 	if (-not $APK)
 	{
 		"Waiting for an APK file to be downloaded..."
@@ -145,3 +148,4 @@ $driver.Quit()
 Get-Process -Name msedgedriver, msedge -ErrorAction Ignore | Stop-Process -Force -ErrorAction Ignore
 
 echo "LatestSupportedYT=$LatestSupportedYT" >> $env:GITHUB_ENV
+
