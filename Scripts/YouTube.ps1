@@ -125,10 +125,11 @@ $DownloadsFolder = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows
 do
 {
 	$APK = Test-Path -Path "$DownloadsFolder\*.apk"
-	Get-ChildItem -Path $DownloadsFolder
+
 	if (-not $APK)
 	{
 		"Waiting for an APK file to be downloaded..."
+		Get-ChildItem -Path $DownloadsFolder -File
 		Start-Sleep -Seconds 5
 	}
 }
