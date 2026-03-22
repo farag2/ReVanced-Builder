@@ -4,13 +4,14 @@ New-Item -Path ReVanced_Builder -ItemType Directory -Force
 
 # Get the latest supported YouTube version to patch
 # https://api.revanced.app
-$Parameters = @{
-	Uri             = "https://api.revanced.app/v4/patches/list"
-	UseBasicParsing = $true
-	Verbose         = $true
-}
-$Patches = Invoke-RestMethod @Parameters
-$LatestSupportedYT = ($Patches | Where-Object -FilterScript {$_.name -eq "Video ads"}).compatiblePackages."com.google.android.youtube" | Sort-Object -Descending -Unique | Select-Object -First 1
+#$Parameters = @{
+#	Uri             = "https://api.revanced.app/v5/patches"
+#	UseBasicParsing = $true
+#	Verbose         = $true
+#}
+# $Patches = Invoke-RestMethod @Parameters
+# $LatestSupportedYT = ($Patches | Where-Object -FilterScript {$_.name -eq "Video ads"}).compatiblePackages."com.google.android.youtube" | Sort-Object -Descending -Unique | Select-Object -First 1
+$LatestSupportedYT = "20.40.45"
 $LatestSupported = $LatestSupportedYT.Replace(".", "-")
 
 Get-Process -Name msedgedriver, msedge -ErrorAction Ignore | Stop-Process -Force -ErrorAction Ignore
