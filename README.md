@@ -11,9 +11,9 @@
 	<a href="https://github.com/farag2/ReVanced-Builder/actions"><img src="https://img.shields.io/github/actions/workflow/status/farag2/ReVanced-Builder/Build.yml?labelColor=151B23&color=151B23&style=for-the-badge&label=build&logo=GitHub"></a>
 </kbd>
 
-# ReVanced builder
+# YouTube Patcher
 
-Build ReVanced YouTube package (.apk) easily than ever using the latest ReVanced patches and dependencies via GitHub Actions
+Patch YouTube package (.apk) using ReVanced or Morphe patches via GitHub Actions
 
 <kbd>
 	<a href="https://github.com/farag2/ReVanced-Builder/releases/latest"><img src="https://img.shields.io/badge/Download-green?labelColor=151B23&color=151B23&style=for-the-badge"></a>
@@ -22,7 +22,7 @@ Build ReVanced YouTube package (.apk) easily than ever using the latest ReVanced
 ## Usage
 
 ```powershell
-git clone https://github.com/farag2/ReVanced_Builder
+git clone https://github.com/farag2/YouTube_Patcher
 ```
 
 Trigger the [`Build`](https://github.com/farag2/ReVanced_Builder/actions/workflows/Build.yml) Action manually to create [release page](https://github.com/farag2/ReVanced_Builder/releases/latest) with configured release notes showing dependencies used for building.
@@ -33,7 +33,7 @@ Trigger the [`Build`](https://github.com/farag2/ReVanced_Builder/actions/workflo
 
 ## Links
 
-* [ReVanced Patches](https://github.com/revanced/revanced-patches)
-* [ReVanced Manager](https://github.com/revanced/revanced-manager)
+* [ReVanced](https://github.com/ReVanced)
+* [Morphe](https://github.com/MorpheApp)
 * [Selenium](https://github.com/SeleniumHQ/selenium)
 * [Telegram](https://t.me/sophia_chat)

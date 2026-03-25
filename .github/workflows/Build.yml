@@ -14,45 +14,84 @@ jobs:
     steps:
       - uses: actions/checkout@main
 
-      - name: YouTube
+      - name: Creating folders
         run: |
-          . Scripts\YouTube.ps1
+          New-Item -Path ReVanced_Builder -ItemType Directory -Force
+          New-Item -Path Morphe_Builder -ItemType Directory -Force
+
+      - name: YouTube ReVanced
+        run: |
+          # .\Scripts\YouTube_ReVanced.ps1
+
+      - name: YouTube Morphe
+        run: |
+          .\Scripts\YouTube_Morphe.ps1
 
       - name: ReVanced CLI
         run: |
-          . Scripts\ReVanced_CLI.ps1
+          # ./Scripts\ReVanced_CLI.ps1
 
-      - name: Downloading ReVanced Patches
+      - name: Morphe CLI
         run: |
-          . Scripts\ReVanced_Patches.ps1
+          .\Scripts\Morphe_CLI.ps1
 
-      - name: Vanced MicroG
+      - name: ReVanced Patches
         run: |
-          . Scripts\MicroG.ps1
+          # .\Scripts\ReVanced_Patches.ps1
+
+      - name: Morphe Patches
+        run: |
+          .\Scripts\Morphe_Patches.ps1
+
+      - name: ReVanced MicroG
+        run: |
+          # .\Scripts\MicroG_ReVanced.ps1
+
+      - name: MicroG Morphe
+        run: |
+          .\Scripts\MicroG_Morphe.ps1
 
       - name: Zulu JDK
         run: |
-          . Scripts\Zulu_JDK.ps1
+          .\Scripts\Zulu_JDK.ps1
 
       - name: Building
         run: |
-          # https://revanced.app/patches?pkg=com.google.android.youtube
           # https://github.com/ReVanced/revanced-cli/tree/main/docs
+          # https://github.com/MorpheApp/morphe-cli/tree/main/docs
 
+          # Building Morphe
           & "$env:ProgramFiles\Zulu\zulu*\bin\java.exe" `
-          -jar "ReVanced_Builder\revanced-cli.jar" `
-          patch "ReVanced_Builder\youtube.apk" `
-          --patches "ReVanced_Builder\revanced-patches.rvp" `
+          -jar "Morphe_Builder\morphe-cli.jar" `
+          patch "Morphe_Builder\youtube.apk" `
+          --patches "Morphe_Builder\morphe-patches.mpp" `
           --force `
           --purge `
-          --bypass-verification `
-          --out "ReVanced_Builder\youtube_revanced.apk"
+          --out "Morphe_Builder\youtube_morphe.apk"
+
+          # Building ReVanced
+          #& "$env:ProgramFiles\Zulu\zulu*\bin\java.exe" `
+          #-jar "ReVanced_Builder\revanced-cli.jar" `
+          #patch "ReVanced_Builder\youtube.apk" `
+          #--patches "ReVanced_Builder\revanced-patches.rvp" `
+          #--force `
+          #--purge `
+          #--bypass-verification `
+          #--out "ReVanced_Builder\youtube_revanced.apk"
 
       - name: Creating archive
         run: |
           $Parameters = @{
-              Path             = "ReVanced_Builder\youtube_revanced.apk", "ReVanced_Builder\microg.apk", "ReVanced_Builder\microg-huawei.apk"
+              Path             = "ReVanced_Builder\youtube_revanced.apk", "ReVanced_Builder\microg_revanced.apk", "ReVanced_Builder\microg_revanced_huawei.apk"
               DestinationPath  = "ReVanced.zip"
+              CompressionLevel = "Fastest"
+              Force            = $true
+          }
+          #Compress-Archive @Parameters
+
+          $Parameters = @{
+              Path             = "Morphe_Builder\youtube_morphe.apk", "Morphe_Builder\microg_morphe.apk"
+              DestinationPath  = "Morphe.zip"
               CompressionLevel = "Fastest"
               Force            = $true
           }
@@ -62,7 +101,16 @@ jobs:
         id: read_release
         run: |
           # https://en.wikipedia.org/wiki/Percent-encoding
-          (Get-Content -Path ReleaseNotesTemplate.md -Encoding utf8 -Raw).replace("YouTubeTag", "${{ env.LatestSupportedYT }}").replace("CLITag", "${{ env.CLIvtag }}").replace("PatchesTag", "${{ env.Patchesvtag }}").replace("MicroGTag", "${{ env.MicroGTag }}").replace("ZuluTag", "${{ env.ZuluTag }}") | Set-Content -Path ReleaseNotesTemplate.md -Encoding utf8 -Force
+          (Get-Content -Path ReleaseNotesTemplate.md -Encoding utf8 -Raw).Replace("ReVancedYTdot", "${{ env.ReVancedYTdot }}").
+            Replace("CLIReVancedTag", "${{ env.CLIReVancedTag }}").
+            Replace("ReVancedPatchesTag", "${{ env.ReVancedPatchesTag }}").
+            Replace("MicroG_ReVanced", "${{ env.MicroG_ReVanced }}").
+            Replace("ZuluTag", "${{ env.ZuluTag }}").
+            Replace("MorpheYTdot", "${{ env.MorpheYTdot }}").
+            Replace("CLIMorpheTag", "${{ env.CLIMorpheTag }}").
+            Replace("MorphePatchesTag", "${{ env.MorphePatchesTag }}").
+            Replace("MicroG_Morphe", "${{ env.MicroG_Morphe }}").
+            Replace("ZuluTag", "${{ env.ZuluTag }}") | Set-Content -Path ReleaseNotesTemplate.md -Encoding utf8 -Force
 
           # https://trstringer.com/github-actions-multiline-strings/
           Add-Content -Path $env:GITHUB_OUTPUT -Value "ReleaseBody=ReleaseNotesTemplate.md"
@@ -75,5 +123,7 @@ jobs:
         with:
           name: ${{ env.RELEASE_NAME }}
           token: ${{ github.token }}
-          files: ReVanced.zip
+          files: |
+            ReVanced.zip
+            Morphe.zip
           body_path: ${{ steps.read_release.outputs.ReleaseBody }}
