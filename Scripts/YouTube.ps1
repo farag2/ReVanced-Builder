@@ -4,13 +4,9 @@ New-Item -Path ReVanced_Builder -ItemType Directory -Force
 
 # Get the latest supported YouTube version to patch
 # https://api.revanced.app
-#$Parameters = @{
-#	Uri             = "https://api.revanced.app/v5/patches"
-#	UseBasicParsing = $true
-#	Verbose         = $true
-#}
-# $Patches = Invoke-RestMethod @Parameters
-# $LatestSupportedYT = ($Patches | Where-Object -FilterScript {$_.name -eq "Video ads"}).compatiblePackages."com.google.android.youtube" | Sort-Object -Descending -Unique | Select-Object -First 1
+# There's no API to get patches list
+# https://github.com/ReVanced/revanced-patches/blob/main/patches/src/main/kotlin/app/revanced/patches/youtube/ad/video/VideoAdsPatch.kt
+# https://gitlab.com/ReVanced/revanced-patches/-/blob/main/patches/src/main/kotlin/app/revanced/patches/youtube/ad/video/VideoAdsPatch.kt
 $LatestSupportedYT = "20.40.45"
 $LatestSupported = $LatestSupportedYT.Replace(".", "-")
 

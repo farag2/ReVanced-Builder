@@ -43,7 +43,9 @@ jobs:
           -jar "ReVanced_Builder\revanced-cli.jar" `
           patch "ReVanced_Builder\youtube.apk" `
           --patches "ReVanced_Builder\revanced-patches.rvp" `
+          --force `
           --purge `
+          --bypass-verification `
           --out "ReVanced_Builder\youtube_revanced.apk"
 
       - name: Creating archive
@@ -75,5 +77,3 @@ jobs:
           token: ${{ github.token }}
           files: ReVanced.zip
           body_path: ${{ steps.read_release.outputs.ReleaseBody }}
-
-
